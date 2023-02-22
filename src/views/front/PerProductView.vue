@@ -3,7 +3,7 @@
         <div class="row">
             <div class="product-img col-md-12 col-lg-5">
                 <div class="d-flex justify-content-center mb-6">
-                    <img :src="product.imageUrl" alt="" class="cardImg"></div>
+                    <img :src="product.imgUrl" alt="" class="cardImg"></div>
         </div>
         <!--商品選項-右-->
         <div class="col-md-12 col-lg-7 ps-lg-9">
@@ -32,7 +32,7 @@
 
 <script>
 
-const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
+const { VITE_APP_URL } = import.meta.env
 
 export default {
   data () {
@@ -42,12 +42,11 @@ export default {
   },
   methods: {
     getPerProduct () {
-      console.log(this.$route.params)
       const { id } = this.$route.params
-      const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`
+      const url = `${VITE_APP_URL}/products/${id}`
       this.$http.get(url)
         .then(res => {
-          this.product = res.data.product
+          this.product = res.data
         })
         .catch(err => {
           console.log(err)

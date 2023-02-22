@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-
+import { createPinia } from 'Pinia'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
@@ -17,6 +17,8 @@ const app = createApp(App)
 // VeeValidate.defineRule('required', VeeValidateRules['required']);
 // VeeValidate.defineRule('min', VeeValidateRules['min']);
 // VeeValidateI18n.loadLocaleFromURL('./zh_TW.json');
+const pinia = createPinia()
+app.use(pinia)
 app.use(VueAxios, axios)
 app.use(router)
 app.mount('#app')

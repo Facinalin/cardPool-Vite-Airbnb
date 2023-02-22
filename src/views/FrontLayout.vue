@@ -1,6 +1,7 @@
 
 <template>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +30,7 @@
     </div>
   </div>
 </nav>
+</div>
  <RouterView></RouterView>
 </template>
 

@@ -3,7 +3,7 @@
       <div class="row gx-5">
       <div class="col-lg-3 my-5 card-group" v-for="product in products" :key="product.id">
   <div class="card rounded-0 border-0">
-  <img :src="product.imageUrl" class="card-img-top" alt="">
+  <img :src="product.imgUrl" class="card-img-top" alt="">
   <div class="card-body px-0 py-4 text-center">
     <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
     <p class="card-text fs-7 pri-aux">{{ product.price }}元</p>
@@ -19,9 +19,12 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { RouterLink } from 'vue-router'
 
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
+const userToken = localStorage.getItem('user1hrToken')
+const userId = localStorage.getItem('userId')
 
 export default {
   data () {
@@ -32,11 +35,11 @@ export default {
   },
   methods: {
     getProduct () {
-      const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`
+      const url = `${VITE_APP_URL}/products`
       this.$http.get(url)
         .then(res => {
           console.log(res.data)
-          this.products = res.data.products
+          this.products = res.data
         })
         .catch(err => {
           console.log(err)
@@ -44,11 +47,12 @@ export default {
     },
     addToCart (curProductId, curQty = 1) {
       let httpRequest = 'post'
-      let url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`
+      let url = `${VITE_APP_URL}/600/users/${userId}/carts`
       let data = {}
       const currentCart = this.carts.find(item => item.productId === curProductId)
+      const products = this.products
       if (currentCart) {
-        httpRequest = 'put'
+        httpRequest = 'patch'
         url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${currentCart.id}`
         data = {
           id: currentCart.id,
@@ -56,16 +60,30 @@ export default {
           qty: currentCart.qty += curQty
         }
       } else {
+        const indicateProduct = products.find(el => el.id === curProductId)
         data = {
           id: new Date().getTime(),
           product_id: curProductId,
-          qty: 1
+          qty: 1,
+          userId,
+          product: indicateProduct,
+          subtotal: indicateProduct.price * 1
         }
       }
-      this.$http[httpRequest](url, { data })
+      this.$http[httpRequest](url, data, {
+        headers: {
+          authorization: `Bearer ${userToken}`
+        }
+      })
         .then(res => {
           console.log(res.data)
-          alert('成功加入購物車！')
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '成功加入購物車!',
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
         .catch(err => {
           console.log(err)
@@ -73,10 +91,21 @@ export default {
     },
     getCart () {
       const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`
+      const products = this.products
       this.$http.get(url)
         .then(res => {
           this.carts = res.data.data.carts
+          // 整理cart
+          const cartWithProduct = this.carts.map(item => {
+            const indicateProduct = products.find(el => el.id === item.productId)
+            return {
+              ...item,
+              indicateProduct,
+              subtotal: indicateProduct.price * item.qty
+            }
+          })
           console.log(this.carts)
+          console.log(cartWithProduct)
         })
         .catch(err => {
           console.log(err)

@@ -1,5 +1,6 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
 <div class="container-fluid">
   <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,13 +29,16 @@
   </div>
 </div>
 </nav>
+</div>
 <RouterView></RouterView>
 </template>
 
 <script>
-
+import Swal from 'sweetalert2'
 import { RouterView } from 'vue-router'
-const { VITE_APP_URL } = import.meta.env
+
+const userToken = localStorage.getItem('user1hrToken')
+const userId = localStorage.getItem('userId')
 
 export default {
   data () {
@@ -45,30 +49,30 @@ export default {
     RouterView
   },
   methods: {
-    checkLogged () {
-      const url = `${VITE_APP_URL}/api/user/check`
-      this.$http.post(url)
-        .then((res) => {
-          if (!res.data.success) {
-            alert('登入後才能查看後台！')
-            this.$router.push('/logIn')
-          }
+    checkLoggedIn () {
+      if (!userToken && !userId) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '你尚未登入，無法查看後台!',
+          showConfirmButton: false,
+          timer: 1800
         })
-        .catch(() => {
-          alert('登入後才能查看後台！')
-          // alert(err.response.data.message)
-          this.$router.push('/logIn')
-        })
+        this.$router.push('/logIn')
+      } else {
+        console.log('已登入')
+      }
     },
     logOut () {
       document.cookie = `hexToken=;expires=${new Date()};`
+      localStorage.clear()
       this.$router.push('/logIn')
     }
   },
   mounted () {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    this.$http.defaults.headers.common.Authorization = token
-    this.checkLogged()
+    // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    // this.$http.defaults.headers.common.Authorization = token
+    this.checkLoggedIn()
   }
 }
 
