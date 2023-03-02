@@ -1,0 +1,1 @@
+import{_ as r,c as e,o}from"./index-0c0ca482.js";const c={},s={class:"container border border-primary border-2"};function t(n,a){return o(),e("div",s," 這是後台訂單列表區 ")}const d=r(c,[["render",t]]);export{d as default};
