@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 .banner{
-  height: 100vh;
+  height: 130vh;
   padding: 0 90px;
 }
 

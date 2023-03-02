@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container border border-primary border-2">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
 <div class="container-fluid">
   <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
@@ -18,7 +18,7 @@
           <a class="nav-link" href="#"><router-link to="/products">代購</router-link></a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="#"><router-link to="/cart">購物車</router-link></a>
+          <a class="nav-link" href="#"><router-link to="/cart"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></router-link></a>
       </li>
     </ul>
     <ul class="navbar-nav">
@@ -50,7 +50,9 @@ export default {
   },
   methods: {
     checkLoggedIn () {
-      if (!userToken && !userId) {
+      if (userToken && userId) {
+        console.log('已登入')
+      } else {
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -59,8 +61,6 @@ export default {
           timer: 1800
         })
         this.$router.push('/logIn')
-      } else {
-        console.log('已登入')
       }
     },
     logOut () {
@@ -70,9 +70,10 @@ export default {
     }
   },
   mounted () {
-    // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    // this.$http.defaults.headers.common.Authorization = token
-    this.checkLoggedIn()
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    this.$http.defaults.headers.common.Authorization = token
+    // this.checkLoggedIn()
+    // TTO
   }
 }
 

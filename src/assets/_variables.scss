@@ -302,7 +302,7 @@ $primary:       #9B9BE3 !default;
 $secondary:     #E8A8D4 !default;
 $maingray:      #1E1C1C !default;
 $white:         #ffffff !default;
-$orange:       #EE6766 !default;
+$mainorange:       #EE6766 !default;
 $aidgray:        #9B9999 !default;
 $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
@@ -314,7 +314,7 @@ $theme-colors: (
   "secondary":  $secondary,
   "maingray":    $maingray,
   "white":       $white,
-  "orange":    $orange,
+  "mainorange":    $mainorange,
   "aidgray":     $aidgray,
   "light":      $light,
   "dark":       $dark
@@ -708,7 +708,7 @@ $table-variants: (
   "secondary":  shift-color($secondary, $table-bg-scale),
   "maingray":    shift-color($maingray, $table-bg-scale),
   "white":       shift-color($white, $table-bg-scale),
-  "orange":    shift-color($orange, $table-bg-scale),
+  "mainorange":    shift-color($mainorange, $table-bg-scale),
   "aidgray":     shift-color($aidgray, $table-bg-scale),
   "light":      $light,
   "dark":       $dark,

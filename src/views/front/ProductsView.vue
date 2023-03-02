@@ -1,7 +1,7 @@
 <template>
-    <div class="my-5 container">
+    <div class="my-5 container border border-primary border-2">
       <div class="row gx-5">
-      <div class="col-lg-3 my-5 card-group" v-for="product in products" :key="product.id">
+      <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in products" :key="product.id">
   <div class="card rounded-0 border-0">
   <img :src="product.imgUrl" class="card-img-top" alt="">
   <div class="card-body px-0 py-4 text-center">
@@ -143,9 +143,6 @@ export default {
 }
 .col-lg-3 .card{
   max-height: 550px;
-}
-.container{
-    padding: 60px;
 }
 
 .pri-aux{

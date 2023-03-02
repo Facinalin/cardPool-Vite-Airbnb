@@ -1,6 +1,6 @@
 
 <template>
-  <div class="container">
+  <div class="container border border-primary border-2">
       <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
@@ -19,12 +19,14 @@
             <a class="nav-link" href="#"><router-link to="/products">代購</router-link></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><router-link to="/cart">購物車</router-link></a>
+            <a class="nav-link" href="#"><router-link to="/cart" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
+    99
+  </span></router-link></a>
         </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="#"><router-link to="/admin">我的後台</router-link></a>
+            <a class="nav-link" href="#"><router-link to="/admin"><font-awesome-icon icon="fa-solid fa-user" /></router-link></a>
         </li>
       </ul>
     </div>

@@ -9,6 +9,19 @@
   </head>
   <body>
     <div id="app"></div>
+    <div class="container">
+      <div class="backlog-section">
+        <h1>Backlog</h1>
+        <div class="droppable-container"></div>
+      </div>
+
+      <div class="sprint-section">
+        <h1>Sprint</h1>
+        <div class="droppable-container"></div>
+        <p>目前點數: <span class="total-score"></span></p>
+        <p class="warning-text hidden">點數已超出上限，請移除一些項目</p>
+      </div>
+    </div>
     <!-- <script src="https://unpkg.com/vee-validate@next"></script>
     <script src="https://unpkg.com/@vee-validate/i18n@4.1.0"></script>
     <script src="https://unpkg.com/@vee-validate/rules"></script> -->
@@ -58,5 +71,66 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  padding: 16px;
+  display: flex;
+  align-items: stretch;
+  column-gap: 50px;
+}
+
+.backlog-section,
+.sprint-section {
+  width: 50%;
+}
+
+.droppable-container {
+  background-color: #f5efe6;
+  min-height: 500px;
+}
+
+.draggble {
+  padding: 16px;
+  font-size: 1rem;
+  text-align: center;
+  background-color: #7895b2;
+  color: #e8dfca;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.time-avatar {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  background-color: #e38b29;
+  color: black;
+  position: absolute;
+  right: 5%;
+  top: -20%;
+}
+
+.warning-text {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+/* .ghost {
+  opacity: 0.4;
+  background-color: yellow;
+  width: 10%;
+  text-align: center;
+} */
+
   </style>
 </html>

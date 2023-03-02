@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <div class="container border border-primary border-2">
         <div class="row">
-    <div class="col-12 border border-2 border-secondary rounded-xxl d-flex py-4 px-6">
+    <div v-if="ifLoggedIn" class="col-12 border border-2 border-secondary rounded-xxl d-flex py-4 px-6">
     <div v-if="!carts.length">購物車目前是空的！
       {{  products[0] }}
     </div>
@@ -61,19 +61,27 @@
 </div>
 </div>
   </div>
+  <div v-else class="d-flex flex-column justify-content-center border border-0">
+    <div class="pic-area d-flex justify-content-center mb-6 border border-1">
+    <img src="https://i.imgur.com/s11Z5gt.png" alt="" class="alertPic">
+    <img src="../../assets/cart-not-logged.svg" alt="" class="alertMsg">
+  </div>
+  <div class="d-flex justify-content-center">
+  <button type="button" class="toLogPageBtn btn btn-primary border-primary text-white rounded-xxl py-1 px-3"><router-link to="/logIn">我要登入</router-link></button>
+</div>
+</div>
 </div>
 </div>
 </template>
 
 <script>
 import productsStore from '../../store/productsStore.js'
-import cartsStore from '../../store/cartsStore.js'
 import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'Pinia'
 
 const { VITE_APP_URL } = import.meta.env
 const userToken = localStorage.getItem('user1hrToken')
-const userId = localStorage.getItem('userId')
+const userId = Number(localStorage.getItem('userId'))
 
 export default {
   data () {
@@ -81,13 +89,14 @@ export default {
       carts: [],
       cartTotal: 0,
       perCart: {},
-      thisUserCart: []
+      thisUserCart: [],
+      ifLoggedIn: false
     }
   },
   methods: {
     getCart () {
       // 2/20晚上成功get user25的購物車
-      const url = `${VITE_APP_URL}/600/users/${userId}/carts?_expand=product`
+      const url = `${VITE_APP_URL}/600/users/${userId}/carts`
       this.$http.get(url,
         {
           headers: {
@@ -98,9 +107,9 @@ export default {
           console.log(res.data)
           this.carts = res.data
           console.log(this.products)
-          // const total = this.carts.reduce((a, b) => a + b.qty * b.product.price, 0)
-          // console.log(total)
-          // this.cartTotal = total
+          const total = this.carts.reduce((a, b) => a + b.subtotal, 0)
+          console.log(total)
+          this.cartTotal = total
         })
         .catch(err => {
           console.log(err)
@@ -116,6 +125,7 @@ export default {
       })
         .then(res => {
           console.log(res.data)
+          console.log(url)
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -130,12 +140,17 @@ export default {
         })
     },
     deleteAllCart () {
+      // here
       const userId = (localStorage.getItem('userId'))
       this.thisUserCart = this.carts.filter(el => el.userId === userId)
       console.log(this.thisUserCart)
-      this.thisUserCart.forEach(el => {
-        const url = `${VITE_APP_URL}/carts/${el.id}`
-        this.$http.delete(url)
+      this.thisUserCart.forEach((el, i, arr) => {
+        const url = `${VITE_APP_URL}/600/carts/${arr[i].id}`
+        this.$http.delete(url, {
+          headers: {
+            authorization: `Bearer ${userToken}`
+          }
+        })
           .then(res => {
             console.log(res.data)
           })
@@ -143,6 +158,7 @@ export default {
             console.log(err)
           })
       })
+      this.getCart()
     },
     setCartQty (perCart, event) {
       const url = `${VITE_APP_URL}/600/carts/${perCart.id}`
@@ -150,6 +166,7 @@ export default {
       // 更改的是該購物車的數量
       this.perCart = perCart
       this.perCart.qty = selectQty
+      this.perCart.subtotal = selectQty * this.perCart.product.price
       this.$http.put(url, this.perCart, {
         headers: {
           authorization: `Bearer ${userToken}`
@@ -166,14 +183,20 @@ export default {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '請填入正確的電話號碼！'
     },
-    ...mapActions(productsStore, ['getProductS']),
-    ...mapActions(cartsStore, ['productToCart'])
+    checkLoggedIn () {
+      if (userToken && userId) {
+        this.ifLoggedIn = true
+      }
+    },
+    ...mapActions(productsStore, ['getProductS'])
   },
   mounted () {
     // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/)
     this.$http.defaults.headers.common.Authorization = localStorage.getItem('user1hrToken')
     // this.getProductS()
-    this.productToCart()
+    this.checkLoggedIn()
+    this.getCart()
+    console.log(this.ifLoggedIn)
   },
   computed: {
     ...mapState(productsStore, ['products'])
@@ -197,6 +220,29 @@ export default {
 .cart-table{
     width: 100%;
     padding: 0px 18px;
+}
+
+.alertPic{
+  width: 12%;
+    height: auto;
+    border-radius: 50%;
+    border: 12px solid #1E1C1C;
+    margin-right: 32px;
+}
+
+.alertMsg{
+  width: 50%;
+}
+
+.toLogPageBtn{
+  display: inline-block;
+  font-size: 16px;
+  width: 20%;
+  vertical-align: middle;
+}
+
+.pic-area{
+  margin-top: 32px;
 }
 
 </style>

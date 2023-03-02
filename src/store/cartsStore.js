@@ -13,7 +13,7 @@ export default defineStore('cartsStore', {
   }),
   actions: {
     productToCart () {
-      const url = `${VITE_APP_URL}/600/users/${userId}/carts?_expand=product`
+      const url = `${VITE_APP_URL}/600/users/${userId}/carts`
       axios.get(url,
         {
           headers: {
