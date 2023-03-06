@@ -1,5 +1,8 @@
 <template>
-    <div class="my-5 container border border-primary border-2">
+  <div v-if="isLoading" class="container d-flex justify-content-center">
+ <img src="https://i.imgur.com/hRNLPLv.gif" alt="heart.gif" class="loadingGif">
+  </div>
+    <div v-else class="my-5 container border border-primary border-2">
       <div class="row gx-5">
       <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in products" :key="product.id">
   <div class="card rounded-0 border-0">
@@ -8,8 +11,8 @@
     <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
     <p class="card-text fs-7 pri-aux">{{ product.price }}元</p>
     <div class="d-flex justify-content-center mt-4">
-    <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 me-2 fs-7"><RouterLink :to="`/product/${product.id}`">看商品</RouterLink></button>
-    <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7" @click="addToCart(product.id)">加購物車</button>
+    <button type="button" class="btn btn-white border-secondary rounded-xxl py-1 px-3 me-2 fs-7"><RouterLink :to="`/product/${product.id}`"><font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />看商品</RouterLink></button>
+    <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7" @click="addToCart(product.id)" :disabled="loadingStatus.loadingItem === product.id || !product.is_enabled"><font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />加購物車</button>
   </div>
   </div>
 </div>
@@ -19,104 +22,38 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 import { RouterLink } from 'vue-router'
+import { mapActions, mapState } from 'Pinia'
+import cartsStore from '../../store/cartsStore.js'
+import productsStore from '../../store/productsStore.js'
+// import Loading from 'vue-loading-overlay'
+// import 'vue-loading-overlay/dist/css/index.css'
 
-const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
-const userToken = localStorage.getItem('user1hrToken')
-const userId = localStorage.getItem('userId')
+// const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 
 export default {
   data () {
     return {
-      products: [],
-      carts: []
-    }
-  },
-  methods: {
-    getProduct () {
-      const url = `${VITE_APP_URL}/products`
-      this.$http.get(url)
-        .then(res => {
-          console.log(res.data)
-          this.products = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    addToCart (curProductId, curQty = 1) {
-      let httpRequest = 'post'
-      let url = `${VITE_APP_URL}/600/users/${userId}/carts`
-      let data = {}
-      const currentCart = this.carts.find(item => item.productId === curProductId)
-      const products = this.products
-      if (currentCart) {
-        httpRequest = 'patch'
-        url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${currentCart.id}`
-        data = {
-          id: currentCart.id,
-          product_id: curProductId,
-          qty: currentCart.qty += curQty
-        }
-      } else {
-        const indicateProduct = products.find(el => el.id === curProductId)
-        data = {
-          id: new Date().getTime(),
-          product_id: curProductId,
-          qty: 1,
-          userId,
-          product: indicateProduct,
-          subtotal: indicateProduct.price * 1
-        }
+      loadingStatus: {
+        loadingItem: ''
       }
-      this.$http[httpRequest](url, data, {
-        headers: {
-          authorization: `Bearer ${userToken}`
-        }
-      })
-        .then(res => {
-          console.log(res.data)
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '成功加入購物車!',
-            showConfirmButton: false,
-            timer: 1800
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    getCart () {
-      const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`
-      const products = this.products
-      this.$http.get(url)
-        .then(res => {
-          this.carts = res.data.data.carts
-          // 整理cart
-          const cartWithProduct = this.carts.map(item => {
-            const indicateProduct = products.find(el => el.id === item.productId)
-            return {
-              ...item,
-              indicateProduct,
-              subtotal: indicateProduct.price * item.qty
-            }
-          })
-          console.log(this.carts)
-          console.log(cartWithProduct)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   },
   components: {
     RouterLink
   },
+  methods: {
+    ...mapActions(cartsStore, ['getCart', 'addToCart']),
+    ...mapActions(productsStore, ['getProduct'])
+  },
+  computed: {
+    ...mapState(productsStore, ['products', 'isLoading'])
+  },
   mounted () {
-    this.getProduct()
+    setTimeout(() => {
+      this.getProduct()
+    }, 1900)
   }
 }</script>
 
@@ -147,6 +84,10 @@ export default {
 
 .pri-aux{
   color: #7171D0;
+}
+
+.loadingGif{
+  width: 160px;
 }
 
 </style>

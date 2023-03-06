@@ -1,30 +1,30 @@
 <template>
-    <div class="container border border-primary border-2">
-      <div class="text-end mt-4">
-        <button class="btn btn-primary me-4" @click="openModal('new')">
+    <div class="container border border-primary border-2 d-flex flex-column">
+      <div class="text-end mt-4 mb-4">
+        <button class="btn btn-primary me-4 text-white" @click="openModal('new')">
           建立新的產品
         </button>
-        <button class="btn btn-secondary" @click="openModal">
+        <button class="btn btn-secondary text-white" @click="openModal">
           拆卡開團
         </button>
       </div>
-      <table class="table mt-4">
+      <table class="table mt-4 text-center">
         <thead>
-          <tr>
+          <tr class="text-primary fs-5 pb-4">
             <th width="120">
               分類
             </th>
-            <th>產品名稱</th>
-            <th width="120">
-              原價
+            <th width="400">產品名稱</th>
+            <th width="110">
+              價格
             </th>
-            <th width="120">
-              售價
+            <th width="110">
+              成員
             </th>
             <th width="100">
               是否啟用
             </th>
-            <th width="120">
+            <th width="160">
               編輯
             </th>
           </tr>
@@ -33,23 +33,23 @@
           <tr v-for="(item) in userProductList" :key="item.id">
             <td>{{ item.category }}</td>
             <td>{{ item.title }}</td>
-            <td class="text-end">
-              {{ item.origin_price }}
-            </td>
-            <td class="text-end">
+            <td class="text-center">
               {{ item.price }}
+            </td>
+            <td class="text-center">
+              {{ item.member }}
             </td>
             <td>
               <span v-if="item.is_enabled" class="text-success">啟用</span>
               <span v-else>未啟用</span>
             </td>
             <td>
-              <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary btn-sm" @click="openModal('edit', item)">
-                  編輯
+              <div class="btn-group-edit d-flex justify-content-center px-4">
+                <button type="button" class="btn btn-primary btn-sm text-white me-2" @click="openModal('edit', item)">
+                  <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                 </button>
-                <button type="button" class="btn btn-outline-danger btn-sm">
-                  刪除
+                <button type="button" class="btn btn-mainorange btn-sm text-white">
+                  <font-awesome-icon icon="fa-solid fa-trash" />
                 </button>
               </div>
             </td>
@@ -66,33 +66,38 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
     <div class="modal-body">
+      <v-form class="row" v-slot="{ errors }" @submit="onSubmit">
   <div class="container-fluid py-3">
-    <div class="row">
-  <div class="col-sm-4">
-    <label for="title" class="form-label">商品圖片</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
-    <input v-model="perProduct.imgUrl" id="title" type="text" class="form-control" placeholder="請輸入圖片連結">
-    <img class="img-fluid">
+
+  <div class="col-sm-4 has-validation">
+    <label for="imgUrl" class="form-label">商品圖片</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
+  <v-field id="imgUrl" v-model="perProduct.imgUrl" name="link"
+  class="form-control" placeholder="請輸入圖片連結" :rules="isRequired" :class="{ 'is-invalid': errors.link }" ></v-field>
+  <p name="link" class="invalid-feedback">{{ errors.link }}</p>
+    <img class="img-fluid" :src="perProduct.imgUrl">
   </div>
       <div class="col-sm-8">
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group mb-3">
               <label for="title" class="form-label">標題</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
-              <input v-model="perProduct.title" id="title" type="text" class="form-control" placeholder="中文不得超過20字，英文不得超過30個字元">
+              <v-field id="title" v-model="perProduct.title" name="title"
+  class="form-control" placeholder="請輸入標題" :rules="isRequired" :class="{ 'is-invalid': errors.title }" ></v-field>
+  <p name="title" class="invalid-feedback">{{ errors.title }}</p>
             </div>
           </div>
             <div class="col-sm-6">
       <div class="form-group mb-3">
-              <label for="title" class="form-label">價格（元）</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
-              <input v-model.number="perProduct.price" id="title" type="number" class="form-control" placeholder="請填入未含運的商品價格">
+              <label for="price" class="form-label">價格（元）</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
+              <v-field id="price" v-model.number="perProduct.price" type="number" name="price"
+  class="form-control" placeholder="請填入未含運的商品價格" :rules="isNumber" :class="{ 'is-invalid': errors.price }" ></v-field>
+  <p name="price" class="invalid-feedback">{{ errors.price }}</p>
             </div>
     </div>
     <div class="col-sm-6">
       <label for="member" class="form-label">成員</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
       <select v-model="perProduct.member" class="form-select" aria-label="Default select example" id="member">
-  <option selected>請選擇成員（一位）</option>
-  <option value="非特定成員">非特定成員</option>
-  <option value="Bangchan">Bangchan</option>
+  <option value="Bangchan" selected>Bangchan</option>
   <option value="Leeknow">Leeknow</option>
   <option value="Changbin">Changbin</option>
   <option value="Hyunjin">Hyunjin</option>
@@ -100,6 +105,7 @@
   <option value="Felix">Felix</option>
   <option value="Seungmin">Seungmin</option>
   <option value="I.N">I.N</option>
+  <option value="非特定成員">非特定成員</option>
 </select>
 
     </div>
@@ -118,17 +124,36 @@
 
 </div>
 
-<select v-if="ifDomesticFee" v-model="perProduct.domestic_Transport.courier" class="form-select" aria-label="Default select example" @change="ifMeetInPerson($event)">
+<!-- <select v-if="ifDomesticFee" v-model="perProduct.domestic_Transport.courier" class="form-select" aria-label="Default select example" @change="ifMeetInPerson($event)">
   <option id="defaultOpt">請選擇出貨方式</option>
+  <option selected value="711賣貨便">711賣貨便</option>
+  <option value="711店到店">711店到店</option>
+  <option value="全家">全家店到店</option>
+  <option value="萊爾富">萊爾富</option>
+</select> -->
+<v-field v-if="ifDomesticFee"
+  id="name"
+  name="domesitcFreight"
+  class="form-control"
+  placeholder="請choose出貨"
+  v-model="perProduct.domestic_Transport.courier"
+  as="select"
+  :rules="isRequired" :class="{ 'is-invalid': errors.domesitcFreight }"
+>
+  <option disabled selected value="">請選擇出貨</option>
   <option value="711賣貨便">711賣貨便</option>
   <option value="711店到店">711店到店</option>
   <option value="全家">全家店到店</option>
   <option value="萊爾富">萊爾富</option>
-</select>
-<input v-if="ifDomesticFee" v-model.number="perProduct.domestic_Transport.amount"  id="internationalFee" type="number" class="form-control" placeholder="運費（元）">
+</v-field>
+<v-field v-if="ifDomesticFee" id="domesitcFreight" v-model.number="perProduct.domestic_Transport.amount" type="number" name="domesitcFreightAmount"
+  class="form-control" :rules="isNumber" :class="{ 'is-invalid': errors.domesitcFreightAmount }" ></v-field>
+  <p name="domesitcFreightAmount" class="invalid-feedback">{{ errors.domesitcFreightAmount }}</p>
 <div v-if="!ifDomesticFee">
 <h4 class="text-secondary">面交<span>0</span>元</h4>
-<input v-model="perProduct.domestic_Transport.courier_Note" id="domesticMeet" type="text" class="form-control mt-4" placeholder="請填寫可面交縣市及日期限制">
+<v-field id="note" v-model="perProduct.domestic_Transport.courier_Note" name="note"
+  class="form-control" placeholder="請填寫可面交縣市及日期限制" :rules="isRequired" :class="{ 'is-invalid': errors.note }" ></v-field>
+  <p name="note" class="invalid-feedback">{{ errors.note }}</p>
 </div>
 
             </div>
@@ -155,25 +180,29 @@
 
 </div>
 <h4 v-if="ifComplement&&ifInternational" class="text-mainorange">本次結帳總額未收國際運費，最終出貨前請至訂單管理新增運費金額，系統將自動通知買家付款。</h4>
-<input v-if="!ifComplement&&ifInternational" v-model.number="perProduct.international_Transport.amount" id="internationalFee" type="number" class="form-control" placeholder="不需二補的最終國際運費">
+<v-field v-if="!ifComplement&&ifInternational" id="domesitcFreight" v-model.number="perProduct.international_Transport.amount" type="number" name="internationalFreight"
+  class="form-control" :rules="isNumber" :class="{ 'is-invalid': errors.internationalFreight }" placeholder="不需二補的最終國際運費"></v-field>
+  <p name="internationalFreight" class="invalid-feedback">{{ errors.internationalFreight }}</p>
             </div>
     </div>
   </div>
   <div class="col-sm-12">
     <label for="floatingTextarea2" class="mb-3">商品描述</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
       <div class="form-floating">
-  <textarea v-model.number="perProduct.description" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+  <v-field v-model="perProduct.description" id="domesitcFreight" type="text" name="description"
+  class="form-control" :rules="isRequired" :class="{ 'is-invalid': errors.description }" height="200px" ></v-field>
+  <p name="price" class="invalid-feedback">{{ errors.description }}</p>
 </div>
           </div>
     </div>
 
-  </div>
 </div>
 <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">取消</button>
-        <button v-if="isNew" type="button" class="btn btn-primary text-white" @click="updateProduct">確認新增</button>
-        <button v-else type="button" class="btn btn-primary text-white" @click="updateProduct">確認修改</button>
+        <button v-if="isNew" type="submit" class="btn btn-primary text-white" @click="updateProduct">確認新增</button>
+        <button v-else type="submit" class="btn btn-primary text-white" @click="updateProduct">確認修改</button>
       </div>
+    </v-form>
     </div>
   </div>
 </div>
@@ -185,11 +214,8 @@
 <script type="module">
 import { Modal } from 'bootstrap'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
-// const userId = localStorage.getItem('userId')
-// const userToken = localStorage.getItem('user1hrToken')
-//  VITE_APP_URL
-// here
 let productModal = null
 
 export default {
@@ -198,22 +224,23 @@ export default {
       userProductList: [],
       perProduct: {
         category: '',
-        origin_price: 0,
-        price: 0,
+        origin_price: null,
+        price: null,
         unit: '個',
         description: '',
         content: '',
         is_enabled: 1,
         imageUrl: '',
         imagesUrl: [],
+        member: 'Bangchan',
         domestic_Transport: {
-          courier: '請選擇出貨方式',
+          courier: '711賣貨便',
           courier_Note: '',
-          amount: 0
+          amount: null
         },
         international_Transport: {
           complement: false,
-          amount: 0
+          amount: null
         }
       },
       isNew: true,
@@ -274,7 +301,7 @@ export default {
   methods: {
     openModal (isNew, item) {
       if (isNew === 'new') {
-        // modal回復default,0301testok
+        // modal回復default,0302testok
         this.perProduct = {
           category: '',
           origin_price: 0,
@@ -301,14 +328,12 @@ export default {
         this.perProduct = { ...item }
         if (this.perProduct.domestic_Transport.courier !== '面交') {
           console.log('面交')
-          // const checkedBtn = document.getElementById('hasDomestic')
-          // checkedBtn.setAttribute('checked')
+          // TBC
         }
         if (this.perProduct.international_Transport.complement === true) {
           this.ifInternational = true
           this.ifComplement = true
           const ifInternationalBtn = this.$refs.hasInternational
-          console.log(this.$refs)
           const ifComplementBtn = this.$refs.needComplement
           console.log(ifComplementBtn)
           // 第二層refs取不到
@@ -333,16 +358,6 @@ export default {
         console.log(err)
       })
     },
-    // getUserProduct () {
-    //   const url2 = `${VITE_APP_URL}/600/users/${userId}/products`
-    //   // const url = `${VITE_APP_URL}/products?sellerId=${userId}`
-    //   this.$http.get(url2)
-    //     .then(res => {
-    //     })
-    //     .catch(err => {
-    //       console.log(err.data)
-    //     })
-    // },
     updateProduct () {
       // 新增商品
       if (!this.ifDomesticFee) {
@@ -360,8 +375,17 @@ export default {
       console.log(this.perProduct)
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
       axios.post(url, { data: this.perProduct }).then(res => {
-        console.log(res.data)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 1800
+        })
+        productModal.hide()
         this.getProductList()
+        // here 並沒有新增的那一筆，但無admin的產品就get得到新增的那一筆
+        // 如果是登入權限問題，應該不會成功新增，應該會擋掉才對，新增都不會成功
       }).catch(err => {
         console.log(err.response.data.message)
       })
@@ -413,17 +437,40 @@ export default {
     needNoComplement () {
       this.ifComplement = false
     },
-    login () {
-      const api = 'https://vue3-course-api.hexschool.io/admin/signin'
-      axios.post(api, this.user).then((response) => {
-        const { token, expired } = response.data
-        // 寫入 cookie token
-        // expires 設置有效時間
-        document.cookie = `hexToken=${token};expires=${new Date(expired)}; path=/`
-        // window.location = 'products.html'
-      }).catch((err) => {
-        console.log(err.response.data.message)
-      })
+    onSubmit (values) {
+      console.log(JSON.stringify(values, null, 2))
+    },
+    isRequired (value) {
+      if (!value) {
+        return '此欄位為必填！'
+      }
+      return true
+    },
+    isNumber (value) {
+      const regex = /^[0-9]+$/
+      if (!regex.test(value)) {
+        console.log('test沒過')
+        return '僅能填入0-9的數字！'
+      }
+      console.log('test過')
+      return true
+    },
+    checkAdmin () {
+      const url = `${VITE_APP_URL2}/api/user/check`
+      axios.post(url)
+        .then(() => {
+          this.getProductList()
+        })
+        .catch((err) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: err.response.data.message,
+            showConfirmButton: false,
+            timer: 1800
+          })
+          this.$router.push('/logIn')
+        })
     }
   },
   mounted () {
@@ -435,8 +482,7 @@ export default {
       keyboard: false,
       backdrop: 'static'
     })
-    this.login()
-    this.getProductList()
+    this.checkAdmin()
   }
 }
 </script>

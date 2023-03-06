@@ -1,5 +1,7 @@
 <template>
-  <h1>活動大廳</h1>
+  <div class="container">
+    <h1>活動大廳</h1>
+  </div>
 </template>
 
 <script>

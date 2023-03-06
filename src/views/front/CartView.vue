@@ -1,20 +1,20 @@
 <template>
-    <div class="container border border-primary border-2">
-        <div class="row">
-    <div v-if="ifLoggedIn" class="col-12 border border-2 border-secondary rounded-xxl d-flex py-4 px-6">
-    <div v-if="!carts.length">購物車目前是空的！
-      {{  products[0] }}
+    <div class="container">
+      <div class="row">
+    <div v-if="ifLoggedIn" class="col-lg-12 col-md-12 col-sm-12 border border-2 border-secondary d-flex py-4 px-2">
+    <div v-if="!carts.length" style="width:100%">
+      <h2 class="text-center">購物車目前是空的！</h2>
     </div>
     <div v-else class="shopping-cart">
-    <table class="cart-table text-start">
+    <table class="cart-table mt-4 text-center">
         <thead class="border-bottom border-primary">
             <!--padding寫thead/ th皆無用，寫th才有用-->
-            <tr class="py-4">
-                <th width="45%" class="py-3">品項</th>
+            <tr class="text-primary fs-5 pb-4">
+                <th width="50%" class="py-3">品項</th>
                 <th width="15%">單價</th>
-                <th width="15%">數量</th>
+                <th width="10%">數量</th>
                 <th width="15%">小計</th>
-                <th width="10%"></th>
+                <th width="10%">刪除</th>
             </tr>
         </thead>
         <tbody>
@@ -23,11 +23,11 @@
       <td>
       <div class="cardItem-title d-flex align-items-center py-4">
           <img :src="cart.product.imgUrl" alt="Product-img" class="perCartPic">
-          <p class="text-start pt-0 pb-3 ps-4 pe-4 fz-20 ms-2">{{ cart.product.title }}</p>
+          <p class="text-center align-middle pt-0 pb-3 ps-4 pe-4 fz-20 ms-2">{{ cart.product.title }}</p>
       </div>
   </td>
-  <td class="fz-20">{{ cart.product.price }}</td>
-  <td class="text-center">
+  <td class="fz-20 text-center align-middle">{{ cart.product.price }}</td>
+  <td class="text-center align-middle">
     <div class="input-group input-group-sm">
               <div class="input-group mb-3">
                 <input min="1" type="number" class="form-control" :value="cart.qty" @change="(evt) =>setCartQty(cart, evt)" >
@@ -35,34 +35,34 @@
               </div>
             </div>
   </td>
-  <td class="text-end mt-2">NT$<span class="checkoutSubtotal fz-20">{{ cart.product.price*cart.qty }}</span></td>
-  <td>
-    <button type="button" class="btn btn-outline-danger btn-sm ms-4" @click="deletePerCart(cart.id)">
-              X
-            </button>
+  <td class="text-center align-middle mt-2">NT$<span class="checkoutSubtotal fz-20">{{ cart.product.price*cart.qty }}</span></td>
+  <td class="text-center align-middle">
+            <button type="button" class="btn btn-mainorange btn-sm text-white"  @click="deletePerCart(cart.id)">
+              <font-awesome-icon v-if="loadingStatus.loadingItem === cart.id" icon="fa-solid fa-spinner" class="me-1" /> <font-awesome-icon icon="fa-solid fa-trash" />
+                </button>
   </td>
 </tr>
 </template>
         </tbody>
         <tfoot>
-            <tr scope="row">
+            <tr scope="row" class="border-top border-secondary">
                 <td></td>
                 <td></td>
                 <td></td>
                 <td class="mt-4">
-                    <p class="fz-20">總金額</p>
+                    <p class="fz-20 mt-3">總金額</p>
                 </td>
-                <td class="fz-20">NT$<span class="jsTotalCheckout">{{ cartTotal }}</span></td>
+                <td class="fz-20 text-mainorange">NT${{ cartTotal }}</td>
             </tr>
         </tfoot>
     </table>
     <div class="deleteAllCart text-end mt-5">
-  <button class="btn btn-outline-danger" type="button" @click.prevent="deleteAllCart">清空購物車</button>
+  <button class="btn btn-mainorange text-white" type="button" @click="deleteAllCart">清空購物車</button>
 </div>
 </div>
   </div>
   <div v-else class="d-flex flex-column justify-content-center border border-0">
-    <div class="pic-area d-flex justify-content-center mb-6 border border-1">
+    <div class="pic-area d-flex justify-content-center mb-6">
     <img src="https://i.imgur.com/s11Z5gt.png" alt="" class="alertPic">
     <img src="../../assets/cart-not-logged.svg" alt="" class="alertMsg">
   </div>
@@ -70,6 +70,7 @@
   <button type="button" class="toLogPageBtn btn btn-primary border-primary text-white rounded-xxl py-1 px-3"><router-link to="/logIn">我要登入</router-link></button>
 </div>
 </div>
+
 </div>
 </div>
 </template>
@@ -78,8 +79,10 @@
 import productsStore from '../../store/productsStore.js'
 import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'Pinia'
+import axios from 'axios'
+// import OrderInfoComponent from '../../components/OrderInfo.js'
 
-const { VITE_APP_URL } = import.meta.env
+const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 const userToken = localStorage.getItem('user1hrToken')
 const userId = Number(localStorage.getItem('userId'))
 
@@ -90,24 +93,34 @@ export default {
       cartTotal: 0,
       perCart: {},
       thisUserCart: [],
-      ifLoggedIn: false
+      ifLoggedIn: true,
+      loadingStatus: {
+        loadingItem: ''
+      }
     }
   },
+  // components: {
+  //   'order-info-component': OrderInfoComponent
+  // },
   methods: {
     getCart () {
-      // 2/20晚上成功get user25的購物車
-      const url = `${VITE_APP_URL}/600/users/${userId}/carts`
-      this.$http.get(url,
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`
-          }
-        })
+      // const url = `${VITE_APP_URL2}/600/users/${userId}/carts`
+      // 改好六api
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
+      this.$http.get(url)
         .then(res => {
-          console.log(res.data)
-          this.carts = res.data
-          console.log(this.products)
-          const total = this.carts.reduce((a, b) => a + b.subtotal, 0)
+          this.carts = res.data.data.carts
+          // 整理cart
+          // const cartWithProduct = this.carts.map(item => {
+          //   const indicateProduct = products.find(el => el.id === item.productId)
+          //   return {
+          //     ...item,
+          //     indicateProduct,
+          //     subtotal: indicateProduct.price * item.qty
+          //   }
+          // })
+          console.log(this.carts)
+          const total = this.carts.reduce((a, b) => a + b.final_total, 0)
           console.log(total)
           this.cartTotal = total
         })
@@ -116,13 +129,10 @@ export default {
         })
     },
     deletePerCart (cartId) {
-      // 2/21中午成功get user25的購物車
-      const url = `${VITE_APP_URL}/600/carts/${cartId}`
-      this.$http.delete(url, {
-        headers: {
-          authorization: `Bearer ${userToken}`
-        }
-      })
+      // /v2/api/{api_path}/cart/{id}
+      this.loadingStatus.loadingItem = cartId
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart/${cartId}`
+      this.$http.delete(url)
         .then(res => {
           console.log(res.data)
           console.log(url)
@@ -133,6 +143,7 @@ export default {
             showConfirmButton: false,
             timer: 1800
           })
+          this.loadingStatus.loadingItem = ''
           this.getCart()
         })
         .catch(err => {
@@ -140,43 +151,55 @@ export default {
         })
     },
     deleteAllCart () {
-      // here
-      const userId = (localStorage.getItem('userId'))
-      this.thisUserCart = this.carts.filter(el => el.userId === userId)
-      console.log(this.thisUserCart)
-      this.thisUserCart.forEach((el, i, arr) => {
-        const url = `${VITE_APP_URL}/600/carts/${arr[i].id}`
-        this.$http.delete(url, {
-          headers: {
-            authorization: `Bearer ${userToken}`
-          }
-        })
-          .then(res => {
-            console.log(res.data)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      })
-      this.getCart()
-    },
-    setCartQty (perCart, event) {
-      const url = `${VITE_APP_URL}/600/carts/${perCart.id}`
-      const selectQty = event.target.value * 1
-      // 更改的是該購物車的數量
-      this.perCart = perCart
-      this.perCart.qty = selectQty
-      this.perCart.subtotal = selectQty * this.perCart.product.price
-      this.$http.put(url, this.perCart, {
-        headers: {
-          authorization: `Bearer ${userToken}`
-        }
-      })
+      // /v2/api/{api_path}/carts
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/carts`
+      this.$http.delete(url)
         .then(res => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '購物車已清空！',
+            showConfirmButton: false,
+            timer: 1800
+          })
+          this.loadingStatus.loadingItem = ''
           this.getCart()
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
+        })
+      this.getCart()
+    },
+    setCartQty (perCart, event) {
+      // /v2/api/{api_path}/cart/{id}
+      // 改好六api
+      this.loadingStatus.loadingItem = perCart.id
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart/${perCart.id}`
+      const selectQty = event.target.value * 1
+      // 更改的是該購物車的數量
+      const cart = {
+        product_id: perCart.product_id,
+        qty: selectQty
+      }
+      this.$http.put(url, { data: cart })
+        .then(res => {
+          console.log(res.data)
+          this.getCart()
+        })
+        .catch(err => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
     },
     phoneVali (value) {
@@ -192,9 +215,11 @@ export default {
   },
   mounted () {
     // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/)
-    this.$http.defaults.headers.common.Authorization = localStorage.getItem('user1hrToken')
+    // this.$http.defaults.headers.common.Authorization = localStorage.getItem('user1hrToken')
     // this.getProductS()
-    this.checkLoggedIn()
+    // this.checkLoggedIn()
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    axios.defaults.headers.common.Authorization = token
     this.getCart()
     console.log(this.ifLoggedIn)
   },
@@ -207,6 +232,7 @@ export default {
 <style>
 .shopping-cart{
     width: 100%;
+    max-width: 100%;
 }
 .perCartPic{
     width: 140px;

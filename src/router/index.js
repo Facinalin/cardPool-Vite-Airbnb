@@ -21,7 +21,14 @@ const routes = [
     },
     {
       path: 'cart',
-      component: () => import('../views/front/CartView.vue')
+      component: () => import('../views/front/CartCheckout.vue'),
+      children: [{
+        path: 'cartToOrder',
+        components: {
+          cart: () => import('../views/front/CartView.vue'),
+          orderInfo: () => import('../views/front/OrderInfo.vue')
+        }
+      }]
     },
     {
       path: 'product/:id',
@@ -29,7 +36,7 @@ const routes = [
     },
     {
       path: 'logIn',
-      component: () => import('../views/logSign/logIn.vue')
+      component: () => import('../views/front/logIn.vue')
     }]
   },
   {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container border border-primary border-2">
+  <div class="container border border-mainorange border-2">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
 <div class="container-fluid">
   <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
@@ -18,7 +18,9 @@
           <a class="nav-link" href="#"><router-link to="/products">代購</router-link></a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="#"><router-link to="/cart"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></router-link></a>
+        <a class="nav-link" href="#"><router-link to="/cart" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
+    {{number}}
+  </span></router-link></a>
       </li>
     </ul>
     <ul class="navbar-nav">
@@ -36,6 +38,8 @@
 <script>
 import Swal from 'sweetalert2'
 import { RouterView } from 'vue-router'
+import { mapState, mapActions } from 'Pinia'
+import cartsStore from '../store/cartsStore'
 
 const userToken = localStorage.getItem('user1hrToken')
 const userId = localStorage.getItem('userId')
@@ -67,11 +71,16 @@ export default {
       document.cookie = `hexToken=;expires=${new Date()};`
       localStorage.clear()
       this.$router.push('/logIn')
-    }
+    },
+    ...mapActions(cartsStore, ['getCart'])
+  },
+  computed: {
+    ...mapState(cartsStore, ['number'])
   },
   mounted () {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     this.$http.defaults.headers.common.Authorization = token
+    this.getCart()
     // this.checkLoggedIn()
     // TTO
   }

@@ -19,10 +19,10 @@
             <a class="nav-link" href="#"><router-link to="/products">代購</router-link></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><router-link to="/cart" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
-    99
+        <a class="nav-link" href="#"><router-link to="/cart/cartToOrder" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
+    {{number}}
   </span></router-link></a>
-        </li>
+      </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -38,6 +38,8 @@
 
 <script>
 import { RouterView } from 'vue-router'
+import { mapState, mapActions } from 'Pinia'
+import cartsStore from '../store/cartsStore'
 
 export default {
   data () {
@@ -50,10 +52,15 @@ export default {
   methods: {
     checkLogged () {
 
-    }
+    },
+    ...mapActions(cartsStore, ['getCart', 'addToCart'])
+  },
+  computed: {
+    ...mapState(cartsStore, ['number'])
   },
   mounted () {
     this.checkLogged()
+    this.getCart()
   }
 }
 

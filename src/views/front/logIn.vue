@@ -1,11 +1,12 @@
 <template>
-      <div class="container">
-      <div v-if="isLogInPanel" class="loginPanel row">
-        <div class="poster-area login-bg col-lg-5 col-md-12 col-sm-12">
+
+      <div v-if="isLogInPanel" class="container container-fluid border border-mainorange">
+        <div class="row">
+        <div class="poster-area login-bg col-5">
         </div>
-        <div class="col-lg-1">
+        <div class="col-1">
         </div>
-      <div class="col-lg-6 pt-8 pb-80 col-md-12 col-sm-12">
+      <div class="col-6 pt-8 pb-80">
         <img src="../../assets/會員登入.svg" alt="" class="mb-8">
         <form action="" class="my-4">
           <div class="inputGroup">
@@ -23,10 +24,12 @@
       </div>
         </form>
       </div>
-    </div>
+  </div>
+  </div>
 
-    <div v-else class="signUpPanel row">
-      <div class="col-6 py-8">
+  <div v-else class="container">
+    <div class="row">
+      <div class="col-lg-6 py-8">
         <img src="../../assets/signUpTitle.svg" alt="" class="mb-8">
         <form action="">
          <div class="inputGroup">
@@ -41,25 +44,22 @@
     <input id="password" v-model="perUser.password" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
     <label for="password">確認密碼 Confirm Password</label>
 </div>
-
          <button type="button"  class="signUpInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20" @click="signUp">註冊</button>
         </form>
         <button type="button" id="toLogin-btn" class="btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o" @click="toLoginPanel">已有帳號？點此登入</button>
       </div>
-      <div class="col-1">
+      <div class="col-lg-1">
       </div>
-      <div class="poster-area signup-bg col-5">
+      <div class="poster-area col-lg-5">
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import Swal from 'sweetalert2'
 
 const { VITE_APP_URL } = import.meta.env
-let token = ''
 
 export default {
   data () {
@@ -79,10 +79,10 @@ export default {
     login () {
       const api = `${VITE_APP_URL}/login`
       this.$http.post(api, this.user).then((response) => {
-        // const { token, expired } = response.data
+        const { token, expired } = response.data
         // 寫入 cookie token
-        // // expires 設置有效時間
-        // document.cookie = `hexToken=${token};expires=${new Date(expired)}; path=/`
+        // expires 設置有效時間
+        document.cookie = `hexToken=${token};expires=${new Date(expired)}; path=/`
         console.log(response.data)
         Swal.fire({
           position: 'center',
@@ -92,9 +92,6 @@ export default {
           timer: 1800
         })
         this.$router.push('/admin/products')
-        token = response.data.accessToken
-        localStorage.setItem('user1hrToken', token)
-        localStorage.setItem('userId', response.data.user.id) // 這句重要
         // 轉址先關掉
         // window.location = 'products.html'
       }).catch((err) => {
@@ -139,9 +136,6 @@ export default {
         })
       })
     }
-  },
-  mounted () {
-
   }
 }
 
@@ -151,9 +145,6 @@ export default {
 .poster-area{
     background-repeat: no-repeat;
     background-size:contain;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 950px;
 }
 
 .login-bg{
