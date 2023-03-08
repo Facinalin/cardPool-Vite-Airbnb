@@ -17,8 +17,6 @@
       <div class="sprint-section">
         <h1>Sprint</h1>
         <div class="droppable-container"></div>
-        <p>目前點數: <span class="total-score" ref="totalScore"></span></p>
-        <p class="warning-text hidden">點數已超出上限，請移除一些項目</p>
       </div>
     </div>
 </template>
@@ -81,14 +79,14 @@ export default {
           .toArray()
           .map((ele) => parseInt(ele, 10))
           .reduce((a, b) => a + b, 0)
-        // totalScoreDOM.textContent = totalScore
+        // // totalScoreDOM.textContent = totalScore
 
-        const warningTextDOM = document.querySelector('.warning-text')
+        // const warningTextDOM = document.querySelector('.warning-text')
 
-        warningTextDOM.classList.add('hidden')
-        if (totalScore > 20) {
-          warningTextDOM.classList.remove('hidden')
-        }
+        // warningTextDOM.classList.add('hidden')
+        // if (totalScore > 20) {
+        //   warningTextDOM.classList.remove('hidden')
+        // }
       }
     })
 

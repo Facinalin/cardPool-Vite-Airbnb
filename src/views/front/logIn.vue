@@ -10,7 +10,7 @@
         <img src="../../assets/會員登入.svg" alt="" class="mb-8">
         <form action="" class="my-4">
           <div class="inputGroup">
-    <input id="email" v-model="user.email" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
+    <input id="email" v-model="user.username" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
     <label for="email">帳號 Account/ Email Address</label>
 </div>
 <div class="inputGroup">
@@ -44,7 +44,7 @@
     <input id="password" v-model="perUser.password" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
     <label for="password">確認密碼 Confirm Password</label>
 </div>
-         <button type="button"  class="signUpInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20" @click="signUp">註冊</button>
+         <button type="button"  class="signUpInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20">註冊</button>
         </form>
         <button type="button" id="toLogin-btn" class="btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o" @click="toLoginPanel">已有帳號？點此登入</button>
       </div>
@@ -59,13 +59,13 @@
 <script>
 import Swal from 'sweetalert2'
 
-const { VITE_APP_URL } = import.meta.env
+const { VITE_APP_URL2 } = import.meta.env
 
 export default {
   data () {
     return {
       user: {
-        email: '',
+        username: '',
         password: ''
       },
       perUser: {
@@ -77,7 +77,8 @@ export default {
   },
   methods: {
     login () {
-      const api = `${VITE_APP_URL}/login`
+      const api = `${VITE_APP_URL2}/admin/signin`
+      console.log(this.user)
       this.$http.post(api, this.user).then((response) => {
         const { token, expired } = response.data
         // 寫入 cookie token
@@ -112,30 +113,30 @@ export default {
     },
     toSignUpPanel () {
       this.isLogInPanel = false
-    },
-    signUp () {
-      const api = `${VITE_APP_URL}/register`
-      this.$http.post(api, this.perUser).then((response) => {
-        console.log(response)
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '註冊成功!',
-          showConfirmButton: false,
-          timer: 1800
-        })
-        this.isLogInPanel = true
-      }).catch((err) => {
-        console.log(err)
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '信箱或密碼格式不全!',
-          showConfirmButton: false,
-          timer: 1800
-        })
-      })
     }
+    // signUp () {
+    //   const api = `${VITE_APP_URL2}/register`
+    //   this.$http.post(api, this.perUser).then((response) => {
+    //     console.log(response)
+    //     Swal.fire({
+    //       position: 'center',
+    //       icon: 'success',
+    //       title: '註冊成功!',
+    //       showConfirmButton: false,
+    //       timer: 1800
+    //     })
+    //     this.isLogInPanel = true
+    //   }).catch((err) => {
+    //     console.log(err)
+    //     Swal.fire({
+    //       position: 'center',
+    //       icon: 'error',
+    //       title: '信箱或密碼格式不全!',
+    //       showConfirmButton: false,
+    //       timer: 1800
+    //     })
+    //   })
+    // }
   }
 }
 

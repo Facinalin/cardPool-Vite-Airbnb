@@ -40,7 +40,9 @@ import Swal from 'sweetalert2'
 import { RouterView } from 'vue-router'
 import { mapState, mapActions } from 'Pinia'
 import cartsStore from '../store/cartsStore'
+import axios from 'axios'
 
+const { VITE_APP_URL2 } = import.meta.env
 const userToken = localStorage.getItem('user1hrToken')
 const userId = localStorage.getItem('userId')
 
@@ -67,10 +69,39 @@ export default {
         this.$router.push('/logIn')
       }
     },
+    clearAllCookies () {
+      const cookies = document.cookie.split(';')
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i]
+        const eqPos = cookie.indexOf('=')
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
+        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      }
+    },
     logOut () {
-      document.cookie = `hexToken=;expires=${new Date()};`
-      localStorage.clear()
-      this.$router.push('/logIn')
+      // document.cookie = `hexToken=;expires=${new Date()};`
+      this.clearAllCookies()
+      const url = `${VITE_APP_URL2}/logout`
+      axios.post(url)
+        .then((res) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: res.data.message,
+            showConfirmButton: false,
+            timer: 1800
+          })
+          this.$router.push('/logIn')
+        })
+        .catch((err) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: err.response.data.message,
+            showConfirmButton: false,
+            timer: 1800
+          })
+        })
     },
     ...mapActions(cartsStore, ['getCart'])
   },

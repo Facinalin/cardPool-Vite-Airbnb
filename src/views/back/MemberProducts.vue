@@ -4,7 +4,7 @@
         <button class="btn btn-primary me-4 text-white" @click="openModal('new')">
           建立新的產品
         </button>
-        <button class="btn btn-secondary text-white" @click="openModal">
+        <button class="btn btn-secondary text-white" @click="openModal('group')">
           拆卡開團
         </button>
       </div>
@@ -59,22 +59,25 @@
 
       <div class="modal fade" tabindex="-1" id="addProductModal">
   <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+    <div class="modal-content border border-secondary border-4">
       <div class="modal-header">
+        <h4 v-if="ifGroup&&!isNew" class="modal-title text-secondary fs-4">新增拆卡團</h4>
+        <div v-else>
         <h4 v-if="isNew" class="modal-title text-primary fs-4">新增產品</h4>
         <h4 v-else class="modal-title text-secondary fs-4">編輯產品</h4>
+      </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
     <div class="modal-body">
       <v-form class="row" v-slot="{ errors }" @submit="onSubmit">
-  <div class="container-fluid py-3">
-
   <div class="col-sm-4 has-validation">
     <label for="imgUrl" class="form-label">商品圖片</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
   <v-field id="imgUrl" v-model="perProduct.imgUrl" name="link"
   class="form-control" placeholder="請輸入圖片連結" :rules="isRequired" :class="{ 'is-invalid': errors.link }" ></v-field>
   <p name="link" class="invalid-feedback">{{ errors.link }}</p>
+  <div class="modalPic">
     <img class="img-fluid" :src="perProduct.imgUrl">
+  </div>
   </div>
       <div class="col-sm-8">
         <div class="row">
@@ -93,8 +96,73 @@
   class="form-control" placeholder="請填入未含運的商品價格" :rules="isNumber" :class="{ 'is-invalid': errors.price }" ></v-field>
   <p name="price" class="invalid-feedback">{{ errors.price }}</p>
             </div>
+  </div>
+  <div v-if="ifGroup" class="col-sm-12">
+      <h4>剩餘成員<font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" /></h4>
+      <div class="container">
+      <div class="backlog-section" ref="redArea">
+        <h1>紅區</h1>
+        <div class="droppable-container"></div>
+      </div>
+
+      <div class="sprint-section" ref="blueArea">
+        <h1>藍區</h1>
+        <div class="droppable-container"></div>
+      </div>
     </div>
-    <div class="col-sm-6">
+<div class="d-flex flex-wrap">
+<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Bangchan" value="Bangchan" v-model="chooseMember">
+    <label class="form-check-label" for="Bangchan">Bangchan</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Leeknow" value="Leeknow" v-model="chooseMember">
+    <label class="form-check-label" for="Leeknow">Leeknow</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Changbin" value="Changbin" v-model="chooseMember">
+    <label class="form-check-label" for="Changbin">Changbin</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Hyunjin" value="Hyunjin" v-model="chooseMember">
+    <label class="form-check-label" for="Hyunjin">Hyunjin</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Han" value="Han" v-model="chooseMember">
+    <label class="form-check-label" for="Han">Han</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Felix" value="Felix" v-model="chooseMember">
+    <label class="form-check-label" for="Felix">Felix</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="Seungmin" value="Seungmin" v-model="chooseMember">
+    <label class="form-check-label" for="Seungmin">Seungmin</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="IN" value="IN" v-model="chooseMember">
+    <label class="form-check-label" for="IN">IN</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="All" value="All" v-model="chooseMember" @change="(evt) =>choosingMember(i, evt)">
+    <label class="form-check-label" for="All">All</label>
+  </div>
+</div>
+  <div class="choosedArea">
+    <p class="mb-3">一般區</p>
+       <div>{{ chooseMember.join(',') }}</div>
+       <button type="button" class="btn">{{ chooseMember.join(' ') }}</button>
+        <div class="d-flex my-2">
+        <div class="mustChoose">
+         <p class="mb-3">必帶區</p>
+        </div>
+        <div class="chooseAfterMust">
+        <p class="mb-3">必帶才可帶區</p>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div v-else class="col-sm-6">
       <label for="member" class="form-label">成員</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
       <select v-model="perProduct.member" class="form-select" aria-label="Default select example" id="member">
   <option value="Bangchan" selected>Bangchan</option>
@@ -109,7 +177,6 @@
 </select>
 
     </div>
-  </div>
 
   <div class="row">
             <div class="col-sm-6">
@@ -124,13 +191,6 @@
 
 </div>
 
-<!-- <select v-if="ifDomesticFee" v-model="perProduct.domestic_Transport.courier" class="form-select" aria-label="Default select example" @change="ifMeetInPerson($event)">
-  <option id="defaultOpt">請選擇出貨方式</option>
-  <option selected value="711賣貨便">711賣貨便</option>
-  <option value="711店到店">711店到店</option>
-  <option value="全家">全家店到店</option>
-  <option value="萊爾富">萊爾富</option>
-</select> -->
 <v-field v-if="ifDomesticFee"
   id="name"
   name="domesitcFreight"
@@ -195,8 +255,7 @@
 </div>
           </div>
     </div>
-
-</div>
+  </div>
 <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">取消</button>
         <button v-if="isNew" type="submit" class="btn btn-primary text-white" @click="updateProduct">確認新增</button>
@@ -211,10 +270,11 @@
   </div>
 </template>
 
-<script type="module">
+<script>
 import { Modal } from 'bootstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Sortable from 'sortablejs'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 let productModal = null
 
@@ -249,10 +309,9 @@ export default {
       mustFillOut: true,
       ifMeet: false,
       ifComplement: false,
-      user: {
-        username: 'lovemistborn13@gmail.com',
-        password: '1997faCI'
-      }
+      ifGroup: false,
+      curUId: '',
+      chooseMember: []
     }
   },
   //   // {"id": 8,
@@ -299,6 +358,9 @@ export default {
   // ]
   // }
   methods: {
+    choosingMember (i, evt) {
+      console.log(evt.target.checked)
+    },
     openModal (isNew, item) {
       if (isNew === 'new') {
         // modal回復default,0302testok
@@ -323,7 +385,6 @@ export default {
           }
         }
         this.isNew = true
-        productModal.show()
       } else if (isNew === 'edit') {
         this.perProduct = { ...item }
         if (this.perProduct.domestic_Transport.courier !== '面交') {
@@ -336,7 +397,6 @@ export default {
           const ifInternationalBtn = this.$refs.hasInternational
           const ifComplementBtn = this.$refs.needComplement
           console.log(ifComplementBtn)
-          // 第二層refs取不到
           ifInternationalBtn.setAttribute('checked', '')
           // ifComplementBtn.setAttribute('checked', '')
         }
@@ -345,17 +405,86 @@ export default {
         }
         this.isNew = false
         productModal.show()
+      } else if (isNew === 'group') {
+        this.perProduct = {
+          category: '',
+          origin_price: 0,
+          price: 0,
+          unit: '個',
+          description: '',
+          content: '',
+          is_enabled: 1,
+          imageUrl: '',
+          imagesUrl: [],
+          domestic_Transport: {
+            courier: '請選擇出貨方式',
+            courier_Note: '',
+            amount: 0
+          },
+          international_Transport: {
+            complement: false,
+            amount: 0
+          }
+        }
+        this.ifGroup = true
+        this.isNew = false
+        // 這兩個dom元素，要點擊第一次modal，關掉後點擊第二次才會取得到，why？
+        // 在mounted裏宣告的話會取不到
+        const unpopularMem = this.$refs.redArea
+        const popularMem = this.$refs.blueArea
+        if (unpopularMem && popularMem) {
+          const backlogArr = [
+            { content: 'Bangchan' },
+            { content: 'Leeknow' },
+            { content: 'Changbin' },
+            { content: 'Hyunjin' },
+            { content: 'Han' },
+            { content: 'Felix' },
+            { content: 'Seungmin' },
+            { content: 'IN' }
+          ]
+
+          backlogArr.map((ele) => {
+            const draggableCard = document.createElement('div')
+            draggableCard.setAttribute('draggable', 'true')
+            draggableCard.classList.add('draggble')
+            draggableCard.innerHTML = ele.content
+
+            const timeAvatar = document.createElement('div')
+            timeAvatar.classList.add('time-avatar')
+
+            draggableCard.appendChild(timeAvatar)
+            unpopularMem.appendChild(draggableCard)
+            return draggableCard
+          })
+          const blueAreaSortableObj = Sortable.create(popularMem, {
+            group: 'dnd',
+            animation: 10
+          })
+          const redAreaSortableObj = Sortable.create(unpopularMem, {
+            group: 'dnd',
+            animation: 10
+          })
+          console.log(blueAreaSortableObj, redAreaSortableObj)
+        }
       }
+      productModal.show()
     },
     getProductList () {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products/all`
       axios.get(url).then(res => {
-        console.log(res.data.products)
         const sortPro = Object.values(res.data.products)
-        this.userProductList = sortPro.splice(10, 2)
-        console.log(this.userProductList)
+        sortPro.splice(0, 10)
+        console.log(sortPro)
+        this.userProductList = sortPro
       }).catch(err => {
-        console.log(err)
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `${err.message}`,
+          showConfirmButton: false,
+          timer: 1800
+        })
       })
     },
     updateProduct () {
@@ -372,7 +501,6 @@ export default {
       }
       this.perProduct.id = new Date().getTime()
       this.perProduct.category = '一般'
-      console.log(this.perProduct)
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
       axios.post(url, { data: this.perProduct }).then(res => {
         Swal.fire({
@@ -384,16 +512,20 @@ export default {
         })
         productModal.hide()
         this.getProductList()
-        // here 並沒有新增的那一筆，但無admin的產品就get得到新增的那一筆
-        // 如果是登入權限問題，應該不會成功新增，應該會擋掉才對，新增都不會成功
       }).catch(err => {
-        console.log(err.response.data.message)
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `${err.message}`,
+          showConfirmButton: false,
+          timer: 1800
+        })
       })
       // 資料需要sellerId/ type記得引入localstorage
       // let url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
       // let httpMethod = 'post'
       // this.$http[httpMethod](url, { data: this.perProduct }).then((res) => {
-      //   console.log(res.data)
+      //   (res.data)
       //   // this.hideModal()
       //   // 下面這句目標：想要觸發getData方法，但因為該方法儲存在根元件，所以要emit出去向父層要方法。
       //   // html78跟79行：因為（修改+編輯）或（刪除）都會需要再調用getData所以要寫在html那邊（如果已拆成元件的話就是網往template找）
@@ -418,19 +550,6 @@ export default {
     hasInternational () {
       this.ifInternational = true
     },
-    ifMeetInPerson (evt) {
-      console.log(evt.target.value)
-      // 不理解
-      const defaultOption = document.getElementById('defaultOpt')
-      console.log(defaultOption.classList)
-      defaultOption.classList.remove('selected')
-      defaultOption.classList.add('disabled')
-      if (!this.ifDomesticFee) {
-        this.ifMeet = true
-      } else {
-        this.ifMeet = false
-      }
-    },
     needComplement () {
       this.ifComplement = true
     },
@@ -449,16 +568,15 @@ export default {
     isNumber (value) {
       const regex = /^[0-9]+$/
       if (!regex.test(value)) {
-        console.log('test沒過')
         return '僅能填入0-9的數字！'
       }
-      console.log('test過')
       return true
     },
     checkAdmin () {
       const url = `${VITE_APP_URL2}/api/user/check`
       axios.post(url)
-        .then(() => {
+        .then((res) => {
+          this.curUId = res.data.uid
           this.getProductList()
         })
         .catch((err) => {
@@ -483,6 +601,7 @@ export default {
       backdrop: 'static'
     })
     this.checkAdmin()
+    // this.getProductList()
   }
 }
 </script>
