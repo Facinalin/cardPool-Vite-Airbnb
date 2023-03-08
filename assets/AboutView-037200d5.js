@@ -1,0 +1,1 @@
+import{_ as e,c as o,o as t,b as s}from"./index-21a9a139.js";const c={},n={class:"container"},a=s("h1",null,"活動大廳",-1),_=[a];function r(i,d,p,l,f,u){return t(),o("div",n,_)}const m=e(c,[["render",r]]);export{m as default};

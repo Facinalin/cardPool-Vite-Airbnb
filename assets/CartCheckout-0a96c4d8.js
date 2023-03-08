@@ -1,1 +1,0 @@
-import{_ as c,c as t,b as e,d as s,o as r,r as n}from"./index-b353907b.js";const a={},_={class:"container"},d={class:"row"},i={class:"col-12"},l={class:"col-12"};function m(f,v){const o=n("router-view");return r(),t("div",_,[e("div",d,[e("div",i,[s(o,{name:"cart"})]),e("div",l,[s(o,{name:"orderInfo"})])])])}const p=c(a,[["render",m]]);export{p as default};
