@@ -5,7 +5,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { defineRule, configure, Field, Form, ErrorMessage } from 'vee-validate'
 import { required, email, max } from '@vee-validate/rules'
@@ -26,6 +26,7 @@ configure({
 defineRule('required', required)
 defineRule('email', email)
 defineRule('max', max)
+
 const app = createApp(App)
 
 const pinia = createPinia()
@@ -33,7 +34,7 @@ app.use(pinia)
 app.use(VueAxios, axios)
 app.use(router)
 app.use(bootstrap)
-library.add(faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots)
+library.add(faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots, faStar)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('VField', Field)
 app.component('VForm', Form)

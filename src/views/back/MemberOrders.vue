@@ -45,6 +45,7 @@ export default {
       axios.get(url)
         .then(res => {
           this.orders = res.data.orders
+          console.log(this.orders)
         })
         .catch(err => {
           Swal.fire({

@@ -26,27 +26,54 @@
             * 本站取消規定：當初卡的成員位數全部取消。請私訊賣家告知取消理由，賣方可從後台手動取消。
         </p>
         </div>
+        <div class="col-12">
+
+  <h4>{{ domestic.amount }}</h4>
+  <h4>{{ domestic.courier }}</h4>
+  <h4>{{ domestic.courier_Note }}</h4>
+  <h4>{{ international.amount }}</h4>
+  <h4>{{ international.complement }}</h4>
+        </div>
         </div>
     </div>
 </template>
 
 <script>
 
-const { VITE_APP_URL } = import.meta.env
+const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 
 export default {
   data () {
     return {
-      product: {}
+      product: {
+      },
+      domestic: {
+        amount: 0,
+        courier: '',
+        courier_Note: ''
+      },
+      international: {
+        amount: 0,
+        complement: ''
+      }
     }
   },
   methods: {
     getPerProduct () {
+      // /v2/api/{api_path}/product/{id}
       const { id } = this.$route.params
-      const url = `${VITE_APP_URL}/products/${id}`
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/product/${id}`
       this.$http.get(url)
         .then(res => {
-          this.product = res.data
+          this.product = res.data.product
+          // 原本沒有要寫這段，但不清楚到底是api或proxy有問題，每次開發渲染時成功一次，報錯三次，只好這樣改
+          this.domestic.amount = res.data.product.domestic_Transport.amount
+          this.domestic.courier = res.data.product.domestic_Transport.courier
+          this.domestic.courier_Note = res.data.product.domestic_Transport.courier_Note
+          console.log(this.domestic)
+          this.international.amount = res.data.product.international_Transport.amount
+          this.international.complement = res.data.product.international_Transport.complement
+          console.log(this.international)
         })
         .catch(err => {
           console.log(err)

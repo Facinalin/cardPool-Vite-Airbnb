@@ -24,6 +24,8 @@
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "font-awesome": "^4.7.0",
+    "fullpage": "^1.5.1",
+    "fullpage.js": "^4.0.18",
     "jquery": "^3.6.3",
     "pinia": "^2.0.31",
     "popper.js": "^1.16.1",

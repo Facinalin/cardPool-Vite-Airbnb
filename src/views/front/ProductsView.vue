@@ -87,6 +87,7 @@ export default {
 }
 
 .loadingGif{
+  margin-top: 70px;
   width: 160px;
 }
 

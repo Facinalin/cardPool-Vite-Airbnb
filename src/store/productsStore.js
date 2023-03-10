@@ -16,7 +16,9 @@ export default defineStore('productsStore', {
       axios.get(url)
         .then(res => {
           console.log(res.data.products)
-          this.products = res.data.products
+          const sortPro = res.data.products
+          sortPro.splice(0, 10)
+          this.products = sortPro
           this.isLoading = false
         })
         .catch(err => {

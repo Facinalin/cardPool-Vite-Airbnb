@@ -55,6 +55,10 @@ const routes = [
       {
         path: 'orders',
         component: () => import('../views/back/MemberOrders.vue')
+      },
+      {
+        path: 'cardgroups',
+        component: () => import('../views/back/MemberCardGroup.vue')
       }
     ]
   }

@@ -25,6 +25,7 @@
     </ul>
     <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link" href="#"><router-link to="/admin/products">我的產品</router-link></a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><router-link to="/admin/cardgroups">我的卡團</router-link></a></li>
           <li class="nav-item"><a class="nav-link" href="#"><router-link to="/admin/orders">我的訂單</router-link></a></li>
           <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7" @click.prevent="logOut">登出</button>
         </ul>

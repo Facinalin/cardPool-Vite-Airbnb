@@ -1,57 +1,44 @@
 <template>
     <div class="container border border-primary border-2 d-flex flex-column">
       <div class="text-end mt-4 mb-4">
-        <button class="btn btn-primary me-4 text-white" @click="openModal('new')">
-          建立新的產品
-        </button>
         <button class="btn btn-secondary text-white" @click="openModal('group')">
           拆卡開團
         </button>
       </div>
       <table class="table mt-4 text-center">
         <thead>
-          <tr class="text-primary fs-5 pb-4">
+          <tr class="text-secondary fs-5 pb-4">
             <th width="120">
-              分類
+              成團進度
             </th>
-            <th width="400">產品名稱</th>
-            <th width="110">
-              價格
+            <th width="110">開團日期</th>
+            <th width="400">
+              隨卡商品
             </th>
             <th width="110">
-              成員
+              編輯收團
             </th>
             <th width="100">
-              是否啟用
-            </th>
-            <th width="160">
-              編輯
+              刪除
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item) in userProductList" :key="item.id">
-            <td>{{ item.category }}</td>
-            <td>{{ item.title }}</td>
+            <td>剩餘{{ ((Object.values(item.leftMember)).filter(el => el === true)).length }}位</td>
+            <td>{{ item.id }}</td>
             <td class="text-center">
-              {{ item.price }}
+              {{ item.title }}
             </td>
             <td class="text-center">
-              {{ item.member }}
-            </td>
-            <td>
-              <span v-if="item.is_enabled" class="text-success">啟用</span>
-              <span v-else>未啟用</span>
-            </td>
-            <td>
-              <div class="btn-group-edit d-flex justify-content-center px-4">
                 <button type="button" class="btn btn-primary btn-sm text-white me-2" @click="openModal('edit', item)">
                   <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                 </button>
+            </td>
+            <td>
                 <button type="button" class="btn btn-mainorange btn-sm text-white" @click="deletePerProduct(item.id)">
                   <font-awesome-icon icon="fa-solid fa-trash" />
                 </button>
-              </div>
             </td>
           </tr>
         </tbody>
@@ -294,49 +281,6 @@ export default {
       normalArea: []
     }
   },
-  //   // {"id": 8,
-  // "title": "Skzoo娃衣",
-  // "imgUrl": "https://i.imgur.com/kBYi7Cx.jpg",
-  // "price": "450",
-  // "sellerId": 1,
-  // "channel": "WithMuu",
-  // "type": "拆卡",
-  // "domesticFee": 60,
-  // "internationalFee": {
-  // "complement": false,
-  // "amount": 0
-  // },
-  // "leftmember": {
-  // "1": false,
-  // "2": true,
-  // "3": true,
-  // "4": true,
-  // "5": false,
-  // "6": false,
-  // "7": true,
-  // "8": false
-  // },
-  // "description": "#拆 推特收卡請注意",
-  // "imgsUrl": [
-  // "https://i.imgur.com/rYO7eET.png",
-  // "https://i.imgur.com/gJt30Ua.png",
-  // "https://i.imgur.com/KduMq6i.png",
-  // "https://i.imgur.com/tqtF0e9.png"
-  // ],
-  // "domesticCourier": {
-  // "711店到店": 60,
-  // "全家店到店": 60,
-  // "711賣貨便": 35
-  // },
-  // "mustChoose": [
-  // 2,
-  // 4
-  // ],
-  // "scarcity": [
-  // 3,
-  // 7
-  // ]
-  // }
   methods: {
     choosingMember (i, evt) {
       console.log(evt.target.checked)
@@ -429,8 +373,7 @@ export default {
         const choosePlate = this.$refs.choosePlate
         // const unpopularMem = document.getElementById('redDragArea')
         // const popularMem = document.getElementById('blueDragArea')
-        console.log(unpopularMem)// here第一次打開modal取不到，第二次打開才取得到
-
+        console.log(unpopularMem)
         const backlogArr = [
           { content: '<img src="https://i.imgur.com/5VrxHl4.png" alt="Bangchan" data-id="1"><p>Bangchan</p>' },
           { content: '<img src="https://i.imgur.com/Uf8hp4X.png" alt="Leeknow" data-id="2"><p>Leeknow</p>' },
@@ -486,8 +429,8 @@ export default {
       axios.get(url).then(res => {
         const sortPro = Object.values(res.data.products)
         sortPro.splice(0, 10)
-        console.log(sortPro)
-        this.userProductList = sortPro
+        const cardgroup = sortPro.filter(el => el.category === '拆卡')
+        this.userProductList = cardgroup
       }).catch(err => {
         Swal.fire({
           position: 'center',
@@ -556,7 +499,6 @@ export default {
           this.perProduct.scarcity = this.scarcity
         }
         this.perProduct.category = '拆卡'
-        console.log(this.perProduct)
       }
       // 三種方式皆共用運費選項/ axios非同步
       if (!this.ifDomesticFee) {
@@ -569,7 +511,10 @@ export default {
       } else {
         this.perProduct.international_Transport.complement = false
       }
+      console.log(this.perProduct)
+      console.log(httpMethod, url)
       axios[httpMethod](url, { data: this.perProduct }).then(res => {
+        console.log(this.perProduct)
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -577,6 +522,18 @@ export default {
           showConfirmButton: false,
           timer: 1800
         })
+        this.mustChoose = []
+        this.scarcity = []
+        this.leftMember = {
+          1: false,
+          2: false,
+          3: false,
+          4: false,
+          5: false,
+          6: false,
+          7: false,
+          8: false
+        }
         productModal.hide()
         this.getProductList()
       }).catch(err => {
