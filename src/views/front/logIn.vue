@@ -1,5 +1,4 @@
 <template>
-
       <div v-if="isLogInPanel" class="container container-fluid border border-mainorange">
         <div class="row">
         <div class="poster-area login-bg col-5">
@@ -14,7 +13,7 @@
     <label for="email">帳號 Account/ Email Address</label>
 </div>
 <div class="inputGroup">
-    <input id="password" v-model="user.password" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
+    <input id="password" v-model="user.password" type="password" required="" autocomplete="off"  class="mb-5 py-2 px-3">
     <label for="password">密碼 Password</label>
 </div>
 <button type="button"  class="logInInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20" @click.prevent="login">登入</button>
@@ -114,29 +113,6 @@ export default {
     toSignUpPanel () {
       this.isLogInPanel = false
     }
-    // signUp () {
-    //   const api = `${VITE_APP_URL2}/register`
-    //   this.$http.post(api, this.perUser).then((response) => {
-    //     console.log(response)
-    //     Swal.fire({
-    //       position: 'center',
-    //       icon: 'success',
-    //       title: '註冊成功!',
-    //       showConfirmButton: false,
-    //       timer: 1800
-    //     })
-    //     this.isLogInPanel = true
-    //   }).catch((err) => {
-    //     console.log(err)
-    //     Swal.fire({
-    //       position: 'center',
-    //       icon: 'error',
-    //       title: '信箱或密碼格式不全!',
-    //       showConfirmButton: false,
-    //       timer: 1800
-    //     })
-    //   })
-    // }
   }
 }
 

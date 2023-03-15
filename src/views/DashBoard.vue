@@ -1,39 +1,59 @@
 <template>
-  <div class="container border border-mainorange border-2">
+  <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
 <div class="container-fluid">
   <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-          <a class="nav-link" href="#"><router-link to="/">首頁</router-link></a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="#"><router-link to="/about">活動</router-link></a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="#"><router-link to="/products">代購</router-link></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><router-link to="/cart" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
+      <li class="nav-item d-flex align-items-center">
+            <a class="nav-link" href="#"><router-link to="/"><font-awesome-icon icon="fa-solid fa-house" /></router-link></a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+            <a class="nav-link" href="#"><router-link to="/about" class="ch-font fz-18">活動</router-link></a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+  <div class="btn-group btn-group-adj">
+    <a class="nav-link text-primary ch-font fz-18 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="#">逛逛</a>
+  <ul class="dropdown-menu dropdown-menu-center">
+    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/products" class="text-primary ch-font">一般商品</router-link></a></li>
+    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/cardproducts" class="text-primary ch-font">成員小卡</router-link></a></li>
+  </ul>
+</div>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+            <a class="nav-link" href="#"><router-link to="/cardgroups" class="ch-font fz-18">卡團</router-link></a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+        <a class="nav-link" href="#"><router-link to="/cart/cartToOrder" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
     {{number}}
   </span></router-link></a>
       </li>
-    </ul>
-    <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#"><router-link to="/admin/products">我的產品</router-link></a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><router-link to="/admin/cardgroups">我的卡團</router-link></a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><router-link to="/admin/orders">我的訂單</router-link></a></li>
-          <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7" @click.prevent="logOut">登出</button>
-        </ul>
+      <li class="nav-item d-flex align-items-center">
+  <div class="btn-group">
+  <button type="button" class="btn bg-transparent dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link" href="#"><font-awesome-icon icon="fa-solid fa-user" class="text-primary" /></a>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/orders" class="text-maingray ch-font fwt-light">我的訂單</router-link></a></li>
+    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/products" class="text-maingray ch-font fwt-light">我的產品</router-link></a></li>
+    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/dashboard/adminrcardgroup" class="text-maingray ch-font fwt-light">我的後台</router-link></a></li>
+    <li class="my-1"><a class="dropdown-item text-center ch-font fwt-light" href="#" @click.prevent="logOut">登出</a></li>
+  </ul>
+</div>
+        </li>
+      </ul>
   </div>
 </div>
 </nav>
 </div>
 <RouterView></RouterView>
+<div class="footer d-flex flex-column justify-content-center align-items-center">
+  <h4 class="en-font me-2 mb-3 fs-5">CardPool is Designed and Created by Facina Lin.</h4>
+  <h4 class="text-center ch-font px-1 d-flex fs-6 justify-content-center align-items-center">本站僅作品用途，尚無商用。聯絡我<img src="../assets/discord.svg" alt="" class="footer-icon ms-2 display-block"></h4>
+ </div>
 </template>
 
 <script>

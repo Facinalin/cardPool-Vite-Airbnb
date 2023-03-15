@@ -2,10 +2,10 @@
     <div class="container border border-primary border-2 d-flex flex-column">
       <div class="text-end mt-4 mb-4">
         <button class="btn btn-primary me-4 text-white" @click="openModal('new')">
-          建立新的產品
+          新增一般產品
         </button>
-        <button class="btn btn-secondary text-white" @click="openModal('group')">
-          拆卡開團
+        <button class="btn btn-secondary me-4 text-white" @click="openModal('card')">
+          新增成員小卡
         </button>
       </div>
       <table class="table mt-4 text-center">
@@ -95,42 +95,8 @@
   <p name="price" class="invalid-feedback">{{ errors.price }}</p>
             </div>
   </div>
-  <div v-if="isNew === 'group' || isNew === 'edit'" class="col-sm-12 mb-4">
-      <h4>剩餘成員<font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" /></h4>
-      <p class="fs-7 mt-1"><font-awesome-icon icon="fa-solid fa-star" />請將下方成員拖曳至對應區域。除（已被卡位成員區）外，其他區域都是買家可以卡位的。</p>
-      <div class="memberWrapper d-flex mt-2">
-       <div class="perArea">
-      <h1 class="text-center py-2 fs-5">必帶區</h1>
-      <div id="redDragArea" class="sprint-section bg-mainorange mustArea" ref="redArea">
-        <div class="droppable-container bg-mainorange"></div>
-      </div>
-    </div>
-
-    <div class="perArea">
-      <h1 class="text-center py-2 fs-5">必帶才可帶區</h1>
-      <div id="blueDragArea" class="sprint-section bg-primary scarceArea" ref="blueArea">
-        <div class="droppable-container bg-primary"></div>
-      </div>
-    </div>
-    <div class="perArea">
-      <h1 class="text-center py-2 fs-5">無限制區</h1>
-      <div class="sprint-section bg-secondary normalArea" ref="normalArea">
-        <div class="droppable-container bg-secondary"></div>
-      </div>
-    </div>
-    <div class="perArea">
-      <h1 class="text-center py-2 fs-5">已被卡位成員區</h1>
-      <div class="sprint-section bg-maingray takenArea" ref="takenArea">
-        <div class="droppable-container bg-maingray"></div>
-      </div>
-    </div>
-    </div>
-    <div class="choosePlate" ref="choosePlate">
-
-    </div>
-    </div>
-    <div v-if="isNew === 'new' || isNew === 'edit'" class="col-sm-6">
-      <label for="member" class="form-label">成員</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
+    <div class="col-sm-6">
+      <label for="member" class="form-label">成員</label><font-awesome-icon v-if="isNew === 'card'" icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
       <select v-model="perProduct.member" class="form-select" aria-label="Default select example" id="member">
   <option value="Bangchan" selected>Bangchan</option>
   <option value="Leeknow">Leeknow</option>
@@ -226,7 +192,7 @@
         <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">取消</button>
         <button v-if="isNew==='new'" type="submit" class="btn btn-primary text-white" @click="updateProduct('new')">確認新增</button>
         <button v-if="isNew==='edit'" type="submit" class="btn btn-primary text-white" @click="updateProduct('edit')">確認修改</button>
-        <button v-if="isNew==='group'" type="submit" class="btn btn-primary text-white" @click="updateProduct('group')">確認開團</button>
+        <button v-if="isNew==='card'" type="submit" class="btn btn-primary text-white" @click="updateProduct('card')">確認新增</button>
       </div>
     </v-form>
     </div>
@@ -240,7 +206,6 @@
 import { Modal } from 'bootstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import Sortable from 'sortablejs'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 let productModal = null
 
@@ -275,7 +240,6 @@ export default {
       mustFillOut: true,
       ifMeet: false,
       ifComplement: false,
-      ifGroup: false,
       curUId: '',
       chooseMember: [],
       modalState: '',
@@ -398,8 +362,10 @@ export default {
           console.log(ifComplementBtn)
         }
         productModal.show()
-      } else if (isNew === 'group') {
-        this.isNew = 'group'
+      } else if (isNew === 'card') {
+        this.isNew = 'card'
+        productModal.show()
+        // modal回復default,0302testok
         this.perProduct = {
           category: '',
           origin_price: 0,
@@ -419,63 +385,6 @@ export default {
             complement: false,
             amount: 0
           }
-        }
-        productModal.show()
-        this.ifGroup = true
-        const unpopularMem = this.$refs.redArea
-        const popularMem = this.$refs.blueArea
-        const normalArea = this.$refs.normalArea
-        const takenArea = this.$refs.takenArea
-        const choosePlate = this.$refs.choosePlate
-        // const unpopularMem = document.getElementById('redDragArea')
-        // const popularMem = document.getElementById('blueDragArea')
-        console.log(unpopularMem)// here第一次打開modal取不到，第二次打開才取得到
-
-        const backlogArr = [
-          { content: '<img src="https://i.imgur.com/5VrxHl4.png" alt="Bangchan" data-id="1"><p>Bangchan</p>' },
-          { content: '<img src="https://i.imgur.com/Uf8hp4X.png" alt="Leeknow" data-id="2"><p>Leeknow</p>' },
-          { content: '<img src="https://i.imgur.com/DlrpnvJ.png" alt="Changbin" data-id="3"><p>Changbin</p>' },
-          { content: '<img src="https://i.imgur.com/lBM4VXu.png" alt="Hyunjin" data-id="4"><p>Hyunjin</p>' },
-          { content: '<img src="https://i.imgur.com/sdkVX6b.png" alt="Han" data-id="5"><p>Han</p>' },
-          { content: '<img src="https://i.imgur.com/vnEW0jA.png" alt="Felix" data-id="6"><p>Felix</p>' },
-          { content: '<img src="https://i.imgur.com/vee74L9.png" alt="Seungmin" data-id="7"><p>Seungmin</p>' },
-          { content: '<img src="https://i.imgur.com/OHOP739.png" alt="IN" data-id="8"><p>IN</p>' }
-        ]
-        const checkDrag = document.querySelectorAll('.draggable')
-        if (unpopularMem && checkDrag.length < 8) {
-          backlogArr.map((ele) => {
-            const draggableCard = document.createElement('div')
-            draggableCard.setAttribute('draggable', 'true')
-            draggableCard.classList.add('draggable')
-            draggableCard.innerHTML = ele.content
-
-            choosePlate.appendChild(draggableCard)
-            return choosePlate
-          })
-
-          const blueAreaSortableObj = Sortable.create(popularMem, {
-            group: 'dnd',
-            animation: 10
-          })
-          const redAreaSortableObj = Sortable.create(unpopularMem, {
-            group: 'dnd',
-            animation: 10
-          })
-          const normalAreaSortableObj = Sortable.create(normalArea, {
-            group: 'dnd',
-            animation: 10
-          })
-          const takenAreaSortableObj = Sortable.create(takenArea, {
-            group: 'dnd',
-            animation: 10
-          })
-
-          const choosePlateSortableObj = Sortable.create(choosePlate, {
-            group: 'dnd',
-            animation: 10
-          })
-
-          console.log(blueAreaSortableObj, redAreaSortableObj, takenAreaSortableObj, normalAreaSortableObj, choosePlateSortableObj)
         }
       }
       console.log(isNew)
@@ -500,63 +409,21 @@ export default {
     },
     updateProduct (type) {
       let url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
-      let httpMethod = ''
+      let httpMethod = 'post'
       // 新增商品
       if (type === 'new') {
-        httpMethod = 'post'
-        console.log('新增商品')
         this.perProduct.id = new Date().getTime()
         this.perProduct.category = '拆卡'
-        console.log(this.perProduct)
       }
+      // 編輯商品
       if (type === 'edit') {
         httpMethod = 'put'
         url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
-        console.log('編輯現有商品')
       }
-      if (type === 'group') {
-        httpMethod = 'post'
-        const mustChoose = document.querySelectorAll('.mustArea .draggable img')
-        mustChoose.forEach(i => {
-          const dataIdValue = i.getAttribute('data-id')
-          this.mustChoose.push(dataIdValue)
-        })
-        const scarcity = document.querySelectorAll('.scarceArea .draggable img')
-        scarcity.forEach(i => {
-          const dataIdValue = i.getAttribute('data-id')
-          this.scarcity.push(dataIdValue)
-        })
-        const normalChoose = document.querySelectorAll('.normalArea .draggable img')
-        normalChoose.forEach(i => {
-          const dataIdValue = i.getAttribute('data-id')
-          this.normalArea.push(dataIdValue)
-        })
-
-        this.mustChoose.forEach((el, i, arr) => {
-          this.leftMember[arr[i]] = true
-        })
-
-        this.scarcity.forEach((el, i, arr) => {
-          this.leftMember[arr[i]] = true
-        })
-
-        this.normalArea.forEach((el, i, arr) => {
-          this.leftMember[arr[i]] = true
-        })
-
-        console.log(this.leftMember)
+      // 新增成員小卡
+      if (type === 'card') {
         this.perProduct.id = new Date().getTime()
-        // this.perProduct.leftMember為filter用
-        this.perProduct.leftMember = this.leftMember
-        // this.perProduct.mustChoose跟scarcity為render用
-        if (this.mustChoose.length !== 0) {
-          this.perProduct.mustChoose = this.mustChoose
-        }
-        if (this.scarcity.length !== 0) {
-          this.perProduct.scarcity = this.scarcity
-        }
-        this.perProduct.category = '拆卡'
-        console.log(this.perProduct)
+        this.perProduct.category = '出卡'
       }
       // 三種方式皆共用運費選項/ axios非同步
       if (!this.ifDomesticFee) {
@@ -588,22 +455,6 @@ export default {
           timer: 1800
         })
       })
-      // 資料需要sellerId/ type記得引入localstorage
-      // let url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
-      // let httpMethod = 'post'
-      // this.$http[httpMethod](url, { data: this.perProduct }).then((res) => {
-      //   (res.data)
-      //   // this.hideModal()
-      //   // 下面這句目標：想要觸發getData方法，但因為該方法儲存在根元件，所以要emit出去向父層要方法。
-      //   // html78跟79行：因為（修改+編輯）或（刪除）都會需要再調用getData所以要寫在html那邊（如果已拆成元件的話就是網往template找）
-      //   // this.$emit('update')
-      //   // 預設：如果沒有多張圖片，則沒有imagesUrl這個屬性
-      // }).catch((err) => {
-      //   alert(err.response.data.message)
-      // })
-      // // 編輯現有商品
-      // httpMethod = 'put'
-      // url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product/${this.product.id}`
     },
     hasDomestic () {
       this.ifDomesticFee = true

@@ -20,6 +20,14 @@ const routes = [
       component: () => import('../views/front/ProductsView.vue')
     },
     {
+      path: 'cardgroups',
+      component: () => import('../views/front/CardGroup.vue')
+    },
+    {
+      path: 'cardproducts',
+      component: () => import('../views/front/CardProducts.vue')
+    },
+    {
       path: 'cart',
       component: () => import('../views/front/CartCheckout.vue'),
       children: [{
@@ -33,6 +41,10 @@ const routes = [
     {
       path: 'product/:id',
       component: () => import('../views/front/PerProductView.vue')
+    },
+    {
+      path: 'cardgroup/:id',
+      component: () => import('../views/front/perCardGroup.vue')
     },
     {
       path: 'logIn',
@@ -57,8 +69,14 @@ const routes = [
         component: () => import('../views/back/MemberOrders.vue')
       },
       {
-        path: 'cardgroups',
-        component: () => import('../views/back/MemberCardGroup.vue')
+        path: 'dashboard',
+        component: () => import('../views/back/DashBoardFrame.vue'),
+        children: [{
+          path: 'adminrcardgroup',
+          components: {
+            membercardgroup: () => import('../views/back/MemberCardGroup.vue')
+          }
+        }]
       }
     ]
   }

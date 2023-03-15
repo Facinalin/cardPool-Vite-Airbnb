@@ -12,7 +12,8 @@ export default defineStore('cartsStore', {
       final_total: 0,
       loadingStatus: {
         loadingItem: ''
-      }
+      },
+      cardGroupCart: []
     }
     // cart是單純使用者對購物車的動作html元素能獲得的資料
     // 下方carts是整理過後，有帶上關聯資料集（渲染用）的購物車打包資料
@@ -22,10 +23,13 @@ export default defineStore('cartsStore', {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
       axios.get(url)
         .then(res => {
-          this.carts = res.data.data.carts
+          console.log(res.data.data.carts)
+          // this.carts = res.data.data.carts
+          this.carts = res.data.data.carts.filter(el => el.category === '一般')
           this.total = res.data.data.total
           this.final_total = res.data.data.final_total
           this.number = this.carts.length
+          console.log(this.carts)
         })
         .catch(err => {
           Swal.fire({
@@ -47,14 +51,15 @@ export default defineStore('cartsStore', {
         httpRequest = 'put'
         url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart/${currentCart.id}`
         cart = {
-          product_id: curProductId,
-          qty: curQty
+          ...currentCart,
+          qty: currentCart.qty + curQty
         }
       } else {
         // const indicateProduct = products.find(el => el.id === curProductId)
         cart = {
           product_id: curProductId,
-          qty: curQty
+          qty: curQty,
+          category: '一般'
         }
       }
       axios[httpRequest](url, { data: cart })
@@ -72,6 +77,27 @@ export default defineStore('cartsStore', {
         })
         .catch(err => {
           this.loadingStatus.loadingItem = ''
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
+        })
+    },
+    getCardGroupCart () {
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
+      axios.get(url)
+        .then(res => {
+          console.log(res.data.data.carts)
+          // this.carts = res.data.data.carts
+          this.cardGroupCart = res.data.data.carts.filter(el => el.category === '拆卡')
+          this.total = res.data.data.total
+          this.final_total = res.data.data.final_total
+          console.log(this.cardGroupCart)
+        })
+        .catch(err => {
           Swal.fire({
             position: 'center',
             icon: 'error',

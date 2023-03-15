@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap');
 
 a {
     text-decoration: none;
@@ -9,21 +12,64 @@ a {
     border-image: linear-gradient(-165deg, $primary 60%, $secondary 90%) 0.5;
 }
 
+// Font General settings
+.ch-font{
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 500;
+}
+
+.ls-4{
+  letter-spacing: 4px;
+}
+
+.ls-10{
+  letter-spacing: 10px;
+}
+
+.fz-18{
+  font-size: 18px;
+}
+.fz-60{
+  font-size: 60px;
+}
+
+.fwt-light{
+  font-weight: 100;
+}
+
+.fw-heavy{
+  font-weight: 500;
+}
+
+.lh1-5{
+  line-height: 1.5;
+}
+
+// Font General settings-end
+
+// Border General settings
+
+.bd-rd-6{
+  border-radius: 6px;
+}
+
+.bd-rd-12{
+  border-radius: 12px;
+}
+
+.bd-rd-20{
+  border-radius: 20px;
+}
+
+// Border General settings-end
+
+
+.mt-150{
+  margin-top: 150px;
+}
+
 .modalPic{
     padding: 12px;
-    // position: relative;
-    // ::after {
-    // content:'';
-    // display: block;
-    // width: 50px;
-    // height: 50px;
-    // background-color: red;
-    // border-radius: 50%;
-    // position: absolute;
-    // top: -25px;
-    // left: -25px;
-    // z-index:2
-    // }
 }
 
 .choosedArea{
@@ -149,8 +195,11 @@ a {
   // background-image: var(--bs-gradient);
 }
 
-.en-slogan{
+.en-font{
   font-family: 'Josefin Sans', sans-serif;
+}
+
+.en-slogan{
   color: white;
   font-size: 44px;
   margin-top: 70px;
@@ -161,12 +210,8 @@ a {
   height: 40vh;
 }
 
-.swiper{
-  height: 200vh;
-}
-
-.bd-rd-20{
-  border-radius: 20px;
+.content{
+  height: 450vh;
 }
 
 .cta-btn{
@@ -228,9 +273,259 @@ a {
   color: #FFDBF4;
 }
 
-.ls-4{
-  letter-spacing: 4px;
+.card-container{
+  padding: 24px 100px;
+  width: 660px;
+  height: 100%;
 }
+
+.perCard{
+  width:110px;
+  height: 165px;
+  border-radius: 20px;
+}
+
+.section{
+  height: 700px;
+}
+
+.swiper-section{
+  margin-top: 180px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.nav-item::marker{
+  display: none;
+}
+
+.btn {
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
+}
+
+.perSlide{
+  height: 100%;
+  margin-right: 16px;
+}
+
+.perSlide:last-child{
+  margin-right: 0px;
+}
+
+.swiperWrapper{
+  height: 280px;
+  width: 100%;
+}
+
+.swiperImg{
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.btn-group-adj{
+  margin-bottom: 0;
+  border-radius: 0px;
+  display: block;
+  padding-bottom: 1px;
+}
+
+.card-img-top-rec{
+  width:100%;
+  height: 330px;
+  object-fit: cover;
+} 
+
+// 商品頁成員按鈕
+
+.member-row{
+  width: 100%;
+  padding: 8px 8px;
+}
+
+.member-img-sm{
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  border: 6px solid #ffffff;
+  padding: 2px 4px;
+  // &:hover{
+  // border: 6px solid #1e1c1c;
+  // }
+}
+
+.red-area{
+  background: #FFE1EC;
+  border-radius: 12px;
+  padding: 4px 14px;
+  .member-img-sm{
+  border: 6px solid #FFE1EC;
+  }
+  .per-member:hover{
+      border: 6px solid #1e1c1c;
+  }
+}
+
+.blue-area{
+  background: #DFE8FF;
+  border-radius: 12px;
+  padding: 4px 8px;
+  .member-img-sm{
+  border: 6px solid #DFE8FF;
+  .per-member:hover{
+    border: 6px solid $maingray;
+}
+  }
+}
+
+.white-area{
+  background: $white;
+  .member-img-sm{
+  border: 6px solid $white;
+  .per-member:hover{
+    border: 6px solid $maingray;
+}
+  }
+}
+
+.per-member{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #ffffff;
+  background: cover;
+  position:relative;
+  margin: 0px 4px;
+}
+
+.small-head{
+  width: 74px;
+  height: 74px;
+}
+
+.member-option{
+  width: 480px;
+}
+
+.perMemberOption{
+  width: 25%;
+}
+
+.memberDisabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+//   &:hover{
+//   border: 6px solid #ffffff;
+// }
+}
+
+.txtDisabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+  &:hover{
+  border:0px;
+  }
+}
+
+.activeSm{
+border: 6px solid $primary;
+ }
+
+.memberQty{
+  color: $mainorange;
+  height: 24px;
+  width: 24px;
+// hover無效？？
+//   &:hover{
+//     color: $white;
+//     background: $mainorange;
+// }
+}
+
+.card-title {
+  flex: 1;
+  max-height: 3.6rem; /* 設置最大高度，即兩行文字的高度 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer{
+  background: $white;
+  height: 120px;
+}
+
+.footer-icon{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.display-block{
+  display: block;
+}
+
+.dance-cta-img{
+  width: 380px;
+}
+
+.addBtn:hover{
+  font-size: 20px;
+}
+
+.cursor-p{
+  cursor: pointer;
+}
+
+.admin-sidebar{
+  position: relative;
+  &::before{
+    content: '';
+    background: $white;
+    opacity: 0.5;
+    height: 4px;
+    width: 40px;
+    top: -8px;
+    left: 50%;
+    border-radius: 6px;
+    transform: translateX(-50%);
+    position: absolute;
+  }
+}
+
+.dropdown-icon{
+  width: 14px;
+  height: 14px;
+  transform: rotate(180deg);
+}
+
+.tr-rotate{
+  transform: rotate(0deg);
+}
+
+.dark-pink{
+  color: #9A678A;
+}
+
+.draggable p{
+  font-weight: 100;
+}
+
+.per-liner-pic{
+  width: 20px;
+  height: 20px;
+}
+
+
+
 
 
 // .gradient-custom {

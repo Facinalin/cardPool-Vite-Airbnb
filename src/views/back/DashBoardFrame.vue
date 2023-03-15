@@ -1,126 +1,40 @@
 <template>
-        <div v-if="ifGroupCreator" class="col-10">
-      <table class="table mt-4 text-center">
-        <thead>
-          <tr class="text-secondary fs-5 pb-4">
-            <th width="120">
-              成團進度
-            </th>
-            <th width="110">開團日期</th>
-            <th width="400">
-              隨卡商品
-            </th>
-            <th width="110">
-              編輯資料
-            </th>
-            <th width="110">
-              收團
-            </th>
-            <th width="100">
-              刪除
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item) in userProductList" :key="item.id">
-            <td>剩餘{{ ((Object.values(item.leftMember)).filter(el => el === true)).length }}位</td>
-            <td>{{ (new Date(item.created_At)).getMonth()+1 }}月{{ (new Date(item.created_At)).getDate() }}日</td>
-            <td class="text-center">
-              {{ item.title }}
-            </td>
-            <td class="text-center">
-              <button class="btn" data-bs-toggle="collapse" data-bs-target="#groupWaiterCollapse" aria-expanded="false" aria-controls="groupWaiterCollapse" @click="openModal('edit',item)"> <font-awesome-icon icon="fa-solid fa-pen-to-square" class="dark-pink fs-4"/></button>
-            </td>
-            <td class="text-center">
-                <button type="button" class="btn btn-sm text-white me-2" @click="openModal('closing',item)">
-                  <font-awesome-icon icon="fa-solid fa-clock" class="text-primary fs-4"/>
-                </button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm text-white" @click="deletePerProduct(item.id)">
-                  <font-awesome-icon icon="fa-solid fa-trash" class="text-mainorange fs-4"/>
-                </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div v-else class="col-10">
-      <table class="table mt-4 text-center">
-        <thead>
-          <tr class="text-primary fs-5 pb-4">
-            <th width="120">
-              團主
-            </th>
-            <th width="110">開團日期</th>
-            <th width="400">
-              隨卡商品
-            </th>
-            <th width="110">
-              卡位總人數
-            </th>
-            <th width="100">
-              取消卡位
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item) in cardGroupCart" :key="item.id">
-            <td>{{ item.user.name }}</td>
-            <td>{{ (new Date(item.created_at)).getMonth()+1 }}月{{ (new Date(item.created_at)).getDate() }}日</td>
-            <td class="text-center">
-              {{ item.product.title }}
-            </td>
-            <td class="text-center">
-                <button type="button" class="btn btn-primary btn-sm text-white me-2" @click="openModal('edit', item)">
-                  99
-                </button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-mainorange btn-sm text-white" @click="deletePerProduct(item.id)">
-                  <font-awesome-icon icon="fa-solid fa-trash" />
-                </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="modal fade" tabindex="-1" id="addProductModal">
+    <div class="container d-flex flex-column mb-8 ch-font">
+        <div class="text-end mt-4 mb-4">
+        <button v-if="ifGroupCreator" class="btn btn-secondary text-white bd-rd-12" @click="openModal('group')">
+          拆卡開團
+        </button>
+        <button v-else class="btn btn-primary text-white bd-rd-12">
+          放棄所有卡位
+        </button>
+      </div>
+       <div class="row">
+        <div class="col-2 bg-secondary bd-rd-12 px-7 py-6">
+          <ul class="ch-font admin-sidebar pt-2">
+            <li class="fs-5 mb-3 text-center text-white cursor-p">訂單管理</li>
+            <li class="fs-5 mb-3 text-center text-white cursor-p">一般產品</li>
+            <li class="fs-5 mb-3 text-center text-white cursor-p d-flex align-items-center justify-content-center" data-bs-toggle="collapse" data-bs-target="#cardGroupCollapse" aria-expanded="false" aria-controls="collapseExample" @click="checkDrop">拆卡團<img src="../../assets/polygon.svg" alt="" class="dropdown-icon ms-2" :class="{ 'tr-rotate':dropdownList}"></li>
+            <div class="collapse bg-secondary" id="cardGroupCollapse">
+  <div class="card card-body bg-secondary border-0">
+    <ul>
+      <li class="fs-6 mb-2 text-center cursor-p dropdown-list dark-pink" @click="toGroupCreatorPanel">我要開團</li>
+      <li class="fs-6 mb-2 text-center cursor-p dropdown-list dark-pink" @click="toGroupParticipantPanel">我拆的團</li>
+    </ul>
+  </div>
+</div>
+<li class="fs-5 mb-3 text-center text-white">會員設定</li>
+          </ul>
+        </div>
+            <router-view name="membercardgroup" :ifGroupCreator="ifGroupCreator"></router-view>
+        <div class="modal fade" tabindex="-1" id="addProductModal">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header bg-maingray">
         <h4 v-if="isNew === 'group'" class="modal-title text-secondary-trans fs-4 ls-4">新增拆卡團</h4>
         <h4 v-if="isNew === 'edit'" class="modal-title text-secondary-trans fs-4 ls-4">編輯拆卡團</h4>
-        <h4 v-if="isNew === 'closing'" class="modal-title text-secondary-trans fs-4 ls-4">收團確認</h4>
-        <button type="button" class="btn-close text-white" @click="closeModal" aria-label="Close"><font-awesome-icon icon="fa-solid fa-xmark" class="text-white" style="font-size:24px"/></button>
+        <button type="button" class="btn-close text-white" @click=closeModal aria-label="Close"><font-awesome-icon icon="fa-solid fa-xmark" class="text-white" style="font-size:24px"/></button>
       </div>
-
-      <div v-if="isNew === 'closing'" class="modal-body">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="member-list">
-    <div class="member-row member-row-sm d-flex justify-content-between mb-2">
-    <div v-for="perMember in domLeftMember" :key="perMember.member" class="perMemberOption d-flex flex-column justify-content-center align-items-center mb-2" :class="{ 'red-area': perMember.note === 'mustChoose', 'blue-area': perMember.note === 'scarcity', 'white-area': perMember.note === 'normal' }" @click="(evt) =>chooseMember(perMember, evt)">
-            <div class="member-img-sm mb-1" :class="{ 'memberDisabled': !perMember.left }">
-                <img class="per-member small-head" :src="perMember.imgUrl" :alt="perMember.member" :data-id="perMember.memberNo">
-            </div>
-            <h2 class="text-maingray text-center fs-7 mb-1" :class="{ 'txtDisabled': !perMember.left }">{{ perMember.member }}</h2>
-          </div>
-
-      </div>
-
-    </div>
-        </div>
-      </div>
-<div class="modal-footer mt-6">
-        <button type="button" class="btn btn-secondary text-white" @click="closeModal">取消</button>
-        <button type="submit" class="btn btn-primary text-white" @click="updateProduct('edit', perProduct)">確認收團</button>
-      </div>
-    </div>
-
-    <div v-else class="modal-body">
+    <div class="modal-body">
       <v-form class="row" v-slot="{ errors }" @submit="onSubmit">
   <div class="col-sm-4 has-validation">
     <label for="imgUrl" class="form-label">商品圖片</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
@@ -197,10 +111,10 @@
       <div class="form-group mb-3">
               <label for="title" class="form-label">國內運費</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" />
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="domesticBtnRadio" id="hasDomestic" autocomplete="off" ref="hasDomestic" value="true" v-model="ifDomesticFee">
+  <input type="radio" class="btn-check" name="domesticBtnRadio" id="hasDomestic" autocomplete="off" ref="hasDomestic">
   <label class="btn btn-outline-mainorange toggleBtn" for="hasDomestic" @click="hasDomestic"><font-awesome-icon icon="fa-solid fa-check" /></label>
 
-  <input type="radio" class="btn-check" name="domesticBtnRadio" id="btnradio2" autocomplete="off" value="false" v-model="ifDomesticFee">
+  <input type="radio" class="btn-check" name="domesticBtnRadio" id="btnradio2" autocomplete="off" checked>
   <label class="btn btn-outline-maingray toggleBtn" for="btnradio2" @click="hasNoDomestic"><font-awesome-icon icon="fa-solid fa-xmark" /></label>
 
 </div>
@@ -235,20 +149,20 @@
       <div class="form-group mb-3">
               <label for="title" class="form-label">國際運費</label>
               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="internationalBtnRadio" ref="hasInternational" id="hasInternational" autocomplete="off" value="true" v-model="ifInternational">
+  <input type="radio" class="btn-check" name="internationalBtnRadio" ref="hasInternational" id="hasInternational" autocomplete="off">
   <label class="btn btn-outline-mainorange toggleBtn" for="hasInternational" @click="hasInternational"><font-awesome-icon icon="fa-solid fa-check" /></label>
 
-  <input type="radio" class="btn-check" name="internationalBtnRadio" id="btnradio4" autocomplete="off" value="false" v-model="ifInternational">
+  <input type="radio" class="btn-check" name="internationalBtnRadio" id="btnradio4" autocomplete="off" checked>
   <label class="btn btn-outline-maingray toggleBtn" for="btnradio4" @click="hasNoInternational"><font-awesome-icon icon="fa-solid fa-xmark" /></label>
 
 </div>
 
 <div v-if="ifInternational" class="btn-group btn-group-wider" role="group" aria-label="Basic radio toggle button group">
 
-  <input type="radio" class="btn-check" name="internationalDetailBtnRadio" ref="needComplement" id="needComplement" autocomplete="off" value="true" v-model="ifComplement">
+  <input type="radio" class="btn-check" name="internationalDetailBtnRadio" ref="needComplement" id="needComplement" autocomplete="off">
   <label class="btn btn-outline-primary toggleBtn" for="needComplement" @click="needComplement">需二補</label>
 
-  <input type="radio" class="btn-check" name="internationalDetailBtnRadio" id="btnradio6" autocomplete="off" value="false" v-model="ifComplement">
+  <input type="radio" class="btn-check" name="internationalDetailBtnRadio" id="btnradio6" autocomplete="off">
   <label class="btn btn-outline-primary toggleBtn" for="btnradio6" @click="needNoComplement">本次付清</label>
 
 </div>
@@ -269,36 +183,32 @@
           </div>
     </div>
   </div>
-<div class="modal-footer mt-6">
+<div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" @click="closeModal">取消</button>
         <button v-if="isNew==='edit'" type="submit" class="btn btn-primary text-white" @click="updateProduct('edit', perProduct)">確認修改</button>
         <button v-if="isNew==='group'" type="submit" class="btn btn-primary text-white" @click="updateProduct('group')">確認開團</button>
       </div>
     </v-form>
     </div>
-
   </div>
 </div>
+    </div>
+       </div>
     </div>
 </template>
 
 <script>
+import { Modal } from 'bootstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { mapActions, mapState } from 'Pinia'
-import cartsStore from '../../store/cartsStore.js'
-import adminStore from '../../store/adminStore.js'
-import { Modal } from 'bootstrap'
 import Sortable from 'sortablejs'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
-
 let productModal = null
 
 export default {
-  props: ['ifGroupCreator'],
   data () {
     return {
-      checkLiningUp: false,
+      userProductList: [],
       perProduct: {
         category: '',
         origin_price: null,
@@ -344,57 +254,8 @@ export default {
       scarcity: [],
       normalArea: [],
       channels: ['非特定通路', '阿拉丁', 'Music Planet', 'JYP', 'YES24', 'KTown4U', 'WithMuu', 'SoundWave', '其它通路'],
-      dropdownList: false,
-      domLeftMember: [
-        {
-          memberNo: '1',
-          member: 'Bangchan',
-          imgUrl: 'https://i.imgur.com/5PlS2aH.png',
-          left: false
-        },
-        {
-          memberNo: '2',
-          member: 'Leeknow',
-          imgUrl: 'https://i.imgur.com/ATWXtR9.png',
-          left: false
-        },
-        {
-          memberNo: '3',
-          member: 'Changbin',
-          imgUrl: 'https://i.imgur.com/XhAHWYu.png',
-          left: false
-        },
-        {
-          memberNo: '4',
-          member: 'Hyunjin',
-          imgUrl: 'https://i.imgur.com/AANylPt.png',
-          left: false
-        },
-        {
-          memberNo: '5',
-          member: 'Han',
-          imgUrl: 'https://i.imgur.com/UQ7he1p.png',
-          left: false
-        },
-        {
-          memberNo: '6',
-          member: 'Felix',
-          imgUrl: 'https://i.imgur.com/UFTzeFH.png',
-          left: false
-        },
-        {
-          memberNo: '7',
-          member: 'Seungmin',
-          imgUrl: 'https://i.imgur.com/UiFtZSu.png',
-          left: false
-        },
-        {
-          memberNo: '8',
-          member: 'I.N',
-          imgUrl: 'https://i.imgur.com/3JdX3kx.png',
-          left: false
-        }
-      ]
+      ifGroupCreator: false,
+      dropdownList: false
     }
   },
   methods: {
@@ -403,23 +264,31 @@ export default {
         this.isNew = 'edit'
         productModal.show()
         this.perProduct = { ...item }
+        console.log(this.perProduct)
         if (this.perProduct.domestic_Transport.courier !== '面交') {
+          console.log('非面交，金額大於0')
           this.ifDomesticFee = true
-        }
-        if (this.perProduct.domestic_Transport.courier === '面交') {
-          this.ifDomesticFee = false
+          const hasDomestic = this.$refs.hasDomestic
+          hasDomestic.setAttribute('checked', '')
         }
         if (this.perProduct.international_Transport.complement === true) {
+          console.log('需二補，金額為0')
           this.ifInternational = true
           this.ifComplement = true
+          const ifInternationalBtn = this.$refs.hasInternational
+          const ifComplementBtn = this.$refs.needComplement
+          console.log(ifComplementBtn)
+          ifInternationalBtn.setAttribute('checked', '')
+          // ifComplementBtn.setAttribute('checked', '')
         }
         if (this.perProduct.international_Transport.complement === false && this.perProduct.international_Transport.amount !== 0) {
+          console.log('不需二補，金額大於0')
           this.ifInternational = true
           this.ifComplement = false
-        }
-        if (this.perProduct.international_Transport.complement === false && this.perProduct.international_Transport.amount === 0) {
-          this.ifInternational = false
-          this.ifComplement = false
+          const ifInternationalBtn = this.$refs.hasInternational
+          ifInternationalBtn.setAttribute('checked', '')
+          const ifComplementBtn = this.$refs.needComplement
+          console.log(ifComplementBtn)
         }
       } else if (isNew === 'group') {
         this.isNew = 'group'
@@ -444,27 +313,6 @@ export default {
           }
         }
         this.ifGroup = true
-      } else if (isNew === 'closing') {
-        this.isNew = 'closing'
-        console.log(item.id)
-        console.log(this.cardGroupCart)
-        this.perProduct = { ...item }
-        const normalMember = { ...this.perProduct.leftMember }
-        const checkNullFalse = Object.values(normalMember)
-        const takenMember = []
-
-        for (let i = 0; i < checkNullFalse.length; i++) {
-          if (normalMember[i] === false) {
-            takenMember.push(i)
-            delete normalMember[i]
-          }
-          if (normalMember[i] === null) {
-            delete normalMember[i]
-          }
-        }
-        const normalChoose = Object.keys(normalMember)
-        console.log('here')
-        console.log(normalChoose, takenMember)
       }
       productModal.show()
       const unpopularMem = this.$refs.redArea
@@ -616,6 +464,17 @@ export default {
       }
       console.log(isNew)
     },
+    // findFirstDuplicateElement (arr) {
+    //   const elementCount = {}
+    //   for (let i = 0; i < arr.length; i++) {
+    //     if (elementCount[arr[i]]) {
+    //       return arr[i]
+    //     } else {
+    //       elementCount[arr[i]] = 1
+    //     }
+    //   }
+    //   return null
+    // },
     closeModal () {
       this.perProduct = {
         category: '',
@@ -643,22 +502,29 @@ export default {
       const normalArea = this.$refs.normalArea
       const takenArea = this.$refs.takenArea
       console.log(unpopularMem)
-      if (unpopularMem || popularMem || normalArea || takenArea) {
-        unpopularMem.innerHTML = ''
-        popularMem.innerHTML = ''
-        normalArea.innerHTML = ''
-        takenArea.innerHTML = ''
-      }
+      unpopularMem.innerHTML = ''
+      popularMem.innerHTML = ''
+      normalArea.innerHTML = ''
+      takenArea.innerHTML = ''
       productModal.hide()
     },
-    filterCardGroupCart () {
-      this.cardGroupCart = this.carts
-    },
-    toCheckLiningUp () {
-      this.checkLiningUp = true
-    },
-    toGroupCreator () {
-      this.checkLiningUp = false
+    getProductList () {
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products/all`
+      axios.get(url).then(res => {
+        const sortPro = Object.values(res.data.products)
+        sortPro.splice(0, 10)
+        const cardgroup = sortPro.filter(el => el.category === '拆卡' && el.created_At)
+        this.userProductList = cardgroup
+        console.log(this.userProductList)
+      }).catch(err => {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `${err.message}`,
+          showConfirmButton: false,
+          timer: 1800
+        })
+      })
     },
     updateProduct (type, perProduct) {
       let url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product`
@@ -829,21 +695,69 @@ export default {
           this.$router.push('/logIn')
         })
     },
-    ...mapActions(cartsStore, ['getCardGroupCart']),
-    ...mapActions(adminStore, ['getProductList'])
-  },
-  computed: {
-    ...mapState(cartsStore, ['cardGroupCart']),
-    ...mapState(adminStore, ['userProductList'])
+    deletePerProduct (curProductId) {
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product/${curProductId}`
+      axios.delete(url).then(res => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `${res.data.message}`,
+          showConfirmButton: false,
+          timer: 1800
+        })
+        this.getProductList()
+      }).catch(err => {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `${err.message}`,
+          showConfirmButton: false,
+          timer: 1800
+        })
+      })
+    },
+    toGroupCreatorPanel () {
+      this.ifGroupCreator = true
+    },
+    toGroupParticipantPanel () {
+      this.ifGroupCreator = false
+    },
+    checkDrop () {
+      if (this.dropdownList === false) { this.dropdownList = true } else { this.dropdownList = false }
+    }
   },
   mounted () {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    axios.defaults.headers.common.Authorization = token
     const addProductModal = document.getElementById('addProductModal')
     productModal = new Modal(addProductModal, {
       keyboard: false,
       backdrop: 'static'
     })
-    this.getCardGroupCart()
-    this.getProductList()
+    this.checkAdmin()
+    // this.getProductList()
   }
 }
 </script>
+
+<style>
+.toggleBtn{
+  width: 38px;
+  height: 38px;
+}
+
+.modalIcon{
+  width: 12px;
+  margin-left: 8px;
+}
+
+.btn-group{
+  width: 100%;
+  padding: 8px 25%;
+}
+
+.btn-group-wider{
+  padding: 8px 10%;
+}
+
+</style>

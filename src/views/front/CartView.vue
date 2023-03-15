@@ -52,7 +52,7 @@
                 <td class="mt-4">
                     <p class="fz-20 mt-3">總金額</p>
                 </td>
-                <td class="fz-20 text-mainorange">NT${{ cartTotal }}</td>
+                <td class="fz-20 text-mainorange">NT${{ final_total }}</td>
             </tr>
         </tfoot>
     </table>
@@ -77,6 +77,7 @@
 
 <script>
 import productsStore from '../../store/productsStore.js'
+import cartsStore from '../../store/cartsStore.js'
 import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'Pinia'
 import axios from 'axios'
@@ -89,7 +90,6 @@ const userId = Number(localStorage.getItem('userId'))
 export default {
   data () {
     return {
-      carts: [],
       cartTotal: 0,
       perCart: {},
       thisUserCart: [],
@@ -103,31 +103,32 @@ export default {
   //   'order-info-component': OrderInfoComponent
   // },
   methods: {
-    getCart () {
-      // const url = `${VITE_APP_URL2}/600/users/${userId}/carts`
-      // 改好六api
-      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
-      this.$http.get(url)
-        .then(res => {
-          this.carts = res.data.data.carts
-          // 整理cart
-          // const cartWithProduct = this.carts.map(item => {
-          //   const indicateProduct = products.find(el => el.id === item.productId)
-          //   return {
-          //     ...item,
-          //     indicateProduct,
-          //     subtotal: indicateProduct.price * item.qty
-          //   }
-          // })
-          console.log(this.carts)
-          const total = this.carts.reduce((a, b) => a + b.final_total, 0)
-          console.log(total)
-          this.cartTotal = total
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
+    // getCart () {
+    //   // !!拆卡團不進入購物車頁面，因為不能單方面結帳
+    //   // const url = `${VITE_APP_URL2}/600/users/${userId}/carts`
+    //   // 改好六api
+    //   const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
+    //   this.$http.get(url)
+    //     .then(res => {
+    //       this.carts = res.data.data.carts
+    //       // 整理cart
+    //       // const cartWithProduct = this.carts.map(item => {
+    //       //   const indicateProduct = products.find(el => el.id === item.productId)
+    //       //   return {
+    //       //     ...item,
+    //       //     indicateProduct,
+    //       //     subtotal: indicateProduct.price * item.qty
+    //       //   }
+    //       // })
+    //       console.log(this.carts)
+    //       const total = this.carts.reduce((a, b) => a + b.final_total, 0)
+    //       console.log(total)
+    //       this.cartTotal = total
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
     deletePerCart (cartId) {
       // /v2/api/{api_path}/cart/{id}
       this.loadingStatus.loadingItem = cartId
@@ -211,7 +212,8 @@ export default {
         this.ifLoggedIn = true
       }
     },
-    ...mapActions(productsStore, ['getProductS'])
+    ...mapActions(productsStore, ['getProductS']),
+    ...mapActions(cartsStore, ['getCart'])
   },
   mounted () {
     // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/)
@@ -224,7 +226,8 @@ export default {
     console.log(this.ifLoggedIn)
   },
   computed: {
-    ...mapState(productsStore, ['products'])
+    ...mapState(productsStore, ['products']),
+    ...mapState(cartsStore, ['carts', 'final_total'])
   }
 }
 </script>

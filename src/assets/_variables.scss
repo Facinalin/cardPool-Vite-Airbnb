@@ -570,12 +570,12 @@ $line-height-base:            1.5 !default;
 $line-height-sm:              1.25 !default;
 $line-height-lg:              2 !default;
 
-$h1-font-size:                $font-size-base * 2.5 !default;
-$h2-font-size:                $font-size-base * 2 !default;
+$h1-font-size:                $font-size-base * 2.5 !default; // 40px
+$h2-font-size:                $font-size-base * 2 !default; // 32px
 $h3-font-size:                $font-size-base * 1.75 !default; // 28px
 $h4-font-size:                $font-size-base * 1.5 !default;  // 24px
-$h5-font-size:                $font-size-base * 1.25 !default;
-$h6-font-size:                $font-size-base !default;
+$h5-font-size:                $font-size-base * 1.25 !default; // 24px
+$h6-font-size:                $font-size-base !default; // 16px
 $price-font-size:             $font-size-base *0.8 !default;
 // scss-docs-end font-variables
 
