@@ -23,13 +23,10 @@ export default defineStore('cartsStore', {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
       axios.get(url)
         .then(res => {
-          console.log(res.data.data.carts)
-          // this.carts = res.data.data.carts
           this.carts = res.data.data.carts.filter(el => el.category === '一般')
           this.total = res.data.data.total
           this.final_total = res.data.data.final_total
           this.number = this.carts.length
-          console.log(this.carts)
         })
         .catch(err => {
           Swal.fire({
@@ -95,7 +92,6 @@ export default defineStore('cartsStore', {
           this.cardGroupCart = res.data.data.carts.filter(el => el.category === '拆卡')
           this.total = res.data.data.total
           this.final_total = res.data.data.final_total
-          console.log(this.cardGroupCart)
         })
         .catch(err => {
           Swal.fire({

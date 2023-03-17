@@ -7,7 +7,8 @@ export default defineStore('productsStore', {
     products: [],
     cardGroupProduct: [],
     isLoading: true,
-    leftMemberQty: 0
+    leftMemberQty: 0,
+    AdminCardGroupProduct: []
     // loading技巧：在統一狀態管理區預設先設置true，傳到元件時會在非同步請求結束後改為false
   }),
   actions: {
@@ -18,7 +19,6 @@ export default defineStore('productsStore', {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/products/all`
       axios.get(url)
         .then(res => {
-          console.log(res.data.products)
           const sortPro = res.data.products
           sortPro.splice(0, 10)
           const filterProduct = sortPro.filter(el => el.category === '一般')
@@ -35,7 +35,6 @@ export default defineStore('productsStore', {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/products/all`
       axios.get(url)
         .then(res => {
-          console.log(res.data.products)
           const sortPro = res.data.products
           sortPro.splice(0, 10)
           const filterProduct = sortPro.filter(el => el.category === '出卡')
@@ -51,7 +50,6 @@ export default defineStore('productsStore', {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/products/all`
       axios.get(url)
         .then(res => {
-          console.log(res.data.products)
           const sortPro = res.data.products
           sortPro.splice(0, 10)
           const filterGroup = sortPro.filter(el => el.category === '拆卡' && el.created_At)
@@ -63,6 +61,22 @@ export default defineStore('productsStore', {
           console.log(err)
         })
     }
+    // 拆卡團（後台）這adminstore已經有了
+    // getAdminCardGroupProduct () {
+    //   const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products/all`
+    //   axios.get(url)
+    //     .then(res => {
+    //       this.isLoading = false
+    //       const sortPro = Object.values(res.data.products)
+    //       sortPro.splice(0, 10)
+    //       const cardgroup = sortPro.filter(el => el.category === '拆卡' && el.created_At)
+    //       this.AdminCardGroupProduct = cardgroup
+    //       console.log(this.AdminCardGroupProduct)
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
     // async getProductS () {
     //   const url = `${VITE_APP_URL}/products`
     //   try {

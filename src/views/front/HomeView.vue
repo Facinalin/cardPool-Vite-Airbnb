@@ -43,26 +43,40 @@
    <div class="txt text-white d-flex flex-column align-items-center justify-content-center mb-6">
     <h1 class="fz-60 ch-font ls-10 mb-9">快速成團</h1>
     <p class="ch-font fs-5 mt-4 fwt-light px-6 ls-10 lh1-5 mb-8">厭倦在社團留言排單嗎？卡舖了解你的麻煩，加入卡舖，快速開團，效率媒合，自動通知！</p>
-    <button type="button" class="border-0 cta-btn bd-rd-20 btn btn-primary text-white border-primary py-2 px-4 fs-5 ch-font">拆卡盛況</button>
+    <button type="button" class="border-0 cta-btn bd-rd-20 btn btn-primary border-primary py-2 px-4 fs-5 ch-font">
+      <router-link to="/cardgroups" class="ch-font fz-18 text-white">
+        拆卡盛況
+      </router-link>
+    </button>
    </div>
   </div>
   <!-- 賣卡換卡 -->
   <div class="d-flex swiper-section">
     <swiper :slides-per-view="6" :space-between="55" :autoplay="true" :loop="true" :speed="600"
   class="swiperWrapper">
-    <swiper-slide class="perSlide" v-for="url in swiperUrl" :key="url"><img :src="url" alt="" class="bd-rd-20 swiperImg"></swiper-slide>
+    <swiper-slide class="perSlide" v-for="product in products.slice(0, 12)" :key="product.id">
+      <RouterLink :to="`/product/${product.id}`">
+        <img :src="product.imgUrl" alt="" class="bd-rd-20 swiperImg">
+      </RouterLink>
+    </swiper-slide>
   </swiper>
   </div>
   <h1 class="fs-1 ch-font ls-10 text-center mt-9 text-white">看看我的本命</h1>
-  <div class="container d-flex section mt-150">
-   <div class="txt text-white d-flex flex-column align-items-center justify-content-center mb-6">
+  <div class="container d-flex flex-column mt-150 dance-section mb-9">
+    <div class="circle-parent">
+      <div class="circle"></div>
+    </div>
+    <div class="d-flex ">
+   <div class="txt text-white d-flex flex-column align-items-center justify-content-center">
     <h1 class="fz-60 ch-font ls-10 mb-9">揪團跳舞</h1>
     <p class="ch-font fs-5 mt-4 fwt-light px-6 ls-10 lh1-5 mb-8">不論是百人隨機舞蹈，還是小組團練，只要你肯出來，我們肯邀！</p>
     <button type="button" class="border-0 cta-btn bd-rd-20 btn btn-primary text-white border-primary py-2 px-4 fs-5 ch-font">我有舞擔夢</button>
    </div>
+
    <div class="d-flex flex-column card-container justify-content-center">
 <img src="../../assets/dance-cta.svg" alt="" class="dance-cta-img">
    </div>
+  </div>
   </div>
 </div>
 
@@ -75,6 +89,8 @@ import { RouterLink } from 'vue-router'
 import SwiperCore, { Autoplay, Pagination } from 'swiper/core'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
+import { mapActions, mapState } from 'Pinia'
+import productsStore from '../../store/productsStore.js'
 
 SwiperCore.use([Autoplay, Pagination])
 
@@ -105,11 +121,25 @@ export default {
     Swiper,
     SwiperSlide
   },
+  methods: {
+    ...mapActions(productsStore, ['getCardProducts'])
+  },
+  computed: {
+    ...mapState(productsStore, ['products', 'isLoading'])
+  },
   mounted () {
+    // const danceSection = document.querySelector('.dance-section')
+    const circle = document.querySelector('.circle')
     window.addEventListener('scroll', () => {
       const bannerPic = document.querySelector('.banner-pic')
       bannerPic.style.transform = `translateY(${window.scrollY * 0.6}px)`
+      // const wrapperHeight = danceSection.getBoundingClientRect().height
+      // const viewportHeight = window.innerHeight
+      if (window.scrollY > 2200) {
+        circle.style.animationPlayState = 'running'
+      }
     })
+    this.getCardProducts()
   }
 }
 </script>

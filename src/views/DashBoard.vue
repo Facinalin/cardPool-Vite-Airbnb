@@ -12,7 +12,7 @@
             <a class="nav-link" href="#"><router-link to="/"><font-awesome-icon icon="fa-solid fa-house" /></router-link></a>
         </li>
         <li class="nav-item d-flex align-items-center">
-            <a class="nav-link" href="#"><router-link to="/about" class="ch-font fz-18">活動</router-link></a>
+            <a class="nav-link" href="#"><router-link to="/activities" class="ch-font fz-18">活動</router-link></a>
         </li>
         <li class="nav-item d-flex align-items-center">
   <div class="btn-group btn-group-adj">
@@ -38,7 +38,6 @@
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
     <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/orders" class="text-maingray ch-font fwt-light">我的訂單</router-link></a></li>
-    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/products" class="text-maingray ch-font fwt-light">我的產品</router-link></a></li>
     <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/dashboard/adminrcardgroup" class="text-maingray ch-font fwt-light">我的後台</router-link></a></li>
     <li class="my-1"><a class="dropdown-item text-center ch-font fwt-light" href="#" @click.prevent="logOut">登出</a></li>
   </ul>

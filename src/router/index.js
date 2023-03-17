@@ -11,9 +11,25 @@ const routes = [
       component: () => import('../views/front/HomeView.vue')
     },
     {
-      path: 'about',
-      name: 'About',
-      component: () => import('../views/front/AboutView.vue')
+      path: 'activities',
+      name: 'Activity',
+      component: () => import('../views/front/ActivityView.vue')
+    },
+    {
+      path: 'fanmerch',
+      component: () => import('../views/front/FanMerch.vue')
+    },
+    {
+      path: 'danceclub',
+      component: () => import('../views/front/DanceClub.vue')
+    },
+    {
+      path: 'fandrawevent',
+      component: () => import('../views/front/FanDrawEvent.vue')
+    },
+    {
+      path: 'fanart',
+      component: () => import('../views/front/FanArt.vue')
     },
     {
       path: 'products',
@@ -74,7 +90,8 @@ const routes = [
         children: [{
           path: 'adminrcardgroup',
           components: {
-            membercardgroup: () => import('../views/back/MemberCardGroup.vue')
+            membercardgroup: () => import('../views/back/MemberCardGroup.vue'),
+            generalproduct: () => import('../views/back/MemberProducts.vue')
           }
         }]
       }

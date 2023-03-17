@@ -3,7 +3,7 @@
    <img src="https://i.imgur.com/hRNLPLv.gif" alt="heart.gif" class="loadingGif">
     </div>
       <div v-else class="my-5 container">
-        <div class="row gx-5">
+        <div class="row gx-3">
         <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in products" :key="product.id">
     <div class="card rounded-0 border-0 px-5">
       <div class="card-img-member">

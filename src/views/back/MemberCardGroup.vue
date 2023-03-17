@@ -1,5 +1,6 @@
 <template>
         <div v-if="ifGroupCreator" class="col-10">
+          <h2 class="ch-font text-center text-white mb-6 fs-2 bg-dark-pink py-4 creator-title bb-dark-pink">我主拆的團們</h2>
       <table class="table mt-4 text-center">
         <thead>
           <tr class="text-secondary fs-5 pb-4">
@@ -47,6 +48,7 @@
     </div>
 
     <div v-else class="col-10">
+      <h2 class="ch-font text-center text-white mb-6 fs-2 bg-dark-purple bb-dark-purple py-4 creator-title">我卡位中的團們</h2>
       <table class="table mt-4 text-center">
         <thead>
           <tr class="text-primary fs-5 pb-4">
@@ -90,30 +92,59 @@
     <div class="modal fade" tabindex="-1" id="addProductModal">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <div class="modal-header bg-maingray">
+      <div class="modal-header bg-maingray border-bottom-0">
         <h4 v-if="isNew === 'group'" class="modal-title text-secondary-trans fs-4 ls-4">新增拆卡團</h4>
         <h4 v-if="isNew === 'edit'" class="modal-title text-secondary-trans fs-4 ls-4">編輯拆卡團</h4>
         <h4 v-if="isNew === 'closing'" class="modal-title text-secondary-trans fs-4 ls-4">收團確認</h4>
         <button type="button" class="btn-close text-white" @click="closeModal" aria-label="Close"><font-awesome-icon icon="fa-solid fa-xmark" class="text-white" style="font-size:24px"/></button>
       </div>
 
-      <div v-if="isNew === 'closing'" class="modal-body">
+      <div v-if="isNew === 'closing'" class="modal-body p-0">
+        <div class="member-list bg-maingray">
+    <div class="member-row member-row-sm d-flex justify-content-between mb-2 py-4 px-3">
+    <div v-for="perMember in domLeftMember" :key="perMember.member" class="perMemberOption d-flex flex-column justify-content-center align-items-center mb-2" @click="(evt) =>chooseMember(perMember, evt)">
+            <div class="member-img-sm mb-1 border-0" :class="{ 'memberDisabled': !perMember.left }">
+                <img class="per-member small-head" :src="perMember.imgUrl" :alt="perMember.member" :data-id="perMember.memberNo" :class="{ 'bd-gray': perMember.left, 'cursor-a': perMember.left }">
+            </div>
+            <h2 class="text-white text-center fs-7 mb-1" :class="{ 'txtDisabled': !perMember.left }">{{ perMember.member }}</h2>
+          </div>
+      </div>
+    </div>
+<div class="py-6 px-5">
       <div class="row">
         <div class="col-sm-12">
-          <div class="member-list">
-    <div class="member-row member-row-sm d-flex justify-content-between mb-2">
-    <div v-for="perMember in domLeftMember" :key="perMember.member" class="perMemberOption d-flex flex-column justify-content-center align-items-center mb-2" :class="{ 'red-area': perMember.note === 'mustChoose', 'blue-area': perMember.note === 'scarcity', 'white-area': perMember.note === 'normal' }" @click="(evt) =>chooseMember(perMember, evt)">
-            <div class="member-img-sm mb-1" :class="{ 'memberDisabled': !perMember.left }">
-                <img class="per-member small-head" :src="perMember.imgUrl" :alt="perMember.member" :data-id="perMember.memberNo">
-            </div>
-            <h2 class="text-maingray text-center fs-7 mb-1" :class="{ 'txtDisabled': !perMember.left }">{{ perMember.member }}</h2>
+          <div class="perLiner border border-primary bd-rd-12 py-3 px-4 mb-2">
+<div class="upper d-flex justify-content-between mb-4">
+  <div class="des d-flex justify-content-between align-items-center"><h2>順序：<span class="text-mainorange">2</span></h2><p>絲帶姐</p><p>主拆<span class="text-secondary ps-1">5</span></p><p>合拆<span class="text-primary ps-1">3</span></p></div>
+<button type="button" class="btn btn-mainorange text-white bd-rd-20">收</button>
+</div>
+<div class="lower d-flex justify-content-start">
+  <img src="https://i.imgur.com/5PlS2aH.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/ATWXtR9.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+</div>
           </div>
-
-      </div>
-
-    </div>
         </div>
+        <div class="col-sm-12">
+          <div class="perLiner border border-primary bd-rd-12 py-3 px-4 mb-2">
+<div class="upper d-flex justify-content-between mb-4">
+  <div class="des d-flex justify-content-between align-items-center"><h2>順序：<span class="text-mainorange">1</span></h2><p>絲帶姐</p><p>主拆<span class="text-secondary ps-1">5</span></p><p>合拆<span class="text-primary ps-1">3</span></p></div>
+<button type="button" class="btn btn-mainorange text-white bd-rd-20">收</button>
+</div>
+<div class="lower d-flex justify-content-start">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+</div>
+          </div>
+        </div>
+
       </div>
+    </div>
 <div class="modal-footer mt-6">
         <button type="button" class="btn btn-secondary text-white" @click="closeModal">取消</button>
         <button type="submit" class="btn btn-primary text-white" @click="updateProduct('edit', perProduct)">確認收團</button>
@@ -130,6 +161,35 @@
   <div class="modalPic">
     <img class="img-fluid" :src="perProduct.imgUrl">
   </div>
+  <div v-if="Array.isArray(perProduct.imagesUrl)">
+    <div class="mb-1" v-for="(image, key) in perProduct.imagesUrl" :key="key">
+      <div class="form-group">
+        <label for="imageUrl" class="form-label">圖片網址</label>
+        <input v-model="perProduct.imagesUrl[key]" type="text" class="form-control"
+          placeholder="請輸入圖片連結">
+      </div>
+      <img class="img-fluid" :src="image">
+    </div>
+    <div
+      v-if="!perProduct.imagesUrl.length || perProduct.imagesUrl[perProduct.imagesUrl.length - 1]">
+      <button class="btn btn-outline-primary btn-sm d-block w-100"
+        @click="perProduct.imagesUrl.push('')">
+        新增圖片
+      </button>
+    </div>
+    <div v-else>
+      <button class="btn btn-outline-danger btn-sm d-block w-100" @click="perProduct.imagesUrl.pop()">
+        刪除圖片
+      </button>
+    </div>
+  </div>
+  <div v-else>
+    <button class="btn btn-outline-primary btn-sm d-block w-100"
+      @click="createImages">
+      新增圖片
+    </button>
+  </div>
+<!--  -->
   </div>
       <div class="col-sm-8">
         <div class="row">
@@ -157,7 +217,7 @@
 </select>
             </div>
   </div>
-  <div v-if="isNew === 'group' || isNew === 'edit'" class="col-sm-12 mb-4">
+  <div v-if="isNew !== 'closing'" class="col-sm-12 mb-4">
       <h4>剩餘成員<font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" /></h4>
       <p class="fs-7 mt-1"><font-awesome-icon icon="fa-solid fa-star" />請將下方成員拖曳至對應區域。除（已被卡位成員區）外，其他區域都是買家可以卡位的。</p>
       <div class="memberWrapper d-flex mt-2">
@@ -296,6 +356,16 @@ let productModal = null
 
 export default {
   props: ['ifGroupCreator'],
+  watch: {
+    userProductList: {
+      handler (newVal, oldVal) {
+        if (newVal.length !== oldVal.length) {
+          console.log('someData length has changed:', newVal.length)
+        }
+      },
+      deep: true
+    }
+  },
   data () {
     return {
       checkLiningUp: false,
@@ -421,7 +491,7 @@ export default {
           this.ifInternational = false
           this.ifComplement = false
         }
-      } else if (isNew === 'group') {
+      } if (isNew === 'group') {
         this.isNew = 'group'
         this.perProduct = {
           category: '',
@@ -446,8 +516,6 @@ export default {
         this.ifGroup = true
       } else if (isNew === 'closing') {
         this.isNew = 'closing'
-        console.log(item.id)
-        console.log(this.cardGroupCart)
         this.perProduct = { ...item }
         const normalMember = { ...this.perProduct.leftMember }
         const checkNullFalse = Object.values(normalMember)
@@ -463,8 +531,16 @@ export default {
           }
         }
         const normalChoose = Object.keys(normalMember)
-        console.log('here')
         console.log(normalChoose, takenMember)
+        normalChoose.forEach(el => {
+          this.domLeftMember.forEach(per => {
+            if (per.memberNo === el) {
+              per.left = true
+            }
+          })
+        })
+        console.log(this.domLeftMember)
+        console.log('here')
       }
       productModal.show()
       const unpopularMem = this.$refs.redArea
@@ -544,16 +620,23 @@ export default {
             delete normalMember[i]
           }
         }
-        mustChoose.forEach((el, i, arr) => {
-          if (normalMember[arr[i]] === true) {
-            delete normalMember[arr[i]]
-          }
-        })
-        scarcity.forEach((el, i, arr) => {
-          if (normalMember[arr[i]] === true) {
-            delete normalMember[arr[i]]
-          }
-        })
+
+        if (mustChoose) {
+          mustChoose.forEach((el, i, arr) => {
+            if (normalMember[arr[i]] === true) {
+              delete normalMember[arr[i]]
+            }
+          })
+        }
+
+        if (scarcity) {
+          scarcity.forEach((el, i, arr) => {
+            if (normalMember[arr[i]] === true) {
+              delete normalMember[arr[i]]
+            }
+          })
+        }
+
         console.log(takenMember)
         const normalChoose = Object.keys(normalMember)
         //   const popularMem = this.$refs.blueArea
@@ -564,7 +647,7 @@ export default {
           const dataId = element.getAttribute('data-id')
           const imgUrl = element.getAttribute('src')
           const memberName = element.getAttribute('alt')
-          if (mustChoose.length > 0) {
+          if (mustChoose) {
             mustChoose.forEach(el => {
               if (el === dataId) {
                 const draggableCard = document.createElement('div')
@@ -576,7 +659,7 @@ export default {
             })
           }
 
-          if (scarcity.length > 0) {
+          if (scarcity) {
             scarcity.forEach(el => {
               if (el === dataId) {
                 const draggableCard = document.createElement('div')
@@ -844,6 +927,50 @@ export default {
     })
     this.getCardGroupCart()
     this.getProductList()
+    // chatGPT版本：無效
+    // const checkDrag = document.querySelectorAll('.draggable')
+    // console.log(checkDrag) // 點開第一次nodelist長度為0
+    // const unpopularMem = this.$refs.redArea
+    // if (unpopularMem && checkDrag.length === 0) {
+    //   const backlogArr = [
+    //     { content: '<img src="https://i.imgur.com/5VrxHl4.png" alt="Bangchan" data-id="1"><p class="en-font" style="font-weight:100;">Bangchan</p>' },
+    //     { content: '<img src="https://i.imgur.com/Uf8hp4X.png" alt="Leeknow" data-id="2"><p class="en-font" style="font-weight:100;">Leeknow</p>' },
+    //     { content: '<img src="https://i.imgur.com/DlrpnvJ.png" alt="Changbin" data-id="3"><p class="en-font" style="font-weight:100;">Changbin</p>' },
+    //     { content: '<img src="https://i.imgur.com/lBM4VXu.png" alt="Hyunjin" data-id="4"><p class="en-font" style="font-weight:100;">Hyunjin</p>' },
+    //     { content: '<img src="https://i.imgur.com/sdkVX6b.png" alt="Han" data-id="5"><p class="en-font" style="font-weight:100;">Han</p>' },
+    //     { content: '<img src="https://i.imgur.com/vnEW0jA.png" alt="Felix" data-id="6"><p class="en-font" style="font-weight:100;">Felix</p>' },
+    //     { content: '<img src="https://i.imgur.com/vee74L9.png" alt="Seungmin" data-id="7"><p class="en-font" style="font-weight:100;">Seungmin</p>' },
+    //     { content: '<img src="https://i.imgur.com/OHOP739.png" alt="IN" data-id="8"><p class="en-font" style="font-weight:100;">IN</p>' }
+    //   ]
+    //   const choosePlate = this.$refs.choosePlate
+    //   backlogArr.map((ele) => {
+    //     const draggableCard = document.createElement('div')
+    //     draggableCard.setAttribute('draggable', 'true')
+    //     draggableCard.classList.add('draggable')
+    //     draggableCard.innerHTML = ele.content
+
+    //     choosePlate.appendChild(draggableCard)
+    //     return choosePlate
+    //   })
+    //   const redAreaSortableObj = Sortable.create(unpopularMem, {
+    //     group: 'dnd',
+    //     animation: 10
+    //   })
+    //   console.log(redAreaSortableObj)
+    // }
   }
+  // chatGPT版本：無效
+  // created () {
+  //   const checkDrag = document.querySelectorAll('.draggable')
+  //   console.log(checkDrag) // 點開第一次nodelist長度為0
+  //   const unpopularMem = this.$refs.redArea
+  //   if (unpopularMem && checkDrag.length === 0) {
+  //     const redAreaSortableObj = Sortable.create(unpopularMem, {
+  //       group: 'dnd',
+  //       animation: 10
+  //     })
+  //     console.log(redAreaSortableObj)
+  //   }
+  // }
 }
 </script>

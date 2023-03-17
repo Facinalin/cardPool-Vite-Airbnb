@@ -41,6 +41,11 @@ a {
   font-weight: 500;
 }
 
+.fw-max{
+  font-weight: 700;
+}
+
+
 .lh1-5{
   line-height: 1.5;
 }
@@ -66,6 +71,14 @@ a {
 
 .mt-150{
   margin-top: 150px;
+}
+
+.mt-50{
+  margin-top: 50px;
+}
+
+.mb-80{
+  margin-bottom: 80px;
 }
 
 .modalPic{
@@ -277,6 +290,7 @@ a {
   padding: 24px 100px;
   width: 660px;
   height: 100%;
+  position: relative;
 }
 
 .perCard{
@@ -344,6 +358,12 @@ a {
   object-fit: cover;
 } 
 
+.card-img-top{
+  width:100%;
+  height: 250px;
+  object-fit: cover;
+} 
+
 // 商品頁成員按鈕
 
 .member-row{
@@ -397,8 +417,8 @@ a {
 }
 
 .per-member{
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: #ffffff;
   background: cover;
@@ -417,6 +437,10 @@ a {
 
 .perMemberOption{
   width: 25%;
+}
+
+.perMemberFilter{
+  width: 30%;
 }
 
 .memberDisabled{
@@ -438,6 +462,10 @@ a {
 .activeSm{
 border: 6px solid $primary;
  }
+
+.active-lg{
+  border: 8px solid $primary;
+   }
 
 .memberQty{
   color: $mainorange;
@@ -475,10 +503,17 @@ border: 6px solid $primary;
 
 .dance-cta-img{
   width: 380px;
+  position: absolute;
+  z-index: 1;
+
 }
 
 .addBtn:hover{
-  font-size: 20px;
+  background: $secondary;
+}
+
+.addBtn{
+  display: block;
 }
 
 .cursor-p{
@@ -524,6 +559,217 @@ border: 6px solid $primary;
   height: 20px;
 }
 
+.bd-gray{
+  border: 6px solid #1e1c1c;
+}
+
+.cursor-a{
+  cursor: auto;
+}
+
+.closing-liner-pic{
+  width: 42px;
+  height: 42px;
+  margin-right: 20px;
+}
+
+.upper .des{
+  width: 35%;
+}
+
+.member-list .per-member{
+  border: 0;
+}
+
+// 單拆卡頁面
+.seller-pic{
+  width: 50px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.bd-top-opa{
+  border-top: 1px solid rgba(155, 155, 227, .7); 
+}
+
+.details-1{
+  margin-top: 7px;
+  position: relative;
+  line-height: 2;
+  &::before{
+      content: "商品資訊";
+      position: absolute;
+      transform: translate(8%,-100%);
+      background: #9B9BE3;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 15px 15px 0 0;
+
+  }
+}
+
+.notice{
+  margin-top: 7px;
+  position: relative;
+  line-height: 2;
+  &::before{
+      content: "拆卡注意事項";
+      position: absolute;
+      transform: translate(8%,-100%);
+      background: #E8A8D4;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 15px 15px 0 0;
+
+  }
+}
+
+.seller{
+  width: 100%;
+}
+
+.seller-btn{
+  color: #E8A8D4;
+  &:hover{
+      color: #ffffff;
+      background: #E8A8D4;  
+  }
+}
+
+.accordion{
+  width: 100%;
+}
+
+.bg-dark-pink{
+  background: #9A678A;
+}
+
+.bg-dark-purple{
+  background: #7272BD;
+}
+
+.creator-title{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bb-dark-pink{
+  border-bottom: 10px solid #DBB6CF;
+}
+
+.bb-dark-purple{
+  border-bottom: 10px solid #B4B4E2;
+}
+
+.filterWrapper {
+  width: 48%;
+}
+
+.member-img{
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  border: 8px solid #ffffff;
+  &:hover{
+    .per-member{
+      border: 8px solid #1e1c1c;
+    }
+      
+  }
+
+}
+
+.perMemberFilter h2 {
+  font-size: 22px;
+}
+
+// 動畫
+
+.circle-parent{
+  position: relative;
+  width: 840px;
+  height: 50px;
+}
+
+.circle{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $primary;
+    left: 0;
+    top: 0;
+    animation: fly 3s linear infinite;
+    animation-iteration-count:1;  
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+    position: absolute;
+    z-index: 4; 
+
+}
+
+@keyframes fly {
+  0% {
+    left: 30px;
+  }
+  100% {
+    left: calc(100%);
+  }
+}
+
+
+.dance-section {
+  height: 500px;
+}
+
+.router-btn:hover{
+  background: $secondary;
+  // a{
+  //   color: $white;
+  // }
+  
+}
+
+.btn .check-product:hover {
+  color: $white;
+}
+
+.loadingGif{
+  margin-top: 70px;
+  width: 160px;
+}
+
+.col-3-card{
+  width: 100%;
+}
+
+.activity-btn-pic{
+  width: 100%;
+  height: 264px;
+  object-fit: cover;
+}
+
+.perBtn{
+  cursor: pointer;
+  position: relative;
+  h1 {
+    position: absolute;
+    font-size: 80px;
+    left: 40px;
+    bottom: 30px;
+    &:hover{
+    left: 60px;
+    transition: transform 0.3s ease-in;
+    }
+  }
+}
+
+.perClub-pic{
+ width: 100px;
+ height: 100px;
+ object-fit: cover;
+}
 
 
 

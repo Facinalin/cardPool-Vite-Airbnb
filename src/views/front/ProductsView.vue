@@ -2,17 +2,24 @@
   <div v-if="isLoading" class="container d-flex justify-content-center">
  <img src="https://i.imgur.com/hRNLPLv.gif" alt="heart.gif" class="loadingGif">
   </div>
-    <div v-else class="my-5 container border border-primary border-2">
-      <div class="row gx-5">
+    <div v-else class="my-5 container">
+      <div class="row gx-4">
       <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in products" :key="product.id">
-  <div class="card rounded-0 border-0">
+  <div class="card rounded-0 border-0 px-2">
+    <div class="card-gene-product-per-pic">
   <img :src="product.imgUrl" class="card-img-top" alt="">
+</div>
   <div class="card-body px-0 py-4 text-center">
     <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
     <p class="card-text fs-7 pri-aux">{{ product.price }}元</p>
     <div class="d-flex justify-content-center mt-4">
-    <button type="button" class="btn btn-white border-secondary rounded-xxl py-1 px-3 me-2 fs-7"><RouterLink :to="`/product/${product.id}`"><font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />看商品</RouterLink></button>
-    <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7" @click="addToCart(product.id)" :disabled="loadingStatus.loadingItem === product.id || !product.is_enabled">
+    <button type="button" class="btn btn-white border-secondary rounded-xxl py-1 px-3 me-2 fs-7 bd-rd-12 router-btn">
+      <RouterLink :to="`/product/${product.id}`" class="text-secondary check-product">
+        <font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />
+        看商品
+      </RouterLink>
+    </button>
+    <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7 bd-rd-12" @click="addToCart(product.id)" :disabled="loadingStatus.loadingItem === product.id || !product.is_enabled">
       <font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />
       加購物車</button>
   </div>

@@ -1,10 +1,10 @@
 
 <template>
   <div class="wrapper">
-  <div class="container my-1">
+  <div class="container my-1 px-4">
       <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
+    <a class="navbar-brand me-0" href="#"><router-link to="/"><img src="https://i.imgur.com/gmA3prD.png" alt="logo" class="logo-img"></router-link></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,7 +14,7 @@
             <a class="nav-link" href="#"><router-link to="/"><font-awesome-icon icon="fa-solid fa-house" /></router-link></a>
         </li>
         <li class="nav-item d-flex align-items-center">
-            <a class="nav-link" href="#"><router-link to="/about" class="ch-font fz-18">活動</router-link></a>
+            <a class="nav-link" href="#"><router-link to="/activities" class="ch-font fz-18">活動</router-link></a>
         </li>
         <li class="nav-item d-flex align-items-center">
   <div class="btn-group btn-group-adj">
@@ -35,13 +35,13 @@
       </li>
       <li class="nav-item d-flex align-items-center">
   <div class="btn-group">
-  <button type="button" class="btn bg-transparent dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+  <button type="button" class="btn bg-transparent dropdown-toggle pe-0" data-bs-toggle="dropdown" aria-expanded="false">
     <a class="nav-link" href="#"><font-awesome-icon icon="fa-solid fa-user" class="text-primary" /></a>
   </button>
   <ul v-if="ifLogged" class="dropdown-menu dropdown-menu-end">
     <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/orders" class="text-maingray ch-font fwt-light">我的訂單</router-link></a></li>
     <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/cardgroups" class="text-maingray ch-font fwt-light">我的卡團</router-link></a></li>
-    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/products" class="text-maingray ch-font fwt-light">我的產品</router-link></a></li>
+    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/admin/dashboard/adminrcardgroup" class="text-maingray ch-font fwt-light">我的後台</router-link></a></li>
     <li class="my-1"><a class="dropdown-item text-center ch-font fwt-light" href="#" @click.prevent="logOut">登出</a></li>
   </ul>
   <ul v-else class="dropdown-menu dropdown-menu-end">

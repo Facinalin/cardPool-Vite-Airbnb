@@ -1,15 +1,15 @@
 <template>
     <div class="container my-5">
         <div class="row">
-            <div class="product-img col-md-12 col-lg-5">
+            <div class="product-img col-md-12 col-lg-5 mt-9">
                 <div class="d-flex justify-content-center mb-6">
                     <img :src="product.imgUrl" alt="" class="cardImg"></div>
         </div>
         <!--商品選項-右-->
-        <div class="col-md-12 col-lg-7 ps-lg-9 ch-font">
-          <h1 class="mb-3">{{ product.title }}</h1>
-    <p class="mb-1">卡團編號：#{{ product.id }}</p>
-    <p class="mb-2">{{ product.channel }}</p>
+        <div class="col-md-12 col-lg-7 ps-lg-9 ch-font mt-9">
+          <h1 class="mb-3 fs-1">{{ product.title }}</h1>
+    <p class="mb-1 fs-7">卡團編號：#{{ product.id }}</p>
+    <p class="mb-2 dark-pink fs-7">{{ product.channel }}</p>
     <div class="member-option">
     <div class="member-row member-row-sm d-flex justify-content-between flex-wrap mb-2">
     <div v-for="perMember in domLeftMember" :key="perMember.member" class="perMemberOption d-flex flex-column justify-content-center align-items-center mb-2" :class="{ 'red-area': perMember.note === 'mustChoose', 'blue-area': perMember.note === 'scarcity', 'white-area': perMember.note === 'normal' }" @click="(evt) =>chooseMember(perMember, evt)">
@@ -23,11 +23,11 @@
 
     </div>
 
-      <h2 class="text-primary">${{ product.price }}元</h2>
+      <h2 class="text-primary fs-3">${{ product.price }}元</h2>
 
-      <div class="my-lg-4 px-lg-2 d-flex flex-column align-items-end">
-        <p class="fz-8 mb-1 display-none">＊確認卡位成員後無法更改。送出前請再三確認。</p>
-        <p class="fz-8 mb-1">＊帶藍區必帶紅區（1:1帶），請確認是否達成必填門檻，否則將無法送出。</p>
+      <div class="px-lg-2 d-flex flex-column align-items-end mt-50">
+        <p class="fs-7 mb-1">＊請仔細檢查卡位成員後再送出，送出後更改成員若影響到排卡順序自行負擔。</p>
+        <p v-if="mustWithScarce === true && product.mustChoose.length === product.scarcity.length" class="fs-7 mb-1">＊帶藍區必帶紅區（1:1帶），請確認是否達成必填門檻，否則將無法送出。</p>
       </div>
           </div>
         <div class="btn-area btns d-flex justify-content-end">
@@ -37,7 +37,7 @@
           <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 bd-rd-12">收藏<font-awesome-icon icon="fa-solid fa-heart" class="ms-1"/></button>
       </div>
         <!--拆卡注意事項-全-->
-        <div class="notice col-12 border border-2 border-secondary rounded-xxl d-flex flex-wrap mt-5 mb-5">
+        <div class="notice col-12 border border-2 border-secondary rounded-xxl d-flex flex-wrap mt-5 mb-80">
           <p class="col-sm-12 col-md-6 col-lg-6 py-4 px-5">
             Q：我要如何知道成團與否？<br>
             （1) 請至註冊信箱內檢查email。<br>
@@ -48,13 +48,60 @@
             * 本站取消規定：當初卡的成員位數全部取消。請私訊賣家告知取消理由，賣方可從後台手動取消。
         </p>
         </div>
-        <div class="col-12">
+<!-- 下方客製商品敘述及運費注意事項 -->
+        <div class="col-12 ch-font">
+          <div class="product-details">
+          <div class="details-1 bd-top-opa col-12 d-flex flex-wrap mt-5 text-maingray">
+            <div class="seller col-12 py-3 px-3 d-flex align-items-center justify-content-between">
+              <div class="seller-left d-flex align-items-center">
+                <img class="seller-pic" src="https://i.imgur.com/YxLmY3t.png" alt="sellerpic">
+          <h5 class="ms-2">Tracy</h5>
+    <p class="ms-6">主拆成團 <span class="text-primary">4</span> 筆</p>
+            </div>
+              <div class="seller-right">
+              <button type="button" class="seller-btn btn btn-white border-secondary rounded-xxl py-1 px-2 me-2">
+                <font-awesome-icon icon="fa-solid fa-comment" class="me-3 text-secondary fs-5"/>
+                訊息</button>
+              <a href="#" class="seller-btn btn btn-white border-secondary rounded-xxl py-1 px-2">查看賣場</a>
+            </div>
+            </div>
+          <div class="internationalFee col-12 py-3 px-3 bd-top-opa d-flex justify-content-between">
+            <p>
+              <font-awesome-icon icon="fa-solid fa-plane" class="me-3 text-primary fs-5"/>
+            國際運費
+          </p>
+          <p v-if="international.complement === true" class="text-mainorange pe-1">需二補</p>
+          <p v-else class="text-orange pe-1">無需二補</p>
+          <p v-if="international.amount !== 0" class="text-mainorange pe-1">{{ international.amount }}元</p>
+          </div>
+          <div class="accordion accordion-flush bd-top-opa" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed py-3 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  <font-awesome-icon icon="fa-solid fa-truck" class="me-3 text-primary fs-5"/>
+                  國內運費
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                 <ul class="domesticCourier">
+                  <li>{{ domestic.courier }}{{ domestic.amount }}元{{ domestic.courier_Note }}</li>
+                 </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-description col-12 bd-top-opa py-2 px-3 mb-8">
+            <p class="description">
+              {{ product.description }}
+            </p>
+          </div>
+            <ul class="pic-area">
+          </ul>
 
-  <h4>{{ domestic.amount }}</h4>
-  <h4>{{ domestic.courier }}</h4>
-  <h4>{{ domestic.courier_Note }}</h4>
-  <h4>{{ international.amount }}</h4>
-  <h4>{{ international.complement }}</h4>
+          </div>
+        </div>
+
         </div>
         </div>
     </div>
@@ -136,7 +183,8 @@ export default {
       loadingStatus: {
         loadingItem: ''
       },
-      ifLogged: false
+      ifLogged: false,
+      mustWithScarce: false
     }
   },
   methods: {
@@ -166,6 +214,7 @@ export default {
           }
           this.finalLeftMember = normalMember
           if (this.product.mustChoose) {
+            this.mustWithScarce = true
             this.product.mustChoose.forEach(el => {
               this.domLeftMember.forEach(per => {
                 if (per.memberNo === el) {
@@ -261,19 +310,24 @@ export default {
             })
           }
         }
-        console.log(chosenMember, curProductId, curQty)
         this.loadingStatus.loadingItem = curProductId
-        let httpRequest = 'post'
-        let url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
         let cart = {}
-        const currentCart = this.carts.find(item => item.productId === curProductId)
+        const currentCart = this.cardGroupCart.find(item => item.product_id === curProductId)
         if (currentCart) {
-          httpRequest = 'put'
-          url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart/${currentCart.id}`
-          cart = {
-            product_id: curProductId,
-            qty: curQty
-          }
+          this.loadingStatus.loadingItem = ''
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '本團已經有你的卡位紀錄，欲編輯成員請至後台修改！',
+            showConfirmButton: true
+          })
+          return
+          // httpRequest = 'put'
+          // url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart/${currentCart.id}`
+          // cart = {
+          //   product_id: curProductId,
+          //   qty: curQty
+          // }
         } else {
         // const indicateProduct = products.find(el => el.id === curProductId)
           cart = {
@@ -281,36 +335,13 @@ export default {
             qty: curQty, // 總金額是price*memberQty
             category: '拆卡',
             chooseMember: chosenMember, // 買家賣家需要核對的就是成員，跟張數chooseMember.length進而計算總價格
-            user: { successHistory: 8, name: 'Mr.Demo' }, // 只能先寫死資料
+            user: { name: 'Mr.Demo', creatorSuccessHistory: 3, participantSuccessHistory: 5 }, // 只能先寫死資料
             created_at: new Date().getTime()// 列表時列出哪個比較早排
           }
         }
-        console.log(cart, url, httpRequest)
+        const httpRequest = 'post'
+        const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
         this.checkAdminToAdd(cart, url, httpRequest)
-        // 檢查登入狀態
-        // axios[httpRequest](url, { data: cart })
-        //   .then(res => {
-        //     console.log(res.data)
-        //     this.loadingStatus.loadingItem = ''
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'success',
-        //       title: '成功卡位!',
-        //       showConfirmButton: false,
-        //       timer: 1800
-        //     })
-        //     this.getCart()
-        //   })
-        //   .catch(err => {
-        //     this.loadingStatus.loadingItem = ''
-        //     Swal.fire({
-        //       position: 'center',
-        //       icon: 'error',
-        //       title: `${err.message}`,
-        //       showConfirmButton: false,
-        //       timer: 1800
-        //     })
-        //   })
       }
       // 購物車api資料結構參考：
       //       {
@@ -326,16 +357,13 @@ export default {
       // 取消卡位的話：買家：刪除購物車id，則賣家那邊也看不到了
     },
     joinGroupLining (cart, purl, httpRequest) {
-      console.log(cart, purl, httpRequest)
-      console.log('hi')
       axios[httpRequest](purl, { data: cart })
         .then(res => {
-          console.log(res.data)
           this.loadingStatus.loadingItem = ''
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: '成功卡位，請至我的卡團查詢排卡狀態!',
+            title: '成功卡位，請至後台查詢排卡狀態!',
             showConfirmButton: false,
             timer: 1800
           })
@@ -343,7 +371,7 @@ export default {
           chosenMemberDom.forEach(el => {
             el.classList.remove('activeSm')
           })
-          this.getCart()
+          this.getCardGroupCart()
         })
         .catch(err => {
           this.loadingStatus.loadingItem = ''
@@ -374,13 +402,13 @@ export default {
           this.$router.push('/logIn')
         })
     },
-    ...mapActions(cartsStore, ['getCart'])
+    ...mapActions(cartsStore, ['getCardGroupCart'])
   },
   computed: {
-    ...mapState(cartsStore, ['carts'])
+    ...mapState(cartsStore, ['cardGroupCart'])
   },
   mounted () {
-    this.getCart()
+    this.getCardGroupCart()
     this.getPerProduct()
   }
 }

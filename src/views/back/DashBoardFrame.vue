@@ -12,7 +12,7 @@
         <div class="col-2 bg-secondary bd-rd-12 px-7 py-6">
           <ul class="ch-font admin-sidebar pt-2">
             <li class="fs-5 mb-3 text-center text-white cursor-p">訂單管理</li>
-            <li class="fs-5 mb-3 text-center text-white cursor-p">一般產品</li>
+            <li class="fs-5 mb-3 text-center text-white cursor-p" @click="toGeneralProductPanel">一般產品</li>
             <li class="fs-5 mb-3 text-center text-white cursor-p d-flex align-items-center justify-content-center" data-bs-toggle="collapse" data-bs-target="#cardGroupCollapse" aria-expanded="false" aria-controls="collapseExample" @click="checkDrop">拆卡團<img src="../../assets/polygon.svg" alt="" class="dropdown-icon ms-2" :class="{ 'tr-rotate':dropdownList}"></li>
             <div class="collapse bg-secondary" id="cardGroupCollapse">
   <div class="card card-body bg-secondary border-0">
@@ -25,7 +25,8 @@
 <li class="fs-5 mb-3 text-center text-white">會員設定</li>
           </ul>
         </div>
-            <router-view name="membercardgroup" :ifGroupCreator="ifGroupCreator"></router-view>
+            <router-view v-if="checkCardGroup" name="membercardgroup" :ifGroupCreator="ifGroupCreator"></router-view>
+            <router-view v-if="checkGeneralProduct" name="generalproduct"></router-view>
         <div class="modal fade" tabindex="-1" id="addProductModal">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -43,6 +44,34 @@
   <p name="link" class="invalid-feedback">{{ errors.link }}</p>
   <div class="modalPic">
     <img class="img-fluid" :src="perProduct.imgUrl">
+  </div>
+  <div v-if="Array.isArray(perProduct.imagesUrl)">
+    <div class="mb-1" v-for="(image, key) in perProduct.imagesUrl" :key="key">
+      <div class="form-group">
+        <label for="imageUrl" class="form-label">圖片網址</label>
+        <input v-model="perProduct.imagesUrl[key]" type="text" class="form-control"
+          placeholder="請輸入圖片連結">
+      </div>
+      <img class="img-fluid" :src="image">
+    </div>
+    <div
+      v-if="!perProduct.imagesUrl.length || perProduct.imagesUrl[perProduct.imagesUrl.length - 1]">
+      <button class="btn btn-outline-primary btn-sm d-block w-100"
+        @click="perProduct.imagesUrl.push('')">
+        新增圖片
+      </button>
+    </div>
+    <div v-else>
+      <button class="btn btn-outline-danger btn-sm d-block w-100" @click="perProduct.imagesUrl.pop()">
+        刪除圖片
+      </button>
+    </div>
+  </div>
+  <div v-else>
+    <button class="btn btn-outline-primary btn-sm d-block w-100"
+      @click="createImages">
+      新增圖片
+    </button>
   </div>
   </div>
       <div class="col-sm-8">
@@ -71,7 +100,7 @@
 </select>
             </div>
   </div>
-  <div v-if="isNew === 'group' || isNew === 'edit'" class="col-sm-12 mb-4">
+  <div class="col-sm-12 mb-4">
       <h4>剩餘成員<font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon" /></h4>
       <p class="fs-7 mt-1"><font-awesome-icon icon="fa-solid fa-star" />請將下方成員拖曳至對應區域。除（已被卡位成員區）外，其他區域都是買家可以卡位的。</p>
       <div class="memberWrapper d-flex mt-2">
@@ -185,8 +214,8 @@
   </div>
 <div class="modal-footer">
         <button type="button" class="btn btn-secondary text-white" @click="closeModal">取消</button>
-        <button v-if="isNew==='edit'" type="submit" class="btn btn-primary text-white" @click="updateProduct('edit', perProduct)">確認修改</button>
-        <button v-if="isNew==='group'" type="submit" class="btn btn-primary text-white" @click="updateProduct('group')">確認開團</button>
+        <button v-if="isNew ==='edit'" type="submit" class="btn btn-primary text-white" @click="updateProduct('edit', perProduct)">確認修改</button>
+        <button v-if="isNew ==='group'" type="submit" class="btn btn-primary text-white" @click="updateProduct('group')">確認開團</button>
       </div>
     </v-form>
     </div>
@@ -202,12 +231,16 @@ import { Modal } from 'bootstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Sortable from 'sortablejs'
+import { mapActions, mapState } from 'Pinia'
+import cartsStore from '../../store/cartsStore.js'
+import adminStore from '../../store/adminStore.js'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 let productModal = null
 
 export default {
   data () {
     return {
+      checkCardGroup: false,
       userProductList: [],
       perProduct: {
         category: '',
@@ -255,7 +288,8 @@ export default {
       normalArea: [],
       channels: ['非特定通路', '阿拉丁', 'Music Planet', 'JYP', 'YES24', 'KTown4U', 'WithMuu', 'SoundWave', '其它通路'],
       ifGroupCreator: false,
-      dropdownList: false
+      dropdownList: false,
+      checkGeneralProduct: false
     }
   },
   methods: {
@@ -264,7 +298,6 @@ export default {
         this.isNew = 'edit'
         productModal.show()
         this.perProduct = { ...item }
-        console.log(this.perProduct)
         if (this.perProduct.domestic_Transport.courier !== '面交') {
           console.log('非面交，金額大於0')
           this.ifDomesticFee = true
@@ -290,7 +323,8 @@ export default {
           const ifComplementBtn = this.$refs.needComplement
           console.log(ifComplementBtn)
         }
-      } else if (isNew === 'group') {
+      } if (isNew === 'group') {
+        console.log('我是dashboard')
         this.isNew = 'group'
         this.perProduct = {
           category: '',
@@ -313,6 +347,8 @@ export default {
           }
         }
         this.ifGroup = true
+      } else if (isNew === 'production') {
+        console.log('production')
       }
       productModal.show()
       const unpopularMem = this.$refs.redArea
@@ -717,14 +753,23 @@ export default {
       })
     },
     toGroupCreatorPanel () {
+      this.checkCardGroup = true
       this.ifGroupCreator = true
+      this.checkGeneralProduct = false
     },
     toGroupParticipantPanel () {
+      this.checkCardGroup = true
       this.ifGroupCreator = false
+      this.checkGeneralProduct = false
     },
     checkDrop () {
       if (this.dropdownList === false) { this.dropdownList = true } else { this.dropdownList = false }
-    }
+    },
+    toGeneralProductPanel () {
+      this.checkGeneralProduct = true
+    },
+    ...mapActions(cartsStore, ['getCardGroupCart']),
+    ...mapActions(adminStore, ['getProductList'])
   },
   mounted () {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
@@ -736,6 +781,10 @@ export default {
     })
     this.checkAdmin()
     // this.getProductList()
+  },
+  computed: {
+    ...mapState(cartsStore, ['cardGroupCart']),
+    ...mapState(adminStore, ['userProductList'])
   }
 }
 </script>

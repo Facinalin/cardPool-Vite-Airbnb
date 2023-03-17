@@ -1,6 +1,6 @@
 <template>
-    <div class="container border border-primary border-2 d-flex flex-column">
-      <div class="text-end mt-4 mb-4">
+        <div class="col-10 d-flex flex-column">
+          <div class="text-end mt-4 mb-4">
         <button class="btn btn-primary me-4 text-white" @click="openModal('new')">
           新增一般產品
         </button>
@@ -15,14 +15,11 @@
               分類
             </th>
             <th width="400">產品名稱</th>
-            <th width="110">
-              價格
+            <th width="180">
+              價格（元）
             </th>
             <th width="110">
               成員
-            </th>
-            <th width="100">
-              是否啟用
             </th>
             <th width="160">
               編輯
@@ -38,10 +35,6 @@
             </td>
             <td class="text-center">
               {{ item.member }}
-            </td>
-            <td>
-              <span v-if="item.is_enabled" class="text-success">啟用</span>
-              <span v-else>未啟用</span>
             </td>
             <td>
               <div class="btn-group-edit d-flex justify-content-center px-4">
@@ -76,6 +69,18 @@
   <div class="modalPic">
     <img class="img-fluid" :src="perProduct.imgUrl">
   </div>
+  <div
+      v-if="!perProduct.imagesUrl.length || perProduct.imagesUrl[perProduct.imagesUrl.length - 1]">
+      <button class="btn btn-outline-primary btn-sm d-block w-100"
+        @click="perProduct.imagesUrl.push('')">
+        新增圖片
+      </button>
+    </div>
+    <div v-else>
+      <button class="btn btn-outline-danger btn-sm d-block w-100" @click="perProduct.imagesUrl.pop()">
+        刪除圖片
+      </button>
+    </div>
   </div>
       <div class="col-sm-8">
         <div class="row">
@@ -395,8 +400,8 @@ export default {
       axios.get(url).then(res => {
         const sortPro = Object.values(res.data.products)
         sortPro.splice(0, 10)
-        console.log(sortPro)
-        this.userProductList = sortPro
+        const generalProducts = sortPro.filter(el => el.category === '一般' || el.category === '出卡')
+        this.userProductList = generalProducts
       }).catch(err => {
         Swal.fire({
           position: 'center',
