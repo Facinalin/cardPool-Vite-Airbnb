@@ -11,7 +11,7 @@
 </div>
   <div class="card-body px-0 py-4 text-center">
     <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
-    <p class="card-text fs-7 pri-aux">{{ product.price }}元</p>
+    <p class="card-text fs-7 text-primary">{{ product.price }}元</p>
     <div class="d-flex justify-content-center mt-4">
     <button type="button" class="btn btn-white border-secondary rounded-xxl py-1 px-3 me-2 fs-7 bd-rd-12 router-btn">
       <RouterLink :to="`/product/${product.id}`" class="text-secondary check-product">
