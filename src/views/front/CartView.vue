@@ -1,19 +1,20 @@
 <template>
     <div class="container">
       <div class="row">
-    <div v-if="ifLoggedIn" class="col-lg-12 col-md-12 col-sm-12 border border-2 border-secondary d-flex py-4 px-2">
+    <div v-if="ifLoggedIn" class="col-lg-12 col-md-12 col-sm-12 d-flex px-2 pt-4 ch-font">
     <div v-if="!carts.length" style="width:100%">
       <h2 class="text-center">購物車目前是空的！</h2>
     </div>
     <div v-else class="shopping-cart">
     <table class="cart-table mt-4 text-center">
-        <thead class="border-bottom border-primary">
+        <thead>
             <!--padding寫thead/ th皆無用，寫th才有用-->
             <tr class="text-primary fs-5 pb-4">
-                <th width="50%" class="py-3">品項</th>
+                <th width="40%" class="py-3 bd-l-12">品項</th>
                 <th width="15%">單價</th>
                 <th width="10%">數量</th>
                 <th width="15%">小計</th>
+                <th width="10%">運費</th>
                 <th width="10%">刪除</th>
             </tr>
         </thead>
@@ -22,42 +23,63 @@
             <tr class="perItemCheckout py-4">
       <td>
       <div class="cardItem-title d-flex align-items-center py-4">
-          <img :src="cart.product.imgUrl" alt="Product-img" class="perCartPic">
+          <img :src="cart.product.imgUrl" alt="Product-img" class="per-cart-pic">
           <p class="text-center align-middle pt-0 pb-3 ps-4 pe-4 fz-20 ms-2">{{ cart.product.title }}</p>
       </div>
   </td>
   <td class="fz-20 text-center align-middle">{{ cart.product.price }}</td>
-  <td class="text-center align-middle">
+  <td class="text-center align-middle pt-4">
     <div class="input-group input-group-sm">
               <div class="input-group mb-3">
                 <input min="1" type="number" class="form-control" :value="cart.qty" @change="(evt) =>setCartQty(cart, evt)" >
-                <span class="input-group-text" id="basic-addon2"></span>
+
               </div>
             </div>
   </td>
-  <td class="text-center align-middle mt-2">NT$<span class="checkoutSubtotal fz-20">{{ cart.product.price*cart.qty }}</span></td>
+  <td class="text-center align-middle mt-2"><span class="checkoutSubtotal fz-20">{{ cart.product.price*cart.qty }}</span></td>
+  <td class="text-center align-middle mt-2">
+    {{ cart.product.domestic_Transport.amount }}
+  </td>
   <td class="text-center align-middle">
-            <button type="button" class="btn btn-mainorange btn-sm text-white"  @click="deletePerCart(cart.id)">
-              <font-awesome-icon v-if="loadingStatus.loadingItem === cart.id" icon="fa-solid fa-spinner" class="me-1" /> <font-awesome-icon icon="fa-solid fa-trash" />
+            <button type="button" class="btn btn-sm text-mainorange"  @click="deletePerCart(cart.id)">
+              <font-awesome-icon v-if="loadingStatus.loadingItem === cart.id" icon="fa-solid fa-spinner" class="me-1 fs-4" /> <font-awesome-icon icon="fa-solid fa-trash" class="fs-5" />
                 </button>
   </td>
 </tr>
 </template>
         </tbody>
         <tfoot>
-            <tr scope="row" class="border-top border-secondary">
+          <tr scope="row" class="border-top border-secondary border-1">
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="mt-4">
-                    <p class="fz-20 mt-3">總金額</p>
+                <td class="mt-4 text-end">
+                    <p class="fz-20 mt-3 me-2">小計</p>
                 </td>
-                <td class="fz-20 text-mainorange">NT${{ final_total }}</td>
+                <td class="fz-20 dark-pink">NT${{ final_total }}</td>
+            </tr>
+          <tr scope="row">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="mt-4 text-end">
+                    <p class="fz-20 mt-3 me-2">運費</p>
+                </td>
+                <td class="fz-20 dark-pink">NT${{ courierTotal }}</td>
+            </tr>
+            <tr scope="row">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="mt-4 text-end">
+                    <p class="fz-20 mt-3 me-2">總金額</p>
+                </td>
+                <td class="fz-20 text-mainorange cartTotal">NT${{ final_total + courierTotal }}</td>
             </tr>
         </tfoot>
     </table>
-    <div class="deleteAllCart text-end mt-5">
-  <button class="btn btn-mainorange text-white" type="button" @click="deleteAllCart">清空購物車</button>
+    <div class="deleteAllCart text-center my-5">
+  <button class="btn btn-mainorange text-white bd-rd-12" type="button" @click="deleteAllCart">清空購物車</button>
 </div>
 </div>
   </div>
@@ -191,6 +213,7 @@ export default {
       this.$http.put(url, { data: cart })
         .then(res => {
           console.log(res.data)
+          this.loadingStatus.loadingItem = ''
           this.getCart()
         })
         .catch(err => {
@@ -224,8 +247,13 @@ export default {
     axios.defaults.headers.common.Authorization = token
     this.getCart()
     console.log(this.ifLoggedIn)
+    // this.cartTotal =
   },
   computed: {
+    courierTotal () {
+      const amount = this.carts.reduce((a, b) => a + b.product.domestic_Transport.amount, 0)
+      return amount
+    },
     ...mapState(productsStore, ['products']),
     ...mapState(cartsStore, ['carts', 'final_total'])
   }

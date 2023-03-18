@@ -1,12 +1,168 @@
 <template>
+  {{ ifFirstStep }}
+  {{  carts }}
     <div class="container">
        <div class="row">
-        <div class="col-12">
+         <!--結帳步驟頁一-->
+        <div class="col-lg-12">
+            <ul class="d-flex my-9 mx-6 justify-content-center checkout-step px-2 en-font">
+    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num navigate"><p class="num">1</p></div><p class="fs-5 ms-4">購物明細</p></li>
+    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num"><p class="num">2</p></div><p class="fs-5 ms-4">付款方式</p></li>
+    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num"><p class="num">3</p></div><p class="fs-5 ms-4">最終確認</p></li>
+</ul>
+        </div>
+        <!--S1-1.購物車最後確認-->
+        <div v-if="ifFirstStep" class="pink-box total-detail col-lg-12 border-top border-bottom border-6 border-secondary">
+            <div class="row gx-6">
+            <div class="col-lg-7">
             <router-view name="cart"></router-view>
         </div>
-        <div class="col-12">
-            <router-view name="orderInfo"></router-view>
+        <div class="col-lg-5">
+            <router-view name="orderInfo" @post-new-order="postNewOrder"></router-view>
         </div>
+    </div>
+        </div>
+
+              <div v-if="ifSecondStep" class="col-lg-6">
+                <h4 class="fs-4 text-center text-primary mb-3 fwt-heavy">訂單資料</h4>
+              <ul class="mb-8 fs-5 border border-primary border-2 py-4 px-8 bd-rd-12">
+                    <li class="fs-6 mb-2"><span class="text-maingray fw-heavy">訂單成立時間：</span><span class="text-primary">{{ (new Date(curOrder.create_at)).getMonth()+1 }}月{{ (new Date(curOrder.create_at)).getDate() }}日{{ (new Date(curOrder.create_at)).getHours() }}:{{ (new Date(curOrder.create_at)).getMinutes() }}</span></li>
+                    <li class="fs-6 mb-2"><span class="text-maingray fw-heavy">訂單編號：</span><span class="text-primary">{{ curOrderId }}</span></li>
+                    <li class="fs-6 mb-2"><span class="text-maingray fw-heavy">訂單總額：</span><span class="text-mainorange">{{ finalTotal + courierTotal }}</span>元</li>
+                    <li><span class="text-maingray fw-heavy">訂單狀態：</span><span class="text-mainorange">待付款</span></li>
+                  </ul>
+                </div>
+                  <div v-if="ifSecondStep" class="col-lg-6">
+                  <h4 class="fs-4 text-center text-primary mb-3 fwt-heavy">運送資料</h4>
+                  <ul class="mb-8 fs-5 bg-primary text-white py-4 px-8 bd-rd-12 d-flex flex-column justify-content-between">
+
+                    <li class="fs-6 mb-2"><span class="fw-heavy">聯絡信箱：</span>{{ curOrder.user.email }}</li>
+                    <li class="fs-6 mb-2"><span class="fw-heavy">取貨人姓名：</span>{{ curOrder.user.name }}</li>
+                    <li class="fs-6 mb-2"><span class="fw-heavy">取貨人手機：</span>{{ curOrder.user.tel }}</li>
+                    <li class="fs-6"><span class="fw-heavy">寄送地址：</span>{{ curOrder.user.address }}</li>
+                  </ul>
+                </div>
+            <!--  -->
+
+          <div v-if="ifSecondStep" class="col-lg-12">
+            <div class="accordion accordion-flush bd-top-opa mb-9" id="orderAccordionFlush">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="orderAccordion">
+                <button class="accordion-button collapsed py-3 px-3 fs-5 text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#channelAccordionFlushCollapse" aria-expanded="false" aria-controls="channelAccordionFlushCollapse">
+                  <font-awesome-icon icon="fa-solid fa-tag" class="me-3 dark-pink fs-6" /><span class="dark-pink fs-6">購買明細</span>
+                </button>
+              </h2>
+              <div id="channelAccordionFlushCollapse" class="accordion-collapse collapse" aria-labelledby="channelAccordionFlushHeading" data-bs-parent="#orderAccordionFlush">
+                <div class="accordion-body">
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-mainorange px-4 py-2 text-white fwt-heavy fs-5 bd-rd-12" @click="confirmToPay">確定付款</button>
+          </div>
+        {{ curOrderId }}
+        {{ curOrder }}
+
+        <div v-if="ifThirdStep" class="col-lg-12">
+         <h4>第三頁</h4>
+        </div>
+
        </div>
     </div>
 </template>
+
+<script>
+
+import { mapActions, mapState } from 'Pinia'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+
+import cartsStore from '../../store/cartsStore.js'
+const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
+
+export default {
+  data () {
+    // -NQnw_-sBXJJrEsfC53i
+    return {
+      ifFirstStep: false,
+      ifSecondStep: true,
+      ifThirdStep: false,
+      curOrderId: '-NQnw_-sBXJJrEsfC53i',
+      curOrder: {},
+      finalTotal: 0
+    }
+  },
+  methods: {
+    postNewOrder (perOrder) {
+      perOrder.data.courierTotal = this.courierTotal
+      console.log(perOrder.data.courierTotal)
+      this.perOrder = perOrder
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/order`
+      axios.post(url, perOrder)
+        .then(res => {
+          console.log(res.data)
+          this.curOrderId = res.data.orderId
+          this.ifFirstStep = false
+          this.ifSecondStep = true
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '成功送出訂單',
+            showConfirmButton: false,
+            timer: 1800
+          })
+          this.getPerOrder()
+          // this.deleteAllCartToOrder()
+          // 成功送出訂單需清空購物車
+        })
+        .catch(err => {
+          console.log(err)
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
+        })
+    },
+    getPerOrder () {
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/order/${this.curOrderId}`
+      axios.get(url)
+        .then(res => {
+          console.log(res.data.order)
+          this.curOrder = res.data.order
+          this.finalTotal = res.data.order.total
+        })
+        .catch(err => {
+          console.log(err)
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
+        })
+    },
+    confirmToPay () {
+      console.log(this.curOrderId)
+    },
+    ...mapActions(cartsStore, ['deleteAllCartToOrder', 'getCart'])
+  },
+  mounted () {
+    this.getCart()
+    console.log(this.final_total)
+    if (this.ifSecondStep === true) {
+      this.getPerOrder()
+    }
+  },
+  computed: {
+    courierTotal () {
+      const amount = this.carts.reduce((a, b) => a + b.product.domestic_Transport.amount, 0)
+      return amount
+    },
+    ...mapState(cartsStore, ['final_total', 'carts'])
+  }
+}
+</script>

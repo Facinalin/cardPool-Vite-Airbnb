@@ -1,11 +1,11 @@
 <template>
   <div class="activity-wrapper bg-maingray">
-  <div class="container text-white ch-font py-2">
+  <div class="container text-white ch-font fwt-light py-2">
     <div class="row py-8">
       <div class="col-lg-6" v-for="activity in activities" :key="activity.imgUrl">
         <RouterLink :to="`/${activity.router}`">
         <div class="perBtn px-3 mb-6">
-      <h1 class="ls-10 text-white">{{ activity.name }}</h1>
+      <h1 class="ls-10 text-white fwt-light">{{ activity.name }}</h1>
       <img :src="activity.imgUrl" alt="" class="activity-btn-pic bd-rd-20">
     </div>
       </RouterLink>

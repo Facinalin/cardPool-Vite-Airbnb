@@ -61,7 +61,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.getProduct()
-    }, 1900)
+    }, 800)
   }
 }</script>
 
@@ -97,6 +97,14 @@ export default {
 .loadingGif{
   margin-top: 70px;
   width: 160px;
+}
+
+.router-btn:hover {
+  background: #E8A8D4;
+}
+
+.router-btn:hover a {
+  color: #ffffff;
 }
 
 </style>
