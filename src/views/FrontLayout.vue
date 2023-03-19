@@ -139,8 +139,7 @@ export default {
   },
   mounted () {
     this.getCart()
-    // this.checkAdmin()
-    // 前台登出的clearAllCookies函式還沒處理
+    this.checkAdmin()
   }
 }
 

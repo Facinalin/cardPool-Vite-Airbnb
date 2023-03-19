@@ -13,12 +13,10 @@
     <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
     <p class="card-text fs-7 text-primary">{{ product.price }}元</p>
     <div class="d-flex justify-content-center mt-4">
-    <button type="button" class="btn btn-white border-secondary rounded-xxl py-1 px-3 me-2 fs-7 bd-rd-12 router-btn">
-      <RouterLink :to="`/product/${product.id}`" class="text-secondary check-product">
+      <RouterLink :to="`/product/${product.id}`" class="dark-pink check-product btn btn-white border-secondary rounded-xxl py-1 px-3 me-2 fs-7 bd-rd-12 router-btn">
         <font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />
         看商品
       </RouterLink>
-    </button>
     <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 fs-7 bd-rd-12" @click="addToCart(product.id)" :disabled="loadingStatus.loadingItem === product.id || !product.is_enabled">
       <font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />
       加購物車</button>

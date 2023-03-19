@@ -772,6 +772,7 @@ export default {
     ...mapActions(adminStore, ['getProductList'])
   },
   mounted () {
+    this.checkGeneralProduct = true
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     axios.defaults.headers.common.Authorization = token
     const addProductModal = document.getElementById('addProductModal')

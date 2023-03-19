@@ -123,10 +123,12 @@ export default defineStore('cartsStore', {
       axios.get(url)
         .then(res => {
           console.log(res.data.data.carts)
+          const oricart = res.data.data.carts
           // this.carts = res.data.data.carts
-          this.cardGroupCart = res.data.data.carts.filter(el => el.category === '拆卡')
+          this.cardGroupCart = oricart.filter(el => el.category === '拆卡')
           this.total = res.data.data.total
           this.final_total = res.data.data.final_total
+          console.log(this.cardGroupCart)
         })
         .catch(err => {
           Swal.fire({

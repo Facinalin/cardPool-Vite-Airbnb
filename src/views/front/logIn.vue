@@ -91,7 +91,7 @@ export default {
           showConfirmButton: false,
           timer: 1800
         })
-        this.$router.push('/admin/products')
+        this.$router.push('/admin/dashboard/adminrcardgroup')
         // 轉址先關掉
         // window.location = 'products.html'
       }).catch((err) => {

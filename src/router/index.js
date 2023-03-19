@@ -63,6 +63,10 @@ const routes = [
       component: () => import('../views/front/perCardGroup.vue')
     },
     {
+      path: 'dancegroup/:id',
+      component: () => import('../views/front/perDanceGroup.vue')
+    },
+    {
       path: 'logIn',
       component: () => import('../views/front/logIn.vue')
     }]

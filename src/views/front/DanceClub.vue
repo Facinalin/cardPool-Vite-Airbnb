@@ -6,9 +6,9 @@
                 <div v-for="danceGroup in danceGroups" :key="danceGroup.id" class="perClub bd-rd-12 border border-primary d-flex justify-content-between py-4 px-6 mb-3">
                     <div class="start d-flex">
                     <div class="me-4 dance-per-group">
-                        <a href="" >
+                       <RouterLink :to="`/dancegroup/${danceGroup.id}`" class="text-secondary check-product">
                         <img :src="danceGroup.imageUrl" alt="" class="perClub-pic bd-rd-12">
-                    </a>
+                      </RouterLink>
                     </div>
                     <div class="per-club-txt d-flex align-items-center">
                         <div class="d-flex flex-column justify-content-between py-2 me-4">

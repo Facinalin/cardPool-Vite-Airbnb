@@ -1,13 +1,13 @@
 <template>
     <div class="container my-5">
         <div class="row">
-            <div class="product-img col-md-12 col-lg-5 mt-9">
+            <div class="product-img col-md-12 col-lg-5 mt-9 bordr border-maingray">
                 <div class="d-flex justify-content-center mb-6">
                     <img :src="product.imgUrl" alt="" class="cardImg"></div>
         </div>
         <!--商品選項-右-->
         <div class="col-md-12 col-lg-7 ps-lg-9 ch-font mt-9">
-          <h1 class="mb-3 fs-1">{{ product.title }}</h1>
+          <h1 class="mb-3 fs-1 lh1-5">{{ product.title }}</h1>
     <p class="mb-1 fs-7">卡團編號：#{{ product.id }}</p>
     <p class="mb-2 dark-pink fs-7">{{ product.channel }}</p>
     <div class="member-option">
@@ -31,7 +31,7 @@
       </div>
           </div>
         <div class="btn-area btns d-flex justify-content-end">
-          <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 me-3 confirmJoinBtn d-flex bd-rd-12" @click="confirmJoin(product.id, memberQty)">
+          <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 me-3 confirmJoinBtn d-flex bd-rd-12" @click="confirmJoin(product.id, memberQty)" :class="{'disabled':loadingStatus.loadingItem === product.id}">
             <font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="me-1" />
             確認卡位<span class="memberQty">{{ memberQty }}</span></button>
           <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 bd-rd-12">收藏<font-awesome-icon icon="fa-solid fa-heart" class="ms-1"/></button>
@@ -195,6 +195,7 @@ export default {
       this.$http.get(url)
         .then(res => {
           this.product = res.data.product
+          console.log(this.product)
           // 原本沒有要寫這段，但不清楚到底是api或proxy有問題，每四次開發渲染時成功一次，報錯三次，只好這樣改
           this.domestic.amount = res.data.product.domestic_Transport.amount
           this.domestic.courier = res.data.product.domestic_Transport.courier
@@ -308,6 +309,7 @@ export default {
               text: '紅區跟藍區須1:1帶！',
               allowOutsideClick: true
             })
+            return
           }
         }
         this.loadingStatus.loadingItem = curProductId
@@ -315,6 +317,11 @@ export default {
         const currentCart = this.cardGroupCart.find(item => item.product_id === curProductId)
         if (currentCart) {
           this.loadingStatus.loadingItem = ''
+          const chosenMemberDom = document.querySelectorAll('.perMemberOption img')
+          chosenMemberDom.forEach(el => {
+            el.classList.remove('activeSm')
+          })
+          this.memberQty = 0
           Swal.fire({
             position: 'center',
             icon: 'error',
@@ -360,6 +367,7 @@ export default {
       axios[httpRequest](purl, { data: cart })
         .then(res => {
           this.loadingStatus.loadingItem = ''
+          this.memberQty = 0
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -421,7 +429,7 @@ export default {
 }
 
 .cardImg{
-    max-width: 300px;
+    max-width: 400px;
     border-radius: 12px;
     object-fit: cover;
 }

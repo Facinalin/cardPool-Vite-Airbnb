@@ -880,6 +880,7 @@ border: 6px solid $primary;
     cursor: pointer;
     content:'看更多';
     width: 60px;
+    border: $white;
     color:$white;
     position: absolute;
     z-index: 2;
@@ -941,6 +942,11 @@ border: 6px solid $primary;
   display: inline;
   margin: 0px auto;
 }
+
+.perClub-pic{
+  object-fit: cover;
+}
+
 
 
 
