@@ -84,7 +84,7 @@
   </div>
   </div>
 </div>
-<div v-else class="row">
+<div v-if="cardGroupBeenFiltered && filteredCardGroupList.length > 0" class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in filteredCardGroupList" :key="product.id">
     <div class="card rounded-0 border-0">
     <img :src="product.imgUrl" class="card-img-top" alt="">
@@ -101,6 +101,9 @@
     </div>
   </div>
   </div>
+</div>
+<div v-if="cardGroupBeenFiltered && filteredCardGroupList.length === 0">
+<h2 class="text-mainorange fs-5">無符合商品！請修改篩選條件！</h2>
 </div>
   </div>
   </div>
@@ -200,7 +203,8 @@ export default {
         ],
         searchable: false,
         createOption: true
-      }
+      },
+      nomatched: false
     }
   },
   components: {
@@ -288,6 +292,7 @@ export default {
       })
       console.log(filterCardGroupProduct)
       if (filterCardGroupProduct.length === 0) {
+        this.cardGroupBeenFiltered = true
         console.log('無符合商品，請修改篩選條件！')
       }
       console.log(this.channels.value)
