@@ -39,6 +39,7 @@
   </swiper>
   </div>
   <h1 class="fs-1 ch-font ls-10 text-center mt-9 text-white">看看我的本命</h1>
+   <!-- 舞團cta -->
   <div class="container d-flex flex-column mt-150 dance-section mb-9">
     <div class="circle-parent">
       <div class="circle"></div>
@@ -58,6 +59,21 @@
 <img src="../../assets/dance-cta.svg" alt="" class="dance-cta-img">
    </div>
   </div>
+  </div>
+  <div class="container d-flex mt-90">
+   <div class="account-img-left">
+<img src="../../assets/Group 29.svg" alt="" class="account-cta-img ps-9">
+   </div>
+   <div class="account-img-right account-cta-txt d-flex flex-column justify-content-center">
+    <h1 class="text-white mb-9 ch-font fs-5 mt-4 fwt-light px-6 ls-6 lh1-5" >歡迎光臨！卡舖匯集了全台灣最豐富的追星資訊，馬上加入會員，你就可以：</h1>
+    <ul class="text-white fwt-light ls-6 fs-5 text-start mb-9 px-6">
+      <li class="mb-1"><font-awesome-icon icon="fa-solid fa-heart" class="me-2"/>拆卡開團/ 出卡</li>
+      <li class="mb-1"><font-awesome-icon icon="fa-solid fa-heart" class="me-2"/>周邊代購</li>
+      <li class="mb-1"><font-awesome-icon icon="fa-solid fa-heart" class="me-2"/>舞蹈揪團</li>
+      <li class="mb-1"><font-awesome-icon icon="fa-solid fa-heart" class="me-2"/>應援宣傳</li>
+    </ul>
+    <router-link to="/logIn" class="account-cta-link text-white bg-mainorange ch-font px-6 py-4 bd-rd-12 fs-4">成為我們的一員</router-link>
+   </div>
   </div>
 </div>
 

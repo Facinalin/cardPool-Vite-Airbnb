@@ -5,7 +5,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots, faStar, faHouse, faHeart, faArrowLeft, faClock, faPlane, faTruck, faComment, faTag } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots, faStar, faHouse, faHeart, faArrowLeft, faClock, faPlane, faTruck, faComment, faTag, faDollarSign } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { defineRule, configure, Field, Form, ErrorMessage } from 'vee-validate'
 import { required, email, max } from '@vee-validate/rules'
@@ -34,7 +34,7 @@ app.use(pinia)
 app.use(VueAxios, axios)
 app.use(router)
 app.use(bootstrap)
-library.add(faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots, faStar, faHouse, faHeart, faArrowLeft, faClock, faPlane, faTruck, faComment, faTag)
+library.add(faCartShopping, faUser, faCheck, faXmark, faStarOfLife, faPenToSquare, faTrash, faSpinner, faCommentDots, faStar, faHouse, faHeart, faArrowLeft, faClock, faPlane, faTruck, faComment, faTag, faDollarSign)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('VField', Field)
 app.component('VForm', Form)

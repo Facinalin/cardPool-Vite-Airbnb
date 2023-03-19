@@ -62,13 +62,14 @@ export default defineStore('cartsStore', {
           this.getCart()
         })
         .catch(err => {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${err.message}`,
-            showConfirmButton: false,
-            timer: 1800
-          })
+          console.log(err)
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'error',
+          //   title: `${err.message}`,
+          //   showConfirmButton: false,
+          //   timer: 1800
+          // })
         })
       this.getCart()
     },

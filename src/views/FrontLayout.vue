@@ -45,7 +45,9 @@
     <li class="my-1"><a class="dropdown-item text-center ch-font fwt-light" href="#" @click.prevent="logOut">登出</a></li>
   </ul>
   <ul v-else class="dropdown-menu dropdown-menu-end">
-    <li class="my-1"><a class="dropdown-item text-center" href="#"><router-link to="/logIn" class="text-maingray ch-font fwt-light">登入註冊</router-link></a></li>
+    <li class="my-1"><a class="dropdown-item text-center" href="#">
+      <router-link to="/logIn" class="text-maingray ch-font fwt-light">登入註冊</router-link>
+    </a></li>
   </ul>
 </div>
         </li>

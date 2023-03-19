@@ -7,6 +7,7 @@
         <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in products" :key="product.id">
     <div class="card rounded-0 border-0 px-5">
       <div class="card-img-member">
+        <div class="watermark"></div>
     <img :src="product.imgUrl" class="card-img-top-rec bd-rd-20" alt="">
   </div>
     <div class="card-body px-0 py-4 text-center">

@@ -1,5 +1,5 @@
 <template>
-      <div v-if="isLogInPanel" class="container container-fluid border border-mainorange">
+      <div v-if="isLogInPanel" class="container container-fluid">
         <div class="row">
         <div class="poster-area login-bg col-5">
         </div>
@@ -16,10 +16,10 @@
     <input id="password" v-model="user.password" type="password" required="" autocomplete="off"  class="mb-5 py-2 px-3">
     <label for="password">密碼 Password</label>
 </div>
-<button type="button"  class="logInInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20" @click.prevent="login">登入</button>
+<button type="button"  class="logInInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20 bd-rd-12" @click.prevent="login">登入</button>
 <div class="d-flex justify-content-between">
-        <button type="button" class="toLogin-btn btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o" @click="toSignUpPanel">沒有帳號？點此註冊</button>
-        <button type="button" class="toLogin-btn btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o">忘記密碼</button>
+        <button type="button" class="toLogin-btn btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o bd-rd-12" @click="toSignUpPanel">沒有帳號？點此註冊</button>
+        <button type="button" class="toLogin-btn btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o bd-rd-12">忘記密碼</button>
       </div>
         </form>
       </div>
@@ -43,9 +43,9 @@
     <input id="password" v-model="perUser.password" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
     <label for="password">確認密碼 Confirm Password</label>
 </div>
-         <button type="button"  class="signUpInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20">註冊</button>
+         <button type="button"  class="signUpInfo-btn btn btn-secondary rounded-xxl text-white py-2 px-9 mb-4 fz-20 bd-rd-12">註冊</button>
         </form>
-        <button type="button" id="toLogin-btn" class="btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o" @click="toLoginPanel">已有帳號？點此登入</button>
+        <button type="button" id="toLogin-btn" class="btn btn-white border border-primary rounded-xxl text-primary py-2 px-3 fz-16-o bd-rd-12" @click="toLoginPanel">已有帳號？點此登入</button>
       </div>
       <div class="col-lg-1">
       </div>

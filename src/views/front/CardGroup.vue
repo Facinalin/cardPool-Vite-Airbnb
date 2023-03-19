@@ -53,8 +53,8 @@
       v-model="channels.value"
       v-bind="channels"
       placeholder="請選擇通路"
+      class="en-font"
     ></Multiselect>
-                  {{ channels.value }}
                 </div>
               </div>
             </div>

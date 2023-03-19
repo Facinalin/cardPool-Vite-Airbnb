@@ -1,9 +1,24 @@
 <template>
-    <div class="container">
-      <div class="row">
-    <div v-if="ifLoggedIn" class="col-lg-12 col-md-12 col-sm-12 d-flex px-2 pt-4 ch-font">
-    <div v-if="!carts.length" style="width:100%">
-      <h2 class="text-center">購物車目前是空的！</h2>
+    <!-- <div v-if="ifLoggedIn" class="container border-0">
+      <div class="row border-0">
+    <div  class="col-lg-12 col-md-12 col-sm-12 d-flex px-2 pt-4 ch-font border-0">
+
+  </div>
+</div>
+</div>
+
+<div v-else class="container">
+  <div class="d-flex flex-column justify-content-center border border-0">
+    <div class="pic-area d-flex justify-content-center mb-6">
+    <img src="https://i.imgur.com/s11Z5gt.png" alt="" class="alertPic">
+    <img src="../../assets/cart-not-logged.svg" alt="" class="alertMsg">
+  </div>
+  <div class="d-flex justify-content-center">
+  <button type="button" class="toLogPageBtn btn btn-primary border-primary text-white rounded-xxl py-1 px-3"><router-link to="/logIn">我要登入</router-link></button>
+</div>
+</div>
+</div> -->
+<div v-if="!carts.length" class="border-0 d-flex justify-content-center">
     </div>
     <div v-else class="shopping-cart">
     <table class="cart-table mt-4 text-center">
@@ -80,19 +95,6 @@
     </table>
     <div class="deleteAllCart text-center my-5">
   <button class="btn btn-mainorange text-white bd-rd-12" type="button" @click="deleteAllCart">清空購物車</button>
-</div>
-</div>
-  </div>
-  <div v-else class="d-flex flex-column justify-content-center border border-0">
-    <div class="pic-area d-flex justify-content-center mb-6">
-    <img src="https://i.imgur.com/s11Z5gt.png" alt="" class="alertPic">
-    <img src="../../assets/cart-not-logged.svg" alt="" class="alertMsg">
-  </div>
-  <div class="d-flex justify-content-center">
-  <button type="button" class="toLogPageBtn btn btn-primary border-primary text-white rounded-xxl py-1 px-3"><router-link to="/logIn">我要登入</router-link></button>
-</div>
-</div>
-
 </div>
 </div>
 </template>

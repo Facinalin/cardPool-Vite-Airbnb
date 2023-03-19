@@ -1,3 +1,3 @@
 <template>
-    <h4>這是抽獎活動區</h4>
+       <img src="https://i.imgur.com/03f5t3E.png" alt="" class="construction-pic mt-6 mb-9 mx-auto">
 </template>

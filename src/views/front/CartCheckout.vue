@@ -1,18 +1,19 @@
 <template>
-  {{ ifFirstStep }}
-  {{  carts }}
-    <div class="container">
+    <div class="container mb-9 border-bottom border-secondary pb-9">
        <div class="row">
          <!--結帳步驟頁一-->
         <div class="col-lg-12">
             <ul class="d-flex my-9 mx-6 justify-content-center checkout-step px-2 en-font">
-    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num navigate"><p class="num">1</p></div><p class="fs-5 ms-4">購物明細</p></li>
-    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num"><p class="num">2</p></div><p class="fs-5 ms-4">付款方式</p></li>
-    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num"><p class="num">3</p></div><p class="fs-5 ms-4">最終確認</p></li>
+    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifFirstStep}"><p class="num">1</p></div><p class="fs-5 ms-4">購物明細</p></li>
+    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifSecondStep}"><p class="num">2</p></div><p class="fs-5 ms-4">付款方式</p></li>
+    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifThirdStep}"><p class="num">3</p></div><p class="fs-5 ms-4">最終確認</p></li>
 </ul>
         </div>
+        <div v-if="!carts.length && ifThirdStep===false" class="col-lg-12">
+          <h4 class="fs-4 text-center">購物車尚無商品！</h4>
+        </div>
         <!--S1-1.購物車最後確認-->
-        <div v-if="ifFirstStep" class="pink-box total-detail col-lg-12 border-top border-bottom border-6 border-secondary">
+        <div v-if="ifFirstStep" class="pink-box total-detail col-lg-12 border-top border-bottom border-6 border-secondary" :class="{'border-0':!carts.length}">
             <div class="row gx-6">
             <div class="col-lg-7">
             <router-view name="cart"></router-view>
@@ -36,10 +37,14 @@
                   <h4 class="fs-4 text-center text-primary mb-3 fwt-heavy">運送資料</h4>
                   <ul class="mb-8 fs-5 bg-primary text-white py-4 px-8 bd-rd-12 d-flex flex-column justify-content-between">
 
-                    <li class="fs-6 mb-2"><span class="fw-heavy">聯絡信箱：</span>{{ curOrder.user.email }}</li>
+                    <!-- <li class="fs-6 mb-2"><span class="fw-heavy">聯絡信箱：</span>{{ curOrder.user.email }}</li>
                     <li class="fs-6 mb-2"><span class="fw-heavy">取貨人姓名：</span>{{ curOrder.user.name }}</li>
                     <li class="fs-6 mb-2"><span class="fw-heavy">取貨人手機：</span>{{ curOrder.user.tel }}</li>
-                    <li class="fs-6"><span class="fw-heavy">寄送地址：</span>{{ curOrder.user.address }}</li>
+                    <li class="fs-6"><span class="fw-heavy">寄送地址：</span>{{ curOrder.user.address }}</li> -->
+                    <li class="fs-6 mb-2"><span class="fw-heavy">聯絡信箱：</span></li>
+                    <li class="fs-6 mb-2"><span class="fw-heavy">取貨人姓名：</span></li>
+                    <li class="fs-6 mb-2"><span class="fw-heavy">取貨人手機：</span></li>
+                    <li class="fs-6"><span class="fw-heavy">寄送地址：</span></li>
                   </ul>
                 </div>
             <!--  -->
@@ -58,13 +63,18 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-mainorange px-4 py-2 text-white fwt-heavy fs-5 bd-rd-12" @click="confirmToPay">確定付款</button>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="mx-auto btn btn-mainorange px-4 py-2 text-white fwt-heavy fs-5 bd-rd-12" @click="confirmToPay"><font-awesome-icon icon="fa-solid fa-dollar-sign me-2" class="text-white fs-3 mb-1"/><p>付款</p><font-awesome-icon v-if="loadingStatus.loadingItem === curOrderId" icon="fa-solid fa-spinner" /></button>
           </div>
-        {{ curOrderId }}
-        {{ curOrder }}
+
+          </div>
 
         <div v-if="ifThirdStep" class="col-lg-12">
-         <h4>第三頁</h4>
+          <h1 class="fs-3 my-6 text-center">等待賣家確認訂單中，請至『我的後台』查詢訂單狀態</h1>
+         <div class="d-flex justify-content-center align-items-center">
+              <router-link to="/" class="me-4 btn btn-primary px-4 py-2 text-white fwt-heavy fs-6 bd-rd-12"><p>回首頁</p></router-link>
+              <router-link to="/products" class="btn btn-primary px-4 py-2 text-white fwt-heavy fs-6 bd-rd-12"><p>繼續逛逛</p></router-link>
+          </div>
         </div>
 
        </div>
@@ -84,12 +94,15 @@ export default {
   data () {
     // -NQnw_-sBXJJrEsfC53i
     return {
-      ifFirstStep: false,
-      ifSecondStep: true,
+      ifFirstStep: true,
+      ifSecondStep: false,
       ifThirdStep: false,
       curOrderId: '-NQnw_-sBXJJrEsfC53i',
       curOrder: {},
-      finalTotal: 0
+      finalTotal: 0,
+      loadingStatus: {
+        loadingItem: ''
+      }
     }
   },
   methods: {
@@ -112,7 +125,7 @@ export default {
             timer: 1800
           })
           this.getPerOrder()
-          // this.deleteAllCartToOrder()
+          this.deleteAllCartToOrder()
           // 成功送出訂單需清空購物車
         })
         .catch(err => {
@@ -146,11 +159,42 @@ export default {
         })
     },
     confirmToPay () {
+      this.loadingStatus.loadingItem = this.curOrderId
       console.log(this.curOrderId)
+      // /v2/api/{api_path}/pay/{order_id}
+      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/pay/${this.curOrderId}`
+      axios.post(url)
+        .then(res => {
+          console.log(res.data)
+          this.loadingStatus.loadingItem = ''
+          this.ifSecondStep = false
+          this.ifThirdStep = true
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '付款成功',
+            showConfirmButton: false,
+            timer: 1800
+          })
+          // this.deleteAllCartToOrder()
+          // 成功送出訂單需清空購物車
+        })
+        .catch(err => {
+          console.log(err)
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
+        })
     },
     ...mapActions(cartsStore, ['deleteAllCartToOrder', 'getCart'])
   },
   mounted () {
+    this.ifFirstStep = true
+    this.ifThirdStep = false
     this.getCart()
     console.log(this.final_total)
     if (this.ifSecondStep === true) {
