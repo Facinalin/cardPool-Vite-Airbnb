@@ -13,7 +13,7 @@
 </div>
   <div class="content bg-black">
     <!-- 拆卡團 -->
-    <div class="container d-flex section">
+    <div class="container d-flex flex-wrap card-group-section">
    <div class="d-flex flex-column card-container justify-content-center">
 <img src="../../assets/takeaseat.svg" alt="" class="takeaseat">
    </div>
@@ -38,13 +38,13 @@
     </swiper-slide>
   </swiper>
   </div>
-  <h1 class="fs-1 ch-font ls-10 text-center mt-9 text-white">看看我的本命</h1>
+  <h1 class="swiper-txt fs-1 ch-font ls-10 text-center mt-9 text-white">看看我的本命</h1>
    <!-- 舞團cta -->
   <div class="container d-flex flex-column mt-150 dance-section mb-9">
     <div class="circle-parent">
       <div class="circle"></div>
     </div>
-    <div class="d-flex">
+    <div class="d-flex flex-wrap-reverse">
    <div class="txt text-white d-flex flex-column align-items-center justify-content-center">
     <h1 class="fz-60 ch-font ls-10 mb-9">揪團跳舞</h1>
     <p class="ch-font fs-5 mt-4 fwt-light px-6 ls-10 lh1-5 mb-8">不論是百人隨機舞蹈，還是小組團練，只要你肯出來，我們肯邀！</p>
@@ -55,12 +55,12 @@
     </button>
    </div>
 
-   <div class="d-flex flex-column card-container justify-content-center">
+   <div class="dance-pic-area d-flex flex-column card-container justify-content-center">
 <img src="../../assets/dance-cta.svg" alt="" class="dance-cta-img">
    </div>
   </div>
   </div>
-  <div class="container d-flex mt-90">
+  <div class="container d-flex mt-90 flex-wrap">
    <div class="account-img-left">
 <img src="../../assets/booklet.svg" alt="" class="account-cta-img ps-9">
    </div>
@@ -135,9 +135,13 @@ export default {
       } if (window.innerWidth <= 779) {
         this.slidesPerView = 3
         this.spaceBetween = 60
-      } if (window.innerWidth <= 500) {
+      } if (window.innerWidth <= 550) {
         this.slidesPerView = 2
-        this.spaceBetween = 60
+        this.spaceBetween = 30
+      }
+      if (window.innerWidth <= 500) {
+        this.slidesPerView = 1
+        this.spaceBetween = 80
       }
     },
     ...mapActions(productsStore, ['getCardProducts'])
