@@ -245,10 +245,7 @@ a {
 }
 
 .content{
-  height: 430vh;
-  @media screen and (max-width: 1200px) {
-    height: 310vh;
-  }
+  height: 320vh;
   @media screen and (max-width: 992px) {
     height: 320vh;
   }
@@ -401,8 +398,10 @@ a {
   height: 100%;
   overflow: hidden;
   border-radius: 15px;
-  @media screen and (max-width: 767px) {
-    width: 100%;
+  @media screen and (max-width: 780px) {
+    width: 86%;
+    height: auto;
+    display: block;
   }
 }
 
