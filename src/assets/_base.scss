@@ -29,6 +29,15 @@ a {
 .ls-10{
   letter-spacing: 10px;
 }
+@media screen and (max-width: 767px) {
+  .fs-5{
+   font-size: 16px !important;
+  }
+  .fs-6{
+    font-size: 12px !important;
+   }
+}
+
 
 .fz-18{
   font-size: 18px;
@@ -193,6 +202,9 @@ a {
   @media screen and (max-width: 767px) {
     width: 440px;
   }
+  @media screen and (max-width: 576px) {
+    width: 100%;
+  }
 }
 .banner-bottom-text{
   margin-top: 490px;
@@ -212,13 +224,18 @@ a {
   @media screen and (max-width: 576px) {
     font-size: 70px;
     }
+  @media screen and (max-width: 448px) {
+      font-size: 46px;
+      }
 }
 
 .btn-area{
   width: 100%;
   margin-top: 36px;
-  display: flex;
-  justify-content: center;
+  @media screen and (max-width: 448px) {
+    justify-content: center;
+    }
+  
 
 }
 
@@ -403,6 +420,9 @@ a {
     height: auto;
     display: block;
   }
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
 }
 
 .btn-group-adj{
@@ -451,9 +471,18 @@ a {
   padding: 4px 14px;
   .member-img-sm{
   border: 6px solid #FFE1EC;
+  @media screen and (max-width: 576px) {
+  border: 4px solid #FFE1EC;
+  }
+  @media screen and (max-width: 458px) {
+    border: 1px solid #FFE1EC;
+    }
   }
   .per-member:hover{
       border: 6px solid #1e1c1c;
+      @media screen and (max-width: 576px) {
+        border: 4px solid $maingray;
+        }
   }
 }
 
@@ -463,8 +492,18 @@ a {
   padding: 4px 8px;
   .member-img-sm{
   border: 6px solid #DFE8FF;
+  @media screen and (max-width: 576px) {
+    border: 3px solid #DFE8FF;
+    }
+    @media screen and (max-width: 458px) {
+      border: 1px solid #DFE8FF;
+      }
+    
   .per-member:hover{
     border: 6px solid $maingray;
+    @media screen and (max-width: 576px) {
+      border: 4px solid $maingray;
+      }
 }
   }
 }
@@ -475,6 +514,9 @@ a {
   border: 6px solid $white;
   .per-member:hover{
     border: 6px solid $maingray;
+    @media screen and (max-width: 576px) {
+      border: 4px solid $maingray;
+      }
 }
   }
 }
@@ -487,15 +529,41 @@ a {
   background: cover;
   position:relative;
   margin: 0px 4px;
+  @media screen and (max-width: 554px) {
+   width: 90px;
+   height: 90px;
+  }
 }
 
 .small-head{
   width: 74px;
   height: 74px;
+  @media screen and (max-width: 554px) {
+    width: 64px;
+    height: 64px;
+   }
+   @media screen and (max-width: 460px) {
+    width: 42px;
+    height: 42px;
+   }
 }
 
 .member-option{
   width: 480px;
+  @media screen and (max-width: 992px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 768px) {
+    width: 97%;
+    }
+
+}
+
+.product-img{
+  @media screen and (max-width: 768px) {
+    padding: 0 24px;
+    }
 }
 
 .perMemberOption{
@@ -552,6 +620,7 @@ border: 6px solid $primary;
 .footer{
   background: $white;
   height: 120px;
+  width: 100%;
 }
 
 .footer-icon{
@@ -711,6 +780,33 @@ border: 6px solid $primary;
   }
 }
 
+.details-dance{
+  margin-top: 150px;
+  position: relative;
+  line-height: 2;
+  &::before{
+      content: "主揪資訊";
+      position: absolute;
+      transform: translate(8%,-100%);
+      background: #9B9BE3;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 15px 15px 0 0;
+
+  }
+}
+
+.perDance-cta{
+  @media screen and (max-width: 986px) {
+    margin-bottom: 70px;
+
+  }
+  @media screen and (max-width: 575px) {
+   padding: 0 24px;
+
+  }
+}
+
 .notice{
   margin-top: 7px;
   position: relative;
@@ -725,6 +821,11 @@ border: 6px solid $primary;
       border-radius: 15px 15px 0 0;
 
   }
+  @media screen and (max-width: 564px) {
+    margin: 0px 14px 50px 14px;
+ 
+   }
+  
 }
 
 .seller{
@@ -948,6 +1049,9 @@ border: 6px solid $primary;
       display: block;
     margin: 32px auto;
       }
+  @media screen and (max-width: 430px) {
+    width: 90%;
+        }
 }
 
 //  transform: rotate(90deg);
@@ -1015,11 +1119,21 @@ border: 6px solid $primary;
     padding-left: 0;
   }
   @media screen and (max-width: 767px) {
-    width: 70%;
+    width: 80%;
     display: block;
+    padding-left: 0;
     margin: 36px auto;
   }
 
+}
+
+.dance-cardImg{
+  display: block;
+  width: 100%;
+  @media screen and (max-width: 575px) {
+    padding: 0 24px;
+    border-radius: 12px;
+  }
 }
 
 .account-img-left{
@@ -1045,6 +1159,30 @@ border: 6px solid $primary;
   object-fit: cover;
 }
 
+.perClub{
+  @media screen and (max-width: 767px) {
+    margin-bottom: 60px;
+  }
+}
+
+.start{
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.dance-pra{
+  @media screen and (max-width: 500px) {
+    margin-top: 24px;
+  }
+}
+
+.club-btn-group{
+  @media screen and (max-width: 767px) {
+    margin-top: 30px;
+  }
+}
+
 .card-group-section{
   @media screen and (max-width: 767px) {
     margin-bottom: 60px;
@@ -1057,7 +1195,37 @@ border: 6px solid $primary;
   }
 }
 
+.footer-txt{
+  @media screen and (max-width: 575px) {
+    font-size: 14px;
+  }
+}
 
+.cardImg{
+  width: 100%;
+}
+
+.product-btn{
+  @media screen and (max-width: 424px) {
+    margin-bottom: 42px;
+  }
+}
+
+.login-bg{
+  background-image: url(./logInPic.png);
+}
+
+@media screen and (max-width: 767px) {
+  .login-bg{
+  background-image: url(https://images.unsplash.com/photo-1603847734787-9e8a3f3e9d60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG9sb2dyYXBoaWN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60);
+}
+}
+
+.poster-area{
+  background-repeat: no-repeat;
+  background-size:contain;
+  max-width: 100%;
+}
 
 
 

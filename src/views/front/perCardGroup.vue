@@ -1,7 +1,7 @@
 <template>
     <div class="container my-5">
         <div class="row">
-            <div class="product-img col-md-12 col-lg-5 mt-9 bordr border-maingray">
+            <div class="product-img col-md-12 col-lg-5 col-12 mt-9">
                 <div class="d-flex justify-content-center mb-6">
                     <img :src="product.imgUrl" alt="" class="cardImg"></div>
         </div>
@@ -37,7 +37,8 @@
           <button type="button" class="product-btn btn btn-white border-primary rounded-xxl py-1 px-3 bd-rd-12">收藏<font-awesome-icon icon="fa-solid fa-heart" class="ms-1"/></button>
       </div>
         <!--拆卡注意事項-全-->
-        <div class="notice col-12 border border-2 border-secondary rounded-xxl d-flex flex-wrap mt-5 mb-80">
+        <div class="col-12">
+        <div class="notice border border-2 border-secondary d-flex flex-wrap mt-5 mb-80">
           <p class="col-sm-12 col-md-6 col-lg-6 py-4 px-5">
             Q：我要如何知道成團與否？<br>
             （1) 請至註冊信箱內檢查email。<br>
@@ -48,6 +49,7 @@
             * 本站取消規定：當初卡的成員位數全部取消。請私訊賣家告知取消理由，賣方可從後台手動取消。
         </p>
         </div>
+      </div>
 <!-- 下方客製商品敘述及運費注意事項 -->
         <div class="col-12 ch-font">
           <div class="product-details">

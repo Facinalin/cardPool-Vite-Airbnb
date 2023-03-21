@@ -62,7 +62,7 @@
   </div>
   <div class="container d-flex mt-90 flex-wrap">
    <div class="account-img-left">
-<img src="../../assets/booklet.svg" alt="" class="account-cta-img ps-9">
+<img src="../../assets/booklet.svg" alt="" class="account-cta-img ps-lg-9 ps-sm-0 ps-xs-0">
    </div>
    <div class="account-img-right account-cta-txt d-flex flex-column justify-content-center">
     <h1 class="text-white mb-9 ch-font fs-5 mt-4 fwt-light px-6 ls-6 lh1-5" >歡迎光臨！卡舖匯集了全台灣最豐富的追星資訊，馬上加入會員，你就可以：</h1>
@@ -141,7 +141,7 @@ export default {
       }
       if (window.innerWidth <= 500) {
         this.slidesPerView = 1
-        this.spaceBetween = 80
+        this.spaceBetween = 30
       }
     },
     ...mapActions(productsStore, ['getCardProducts'])

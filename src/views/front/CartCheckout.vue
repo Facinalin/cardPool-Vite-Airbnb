@@ -1,12 +1,12 @@
 <template>
-    <div class="container mb-9 border-bottom border-secondary pb-9">
+    <div class="container container-sm container-md container-lg mb-9 border-bottom border border-mainorange pb-9">
        <div class="row">
          <!--結帳步驟頁一-->
         <div class="col-lg-12">
             <ul class="d-flex my-9 mx-6 justify-content-center checkout-step px-2 en-font">
-    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifFirstStep}"><p class="num">1</p></div><p class="fs-5 ms-4">購物明細</p></li>
-    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifSecondStep}"><p class="num">2</p></div><p class="fs-5 ms-4">付款方式</p></li>
-    <li class="step px-4 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifThirdStep}"><p class="num">3</p></div><p class="fs-5 ms-4">最終確認</p></li>
+    <li class="step px-md-4 px-1 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifFirstStep}"><p class="num">1</p></div><p class="fs-6 ms-md-4 ms-1 fs-sm-7">購物明細</p></li>
+    <li class="step px-md-4 px-1 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifSecondStep}"><p class="num">2</p></div><p class="fs-6 ms-md-4 ms-1 fs-sm-6">付款方式</p></li>
+    <li class="step px-md-4 px-1 fs-3 d-flex align-items-center"><div class="step-num" :class="{'navigate': ifThirdStep}"><p class="num">3</p></div><p class="fs-6 ms-md-4 ms-1 fs-sm-6">最終確認</p></li>
 </ul>
         </div>
         <div v-if="!carts.length && ifThirdStep===false" class="col-lg-12">

@@ -1,11 +1,11 @@
 <template>
       <div v-if="isLogInPanel" class="container container-fluid">
         <div class="row">
-        <div class="poster-area login-bg col-5">
+        <div class="poster-area login-bg col-md-5 col-sm-12 col-12">
         </div>
-        <div class="col-1">
+        <div class="col-md-1 col-12">
         </div>
-      <div class="col-6 pt-8 pb-80">
+      <div class="col-md-6 col-12 pt-8 pb-80">
         <img src="../../assets/會員登入.svg" alt="" class="mb-8">
         <form action="" class="my-4">
           <div class="inputGroup">
@@ -63,6 +63,8 @@ const { VITE_APP_URL2 } = import.meta.env
 export default {
   data () {
     return {
+      mdImgSrc: '',
+      imgSrc: '',
       user: {
         username: '',
         password: ''
@@ -119,14 +121,6 @@ export default {
 </script>
 
 <style>
-.poster-area{
-    background-repeat: no-repeat;
-    background-size:contain;
-}
-
-.login-bg{
-    background-image: url(../../assets/logInPic.png);
-}
 
 .log-sign-title{
     -webkit-text-stroke: 1.4px #1E1C1C;
@@ -187,15 +181,7 @@ export default {
 }
 
 @media (max-width:767px){
-  .login-bg{
-    background-image: url(../../assets/logInPic-sm-png)
-  }
-  .poster-area{
-    background-repeat: no-repeat;
-    background-size:contain;
-    max-width: 100%;
-    height: 140px;
-}
+
   }
 
 .signup-bg{

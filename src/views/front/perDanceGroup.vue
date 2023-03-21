@@ -1,12 +1,12 @@
 <template>
-    <div class="container my-5">
+    <div class="container container-sm container-md container-lg my-5">
         <div class="row">
-            <div class="product-img col-md-12 col-lg-5 mb-80 mt-9">
+            <div class="product-img col-sm-12 col-md-12 col-lg-5 col-xl-5 mb-80 mt-9">
                 <div class="d-flex justify-content-center mb-6">
-                    <img :src="product.imageUrl" alt="" class="cardImg"></div>
+                    <img :src="product.imageUrl" alt="" class="dance-cardImg bd-rd-12"></div>
         </div>
         <!--商品選項-右-->
-        <div class="col-md-12 col-lg-7 ps-lg-9 ch-font mt-9 d-flex flex-column justfy-content-between">
+        <div class="perDance-cta col-sm-12 col-md-12 col-lg-7 col-xl-7 ps-lg-9 ch-font mt-9 d-flex flex-column justfy-content-between">
           <div class="txt-area">
           <h1 class="mb-3 fs-1">{{ product.title }}</h1>
           <h2 class="text-primary fs-3">主揪：{{ product.leader }}</h2>
@@ -19,7 +19,7 @@
         <div class="col-12">
   <div class="col-12 ch-font">
           <div class="product-details">
-          <div class="details-1 bd-top-opa col-12 d-flex flex-wrap mt-5 text-maingray">
+          <div class="details-dance bd-top-opa col-12 d-flex flex-wrap mt-5 text-maingray">
             <div class="seller col-12 py-3 px-3 d-flex align-items-center justify-content-between">
               <div class="seller-left d-flex align-items-center">
                 <img class="seller-pic" src="https://i.imgur.com/YxLmY3t.png" alt="sellerpic">

@@ -1,9 +1,8 @@
 <template>
-    <div class="container py-6">
-        <h3></h3>
+    <div class="container container-sm container-lg container-xl py-6">
         <div class="row">
             <div class="col-lg-12 ch-font">
-                <div v-for="danceGroup in danceGroups" :key="danceGroup.id" class="perClub bd-rd-12 border border-primary d-flex justify-content-between py-4 px-6 mb-3">
+                <div v-for="danceGroup in danceGroups" :key="danceGroup.id" class="perClub bd-rd-12 border border-primary d-flex flex-wrap justify-content-between py-4 px-6 mb-3">
                     <div class="start d-flex">
                     <div class="me-4 dance-per-group">
                        <RouterLink :to="`/dancegroup/${danceGroup.id}`" class="text-secondary check-product">
@@ -14,7 +13,7 @@
                         <div class="d-flex flex-column justify-content-between py-2 me-4">
 <h1 class="fs-3 en-font mb-4">{{danceGroup.title}}</h1>
 <h2 class="text-primary fs-3">{{danceGroup.county}}</h2></div>
-<div>
+<div class="dance-pra">
 <p class="mb-3">預計 <span class="dark-pink">{{ (new Date(danceGroup.d_day * 1000)).getMonth()+1 }}月{{ (new Date(danceGroup.d_day * 1000)).getDate() }}日</span > 表演</p>
 <p class="mb-3">一練 <span class="dark-pink">{{ (new Date(danceGroup.first_practice * 1000)).getMonth()+1 }}月{{ (new Date(danceGroup.first_practice * 1000)).getDate() }}日</span></p>
 <p>主揪 <span class="text-secondary">{{danceGroup.leader}}</span></p>
