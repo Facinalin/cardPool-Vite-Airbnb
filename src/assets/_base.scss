@@ -235,8 +235,28 @@ a {
   @media screen and (max-width: 448px) {
     justify-content: center;
     }
-  
+}
 
+// .general-product-des .ge-txt-area{
+//   @media screen and (max-width: 992px) {
+//     margin-bottom: 24px;
+//     }
+// }
+
+
+
+
+.ge-btn-area{
+  justify-content: center;
+}
+
+.general-product-des{
+  @media screen and (max-width: 992px) {
+    margin-bottom: 70px;
+    }
+  @media screen and (max-width: 767px) {
+      align-items: center;
+      }
 }
 
 .banner{
@@ -501,11 +521,14 @@ a {
     
   .per-member:hover{
     border: 6px solid $maingray;
-    @media screen and (max-width: 576px) {
-      border: 4px solid $maingray;
-      }
 }
   }
+}
+
+@media screen and (max-width: 576px) {
+  .per-member:hover{
+  border: 4px solid $maingray;
+}
 }
 
 .white-area{
@@ -561,6 +584,9 @@ a {
 }
 
 .product-img{
+  @media screen and (max-width: 992px) {
+    margin-bottom: 36px;
+    }
   @media screen and (max-width: 768px) {
     padding: 0 24px;
     }

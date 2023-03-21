@@ -10,28 +10,16 @@
                     <img :src="product.imgUrl" alt="" class="cardProductCardImg"></div>
         </div>
         <!--商品選項-右-->
-        <div class="col-md-12 col-lg-7 ps-lg-9 ch-font mt-9 d-flex flex-column justfy-content-between">
-          <div class="txt-area">
+        <div class="col-md-12 col-lg-7 ps-lg-9 ch-font mt-9 d-flex flex-column justfy-content-between general-product-des">
+          <div class="ge-txt-area mb-9">
           <h1 class="mb-3 fs-1">{{ product.title }}</h1>
           <h2 class="text-primary fs-3">${{ product.price }}元</h2>
         </div>
-          <div class="btn-area btns d-flex justify-content-start">
+          <div class="ge-btn-area btns d-flex justify-content-start">
           <button type="button" class="product-btn btn btn-white border-primary bd-rd-12 py-1 px-3 me-3 confirmJoinBtn d-flex" @click="addToCart(product.id)">加入購物車<font-awesome-icon v-if="loadingStatus.loadingItem === product.id" icon="fa-solid fa-spinner" class="ms-1" /></button>
           <button type="button" class="product-btn btn btn-white border-primary bd-rd-12 py-1 px-3">收藏</button>
       </div></div>
 
-        <!--拆卡注意事項-全-->
-        <div class="mt-90 mb-9 notice col-12 border border-2 border-secondary rounded-xxl d-flex flex-wrap">
-          <p class="col-sm-12 col-md-6 col-lg-6 py-4 px-5">
-            Q：我要如何知道成團與否？<br>
-            （1) 請至註冊信箱內檢查email。<br>
-            （2) 請至『會員專區>收藏與排卡>卡位狀態查詢』查看成團進度。
-        </p>
-        <p class="col-sm-12 col-md-6 col-lg-6 py-4 px-5">
-            Q：我要如何取消卡位？<br>
-            * 本站取消規定：當初卡的成員位數全部取消。請私訊賣家告知取消理由，賣方可從後台手動取消。
-        </p>
-        </div>
         <div class="col-12">
   <div class="col-12 ch-font">
           <div class="product-details">
