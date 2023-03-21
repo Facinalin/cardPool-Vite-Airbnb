@@ -18,19 +18,18 @@
                 <div class="accordion-body">
                   <div class="memberFilter">
                     <div class="first-step container-fluid d-flex justify-content-center mb-60">
-        <div class="filterWrapper d-flex flex-wrap justify-content-center">
-     <div class="member-area d-flex flex-wrap en-font">
+        <div class="filterWrapper d-flex flex-wrap justify-content-center en-font">
       <div class="member-row d-flex justify-content-between flex-wrap mb-2">
     <div v-for="perMember in domLeftMember" :key="perMember.member" class="perMemberFilter d-flex flex-column justify-content-center align-items-center mb-2" @click="(evt) =>filterMember(perMember, evt)">
             <div class="member-img mb-1" :class="{ 'memberDisabled': !perMember.left }">
                 <img class="per-member" :src="perMember.imgUrl" :alt="perMember.member" :data-id="perMember.memberNo">
             </div>
-            <h2 class="text-maingray text-center mb-1" :class="{ 'txtDisabled': !perMember.left }">{{ perMember.member }}</h2>
+            <h2 class="per-member-txt text-maingray text-center mb-1" :class="{ 'txtDisabled': !perMember.left }">{{ perMember.member }}</h2>
           </div>
 
       </div>
 <!--  -->
-    </div>
+
      </div>
     </div>
                   </div>
@@ -268,9 +267,8 @@ export default {
     },
     // 卡團篩選條件
     filterCardGroup () {
-      const allFilter = document.querySelectorAll('.per-member')
+      this.cardGroupBeenFiltered = false
       const chosenMember = document.querySelectorAll('.active-lg')
-      console.log(allFilter, chosenMember)
       const filterCardGroupProduct = [...this.cardGroupProduct]
       if (chosenMember.length === 0) {
         Swal.fire({
@@ -291,11 +289,11 @@ export default {
         })
       })
       console.log(filterCardGroupProduct)
+      // 如果連第一層filter都沒有產品，就可以值接回傳無符合。
       if (filterCardGroupProduct.length === 0) {
         this.cardGroupBeenFiltered = true
         console.log('無符合商品，請修改篩選條件！')
       }
-      console.log(this.channels.value)
       // this.channels.value為一個array
       const chosenChannels = this.channels.value
       const finalData = []
@@ -306,11 +304,10 @@ export default {
           }
         })
       })
+      console.log(this.channels.value)
       console.log(finalData)
-      if (finalData.length > 0) {
-        this.filteredCardGroupList = finalData
-        this.cardGroupBeenFiltered = true
-      }
+      this.filteredCardGroupList = finalData
+      this.cardGroupBeenFiltered = true
     },
     ...mapActions(productsStore, ['getCardGroupProduct'])
   },

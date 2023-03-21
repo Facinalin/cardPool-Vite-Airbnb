@@ -237,15 +237,6 @@ a {
     }
 }
 
-// .general-product-des .ge-txt-area{
-//   @media screen and (max-width: 992px) {
-//     margin-bottom: 24px;
-//     }
-// }
-
-
-
-
 .ge-btn-area{
   justify-content: center;
 }
@@ -556,7 +547,20 @@ a {
    width: 90px;
    height: 90px;
   }
+  @media screen and (max-width: 450px) {
+    width: 70px;
+    height: 70px;
+   }
 }
+
+// .per-member-txt{
+//   @media screen and (max-width: 767px) {
+//     font-size: 20px;
+//     }
+//   @media screen and (max-width: 554px) {
+//    font-size: 16px;
+//    }
+// }
 
 .small-head{
   width: 74px;
@@ -895,6 +899,16 @@ border: 6px solid $primary;
 
 .filterWrapper {
   width: 48%;
+  @media screen and (max-width: 1196px) {
+  width: 60%;
+    }
+  @media screen and (max-width: 992px) {
+   width: 80%;
+    }
+  @media screen and (max-width: 767px) {
+   width: 100%;
+       }
+
 }
 
 .member-img{
@@ -913,6 +927,15 @@ border: 6px solid $primary;
 
 .perMemberFilter h2 {
   font-size: 22px;
+  @media screen and (max-width: 992px) {
+    font-size: 20px;
+    }
+  @media screen and (max-width: 767px) {
+    font-size: 18px;
+    }
+  @media screen and (max-width: 554px) {
+   font-size: 16px;
+   }
 }
 
 // 動畫
