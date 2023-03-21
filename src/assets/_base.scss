@@ -1104,6 +1104,10 @@ border: 6px solid $primary;
 .construction-pic{
   width: 500px;
   display: block;
+  @media screen and (max-width: 548px) {
+  width:90%;
+  }
+
 }
 
 .cardProductCardImg{
