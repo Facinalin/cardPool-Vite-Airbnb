@@ -5,7 +5,7 @@
       <img src="../../assets/maxident.png" alt="" class="banner-pic">
       <h1 class="text-size banner-bottom-text ch-font ls-10">拆換自如</h1>
   </div>
-  <div class="btn-area">
+  <div class=" d-flex justify-content-center mt-9">
     <button type="button" class="border-0 cta-btn bd-rd-20 btn btn-primary text-white border-primary py-2 px-4 fs-5 ch-font"><RouterLink to="/cardproducts" class="text-white cta-btn-txt fs-4">逛逛卡舖</RouterLink></button>
   </div>
   <h1 class="en-slogan en-font text-center fwt-light" style="margin-bottom:40px;margin-top: 120px;">"I wanna send my Card to you. CardPool is all it takes."</h1>
@@ -155,7 +155,6 @@ export default {
   mounted () {
     window.addEventListener('resize', this.updateSwiper)
     this.updateSwiper(this.slidesPerView)
-    console.log()
     // const danceSection = document.querySelector('.dance-section')
     const circle = document.querySelector('.circle')
     window.addEventListener('scroll', () => {

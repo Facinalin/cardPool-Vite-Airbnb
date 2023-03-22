@@ -14,9 +14,9 @@
 <h1 class="fs-3 en-font mb-4">{{danceGroup.title}}</h1>
 <h2 class="text-primary fs-3">{{danceGroup.county}}</h2></div>
 <div class="dance-pra">
-<p class="mb-3">預計 <span class="dark-pink">{{ (new Date(danceGroup.d_day * 1000)).getMonth()+1 }}月{{ (new Date(danceGroup.d_day * 1000)).getDate() }}日</span > 表演</p>
-<p class="mb-3">一練 <span class="dark-pink">{{ (new Date(danceGroup.first_practice * 1000)).getMonth()+1 }}月{{ (new Date(danceGroup.first_practice * 1000)).getDate() }}日</span></p>
-<p>主揪 <span class="text-secondary">{{danceGroup.leader}}</span></p>
+<p class="mb-3 text-aidgray">預計 <span class="text-mainorange">{{ (new Date(danceGroup.d_day * 1000)).getMonth()+1 }}月{{ (new Date(danceGroup.d_day * 1000)).getDate() }}日</span > 表演</p>
+<p class="mb-3 text-aidgray">一練 <span class="text-maingray">{{ (new Date(danceGroup.first_practice * 1000)).getMonth()+1 }}月{{ (new Date(danceGroup.first_practice * 1000)).getDate() }}日</span></p>
+<p class="text-aidgray">主揪 <span class="text-maingray">{{danceGroup.leader}}</span></p>
 </div>
                     </div>
                 </div>

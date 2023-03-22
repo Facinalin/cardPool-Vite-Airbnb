@@ -115,8 +115,6 @@ export default {
       axios.post(url)
         .then((res) => {
           this.ifLogged = true
-          console.log('到這')
-          console.log(this.ifLogged)
         })
         .catch((err) => {
           // Swal.fire({
