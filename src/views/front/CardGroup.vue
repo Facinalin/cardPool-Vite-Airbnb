@@ -210,16 +210,6 @@ export default {
     RouterLink,
     Multiselect
   },
-  // watch: {
-  //   isLoading: {
-  //     handler (newVal) {
-  //       if (newVal === false) {
-  //         this.isLoading = false
-  //       }
-  //     },
-  //     deep: true
-  //   }
-  // },
   methods: {
     // 按鈕區域個人與全員判斷
     filterMember (item, evt) {
