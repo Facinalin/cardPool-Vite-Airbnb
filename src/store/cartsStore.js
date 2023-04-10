@@ -18,7 +18,9 @@ export default defineStore('cartsStore', {
       ifInternational: false,
       ifComplement: false,
       domesticAmount: 0,
-      InternationalAmount: 0
+      InternationalAmount: 0,
+      danceTemp: null,
+      curCartId: ''
 
     }
     // cart是單純使用者對購物車的動作html元素能獲得的資料
@@ -35,20 +37,9 @@ export default defineStore('cartsStore', {
           const test = this.carts.reduce((a, b) => a + b.total, 0)
           this.final_total = test
           this.number = this.carts.length
-          // this.carts.forEach(el => {
-          //   if (el.domestic_Transport.amount !== 0) {
-
-          //   }
-          // })
         })
         .catch(err => {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${err.message}`,
-            showConfirmButton: false,
-            timer: 1800
-          })
+          console.log(err)
         })
     },
     deleteAllCartToOrder () {

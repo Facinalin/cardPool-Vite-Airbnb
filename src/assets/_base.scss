@@ -678,12 +678,13 @@ border: 6px solid $primary;
     width: 90%;
   }
   @media screen and (max-width: 767px) {
-    width: 80%;
+    width: 90%;
     position: static;
     z-index: auto;
     margin-bottom: 50px;
     display: block;
     margin: 0 auto;
+    padding-right: 0px;
   }
 
 }
@@ -1172,7 +1173,7 @@ border: 6px solid $primary;
     padding-left: 0;
   }
   @media screen and (max-width: 767px) {
-    width: 80%;
+    width: 75%;
     display: block;
     padding-left: 0;
     margin: 36px auto;
@@ -1280,6 +1281,17 @@ border: 6px solid $primary;
   max-width: 100%;
 }
 
+.dance-list{
+  border-radius: 8px;
+  background: $maingray;
+  color: $white;
+  padding: 4px 8px;
+  margin-right: 13px;
+}
+
+.dance-vform{
+  width: 50%;
+}
 
 
 

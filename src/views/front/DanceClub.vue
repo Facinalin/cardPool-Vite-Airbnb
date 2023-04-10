@@ -30,6 +30,9 @@
 </div>
                 </div>
             </div>
+            <div class="col-lg-12 d-flex justify-content-center pt-9">
+              <pagination-component :pagination="pagination" :path="path"></pagination-component>
+            </div>
         </div>
     </div>
 </template>
@@ -37,21 +40,26 @@
 <script>
 import { mapActions, mapState } from 'Pinia'
 import productsStore from '../../store/productsStore.js'
+import paginationComponent from '../../components/PaginationView.vue'
 
 export default {
   data () {
     return {
-
+      path: ''
     }
+  },
+  components: {
+    paginationComponent
   },
   methods: {
     ...mapActions(productsStore, ['getDanceGroupProduct'])
   },
   computed: {
-    ...mapState(productsStore, ['danceGroups'])
+    ...mapState(productsStore, ['danceGroups', 'pagination'])
   },
   mounted () {
-    this.getDanceGroupProduct()
+    this.path = this.$route.path
+    this.getDanceGroupProduct(this.path)
   }
 }
 </script>

@@ -9,7 +9,9 @@ export default defineStore('productsStore', {
     isLoading: true,
     leftMemberQty: 0,
     AdminCardGroupProduct: [],
-    danceGroups: []
+    danceGroups: [],
+    pagination: {},
+    category: ''
     // loading技巧：在統一狀態管理區預設先設置true，傳到元件時會在非同步請求結束後改為false
   }),
   actions: {
@@ -56,24 +58,29 @@ export default defineStore('productsStore', {
           const filterGroup = sortPro.filter(el => el.category === '拆卡' && el.created_At)
           this.cardGroupProduct = filterGroup
           this.isLoading = false
-          console.log(this.cardGroupProduct)
         })
         .catch(err => {
           console.log(err)
         })
     },
     // 跳舞揪團
-    getDanceGroupProduct () {
-      const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/products/all`
-      axios.get(url)
-        .then(res => {
-          const filterGroup = res.data.products.filter(el => el.category === '跳舞' && el.leftMember)
-          this.danceGroups = filterGroup
-          console.log(this.danceGroups)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    getDanceGroupProduct (path, page = 1) {
+      if (path === '/danceclub') {
+        // /v2/api/{api_path}/admin/products
+        this.category = '跳舞'
+        const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products?page=${page}&category=${this.category}`
+        axios.get(url)
+          .then(res => {
+            const { products, pagination } = res.data
+            this.pagination = pagination
+            this.danceGroups = products
+            // const filterGroup = products.filter(el => el.category === '跳舞' && el.leftMember)
+            // this.danceGroups = filterGroup
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     }
     // 拆卡團（後台）這adminstore已經有了
     // getAdminCardGroupProduct () {
