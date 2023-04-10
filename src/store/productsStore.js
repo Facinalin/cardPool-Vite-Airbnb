@@ -1,4 +1,4 @@
-import { defineStore } from 'Pinia'
+import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env

@@ -112,7 +112,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { mapState, mapActions } from 'Pinia'
+import { mapState, mapActions } from 'pinia'
 import cartsStore from '../../store/cartsStore.js'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 

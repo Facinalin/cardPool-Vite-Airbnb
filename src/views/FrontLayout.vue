@@ -29,7 +29,7 @@
             <a class="nav-link" href="#"><router-link to="/cardgroups" class="ch-font fz-18">卡團</router-link></a>
         </li>
         <li class="nav-item d-flex align-items-center">
-        <a class="nav-link" href="#"><router-link to="/cart/cartToOrder" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
+        <a class="nav-link" href="#"><router-link to="/cart/carttoorder" class="position-relative"><font-awesome-icon icon="fa-solid fa-cart-shopping" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-mainorange">
     {{number}}
   </span></router-link></a>
       </li>
@@ -68,7 +68,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { RouterView } from 'vue-router'
-import { mapState, mapActions } from 'Pinia'
+import { mapState, mapActions } from 'pinia'
 import cartsStore from '../store/cartsStore'
 import logStateStore from '../store/logStateStore'
 import axios from 'axios'
@@ -116,17 +116,15 @@ export default {
         .then((res) => {
           this.ifLogged = true
         })
-        .catch((err) => {
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'error',
-          //   title: err.response.data.message,
-          //   showConfirmButton: false,
-          //   timer: 1800
-          // })
-          // this.$router.push('/logIn')
-          console.log(err)
-        })
+        // .catch((err) => {
+        //   Swal.fire({
+        //     position: 'center',
+        //     icon: 'error',
+        //     title: err.response.data.message,
+        //     showConfirmButton: false,
+        //     timer: 1800
+        //   })
+        // })
     },
     ...mapActions(cartsStore, ['getCart', 'addToCart']),
     ...mapState(logStateStore, ['clearAllCookies'])

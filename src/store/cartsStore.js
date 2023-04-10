@@ -1,4 +1,4 @@
-import { defineStore } from 'Pinia'
+import { defineStore } from 'pinia'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
@@ -32,14 +32,18 @@ export default defineStore('cartsStore', {
       axios.get(url)
         .then(res => {
           this.carts = res.data.data.carts.filter(el => el.category === '一般' || el.category === '出卡')
-          // this.total = res.data.data.total
-          // this.final_total = res.data.data.final_total
           const test = this.carts.reduce((a, b) => a + b.total, 0)
           this.final_total = test
           this.number = this.carts.length
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
     },
     deleteAllCartToOrder () {
@@ -53,14 +57,13 @@ export default defineStore('cartsStore', {
           this.getCart()
         })
         .catch(err => {
-          console.log(err)
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'error',
-          //   title: `${err.message}`,
-          //   showConfirmButton: false,
-          //   timer: 1800
-          // })
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
       this.getCart()
     },
@@ -87,7 +90,6 @@ export default defineStore('cartsStore', {
       }
       axios[httpRequest](url, { data: cart })
         .then(res => {
-          console.log(res.data)
           this.loadingStatus.loadingItem = ''
           Swal.fire({
             position: 'center',
@@ -113,13 +115,11 @@ export default defineStore('cartsStore', {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
       axios.get(url)
         .then(res => {
-          console.log(res.data.data.carts)
           const oricart = res.data.data.carts
           // this.carts = res.data.data.carts
           this.cardGroupCart = oricart.filter(el => el.category === '拆卡')
           this.total = res.data.data.total
           this.final_total = res.data.data.final_total
-          console.log(this.cardGroupCart)
         })
         .catch(err => {
           Swal.fire({

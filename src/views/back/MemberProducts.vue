@@ -496,24 +496,6 @@ export default {
       }
       return true
     },
-    checkAdmin () {
-      const url = `${VITE_APP_URL2}/api/user/check`
-      axios.post(url)
-        .then((res) => {
-          this.curUId = res.data.uid
-          this.getProductList()
-        })
-        .catch((err) => {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: err.response.data.message,
-            showConfirmButton: false,
-            timer: 1800
-          })
-          this.$router.push('/logIn')
-        })
-    },
     deletePerProduct (curProductId) {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/product/${curProductId}`
       axios.delete(url).then(res => {
@@ -569,8 +551,6 @@ export default {
       keyboard: false,
       backdrop: 'static'
     })
-    this.checkAdmin()
-    // this.getProductList()
   }
 }
 </script>

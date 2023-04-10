@@ -111,7 +111,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { RouterLink } from 'vue-router'
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 import productsStore from '../../store/productsStore.js'
 import Multiselect from '@vueform/multiselect'
 // import Loading from 'vue-loading-overlay'

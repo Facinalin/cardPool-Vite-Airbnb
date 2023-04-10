@@ -21,7 +21,7 @@
 
 <script>
 import productsStore from '../store/productsStore.js'
-import { mapActions } from 'Pinia'
+import { mapActions } from 'pinia'
 
 export default {
   props: ['pagination', 'path'],

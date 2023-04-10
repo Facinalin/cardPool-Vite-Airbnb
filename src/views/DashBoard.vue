@@ -58,7 +58,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { RouterView } from 'vue-router'
-import { mapState, mapActions } from 'Pinia'
+import { mapState, mapActions } from 'pinia'
 import cartsStore from '../store/cartsStore'
 import axios from 'axios'
 

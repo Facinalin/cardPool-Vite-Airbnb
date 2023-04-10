@@ -83,7 +83,7 @@
 
 <script>
 
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -196,7 +196,6 @@ export default {
     this.ifFirstStep = true
     this.ifThirdStep = false
     this.getCart()
-    console.log(this.final_total)
     if (this.ifSecondStep === true) {
       this.getPerOrder()
     }

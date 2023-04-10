@@ -27,7 +27,7 @@
 
 <script>
 import { RouterLink } from 'vue-router'
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 import cartsStore from '../../store/cartsStore.js'
 import productsStore from '../../store/productsStore.js'
 

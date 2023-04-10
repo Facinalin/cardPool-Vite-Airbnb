@@ -345,7 +345,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 import cartsStore from '../../store/cartsStore.js'
 import adminStore from '../../store/adminStore.js'
 import { Modal } from 'bootstrap'

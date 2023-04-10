@@ -48,7 +48,7 @@ import cartsStore from '../../store/cartsStore.js'
 // import orderPaymentStore from '../../store/orderPaymentStore.js'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 
 export default {
@@ -138,7 +138,6 @@ export default {
   },
   mounted () {
     this.getCart()
-    console.log('在這')
   },
   computed: {
     ...mapState(cartsStore, ['carts'])

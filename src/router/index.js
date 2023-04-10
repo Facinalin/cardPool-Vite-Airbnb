@@ -47,7 +47,7 @@ const routes = [
       path: 'cart',
       component: () => import('../views/front/CartCheckout.vue'),
       children: [{
-        path: 'cartToOrder',
+        path: 'carttoorder',
         components: {
           cart: () => import('../views/front/CartView.vue'),
           orderInfo: () => import('../views/front/OrderInfo.vue')

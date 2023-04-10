@@ -1,4 +1,4 @@
-import { defineStore, mapActions } from 'Pinia'
+import { defineStore, mapActions } from 'pinia'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import cartsStore from './cartsStore.js'

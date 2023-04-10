@@ -86,7 +86,7 @@ import { RouterLink } from 'vue-router'
 import SwiperCore, { Autoplay, Pagination } from 'swiper/core'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 import productsStore from '../../store/productsStore.js'
 
 SwiperCore.use([Autoplay, Pagination])

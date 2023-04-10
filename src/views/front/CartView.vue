@@ -1,23 +1,4 @@
 <template>
-    <!-- <div v-if="ifLoggedIn" class="container border-0">
-      <div class="row border-0">
-    <div  class="col-lg-12 col-md-12 col-sm-12 d-flex px-2 pt-4 ch-font border-0">
-
-  </div>
-</div>
-</div>
-
-<div v-else class="container">
-  <div class="d-flex flex-column justify-content-center border border-0">
-    <div class="pic-area d-flex justify-content-center mb-6">
-    <img src="https://i.imgur.com/s11Z5gt.png" alt="" class="alertPic">
-    <img src="../../assets/cart-not-logged.svg" alt="" class="alertMsg">
-  </div>
-  <div class="d-flex justify-content-center">
-  <button type="button" class="toLogPageBtn btn btn-primary border-primary text-white rounded-xxl py-1 px-3"><router-link to="/logIn">我要登入</router-link></button>
-</div>
-</div>
-</div> -->
 <div v-if="!carts.length" class="border-0 d-flex justify-content-center">
     </div>
     <div v-else class="shopping-cart">
@@ -89,7 +70,7 @@
                 <td class="mt-4 text-end">
                     <p class="fz-20 mt-3 me-2">總金額</p>
                 </td>
-                <td class="fz-20 text-mainorange cartTotal">NT${{ final_total + courierTotal }}</td>
+                <td class="fz-20 text-mainorange cartTotal">NT${{ final_total +courierTotal }}</td>
             </tr>
         </tfoot>
     </table>
@@ -103,7 +84,7 @@
 import productsStore from '../../store/productsStore.js'
 import cartsStore from '../../store/cartsStore.js'
 import Swal from 'sweetalert2'
-import { mapState, mapActions } from 'Pinia'
+import { mapState, mapActions } from 'pinia'
 import axios from 'axios'
 // import OrderInfoComponent from '../../components/OrderInfo.js'
 
@@ -127,32 +108,6 @@ export default {
   //   'order-info-component': OrderInfoComponent
   // },
   methods: {
-    // getCart () {
-    //   // !!拆卡團不進入購物車頁面，因為不能單方面結帳
-    //   // const url = `${VITE_APP_URL2}/600/users/${userId}/carts`
-    //   // 改好六api
-    //   const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/cart`
-    //   this.$http.get(url)
-    //     .then(res => {
-    //       this.carts = res.data.data.carts
-    //       // 整理cart
-    //       // const cartWithProduct = this.carts.map(item => {
-    //       //   const indicateProduct = products.find(el => el.id === item.productId)
-    //       //   return {
-    //       //     ...item,
-    //       //     indicateProduct,
-    //       //     subtotal: indicateProduct.price * item.qty
-    //       //   }
-    //       // })
-    //       console.log(this.carts)
-    //       const total = this.carts.reduce((a, b) => a + b.final_total, 0)
-    //       console.log(total)
-    //       this.cartTotal = total
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // },
     deletePerCart (cartId) {
       // /v2/api/{api_path}/cart/{id}
       this.loadingStatus.loadingItem = cartId
@@ -248,8 +203,6 @@ export default {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     axios.defaults.headers.common.Authorization = token
     this.getCart()
-    console.log(this.ifLoggedIn)
-    // this.cartTotal =
   },
   computed: {
     courierTotal () {

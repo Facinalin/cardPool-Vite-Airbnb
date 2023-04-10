@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'Pinia'
+import { mapActions, mapState } from 'pinia'
 import productsStore from '../../store/productsStore.js'
 import paginationComponent from '../../components/PaginationView.vue'
 
