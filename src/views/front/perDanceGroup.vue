@@ -75,7 +75,7 @@
       <textarea id="message" class="form-control custom-vf" cols="30" rows="3" v-model="perOrder.data.message"></textarea>
     </div>
     <div class="text-end">
-      <button type="submit" class="btn btn-primary text-white bd-rd-12 ch-font" @click="signUpDance(danceGroupId)">確定報名資訊</button>
+      <button type="submit" class="btn btn-primary text-white bd-rd-12 ch-font" @click="signUpDance">確定報名資訊</button>
     </div>
 
   </v-form>
@@ -171,7 +171,7 @@ export default {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: `團號${this.product.id}成功報名，請等待主揪訊息通知下一步。`,
+            title: `團號${this.product.id}成功報名，請等待主揪訊息通知下一步驟。`,
             showConfirmButton: false,
             timer: 1800
           })
@@ -221,9 +221,9 @@ export default {
       window.scrollTo(0, infoAccordion.offsetTop)
       const flushCollapseOne = document.getElementById('flush-collapseOne')
       flushCollapseOne.classList.add('show')
-      this.addToCart()
+      // this.addToCart()
     },
-    addToCart () {
+    signUpDance () {
       this.loadingStatus.loadingItem = this.product.id
       let cart = {}
       cart = {
