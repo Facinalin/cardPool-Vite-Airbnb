@@ -6,7 +6,7 @@
         <div class="col-md-1 col-12">
         </div>
       <div class="col-md-6 col-12 pt-8 pb-80">
-        <img src="../../assets/會員登入.svg" alt="" class="mb-8">
+        <img src="../../assets/會員登入.svg" alt="會員登入圖片" class="mb-8">
         <form action="" class="my-4">
           <div class="inputGroup">
     <input id="email" v-model="user.username" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">
@@ -29,7 +29,7 @@
   <div v-else class="container">
     <div class="row">
       <div class="col-lg-6 py-8">
-        <img src="../../assets/signUpTitle.svg" alt="" class="mb-8">
+        <img src="../../assets/signUpTitle.svg" alt="註冊圖片" class="mb-8">
         <form action="">
          <div class="inputGroup">
     <input id="email" v-model="perUser.email" type="text" required="" autocomplete="off"  class="mb-5 py-2 px-3">

@@ -1220,6 +1220,7 @@ border: 6px solid $primary;
 }
 
 .start{
+  flex-direction: row;
   @media screen and (max-width: 500px) {
     flex-direction: column;
   }

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="product-img col-sm-12 col-md-12 col-lg-5 col-xl-5 mb-80 mt-9">
                 <div class="d-flex justify-content-center mb-6">
-                    <img :src="product.imageUrl" alt="" class="dance-cardImg bd-rd-12"></div>
+                    <img :src="product.imageUrl" :alt="product.title" class="dance-cardImg bd-rd-12"></div>
         </div>
         <!--商品選項-右-->
         <div class="perDance-cta col-sm-12 col-md-12 col-lg-7 col-xl-7 ps-lg-9 ch-font mt-9 d-flex flex-column justfy-content-between">
@@ -75,7 +75,7 @@
       <textarea id="message" class="form-control custom-vf" cols="30" rows="3" v-model="perOrder.data.message"></textarea>
     </div>
     <div class="text-end">
-      <button type="submit" class="btn btn-primary text-white bd-rd-12 ch-font">確定報名資訊</button>
+      <button type="submit" class="btn btn-primary text-white bd-rd-12 ch-font" @click="signUpDance(danceGroupId)">確定報名資訊</button>
     </div>
 
   </v-form>
@@ -163,9 +163,6 @@ export default {
       if (!JSON.stringify(values, null, 2)) {
         alert('無法提交')
       }
-      console.log(1, this.perOrder.data)
-      console.log(2, this.product.id)
-      console.log(3, this.danceCurId)
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/order`
       axios.post(url, this.perOrder)
         .then(res => {

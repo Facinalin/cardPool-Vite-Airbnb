@@ -6,7 +6,7 @@
         <RouterLink :to="`/${activity.router}`">
         <div class="perBtn px-3 mb-6">
       <h1 class="ls-10 text-white fwt-light">{{ activity.name }}</h1>
-      <img :src="activity.imgUrl" alt="" class="activity-btn-pic bd-rd-20">
+      <img :src="activity.imgUrl" :alt="activity.title" class="activity-btn-pic bd-rd-20">
     </div>
       </RouterLink>
       </div>

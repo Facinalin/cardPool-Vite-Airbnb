@@ -8,7 +8,7 @@
     <div class="card rounded-0 border-0 px-5">
       <div class="card-img-member">
         <div class="watermark"></div>
-    <img :src="product.imgUrl" class="card-img-top-rec bd-rd-20" alt="">
+    <img :src="product.imgUrl" class="card-img-top-rec bd-rd-20" :alt="product.title">
   </div>
     <div class="card-body px-0 py-4 text-center">
       <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>

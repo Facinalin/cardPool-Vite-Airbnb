@@ -68,7 +68,7 @@
           <div v-if="!cardGroupBeenFiltered" class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in cardGroupProduct" :key="product.id">
     <div class="card rounded-0 border-0">
-    <img :src="product.imgUrl" class="card-img-top" alt="">
+    <img :src="product.imgUrl" class="card-img-top" :alt="product.title">
     <div class="card-body px-0 py-4 text-center">
       <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
       <p class="card-text fs-6 pri-aux">{{ product.price }}元</p>
@@ -86,7 +86,7 @@
 <div v-if="cardGroupBeenFiltered && filteredCardGroupList.length > 0" class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in filteredCardGroupList" :key="product.id">
     <div class="card rounded-0 border-0">
-    <img :src="product.imgUrl" class="card-img-top" alt="">
+    <img :src="product.imgUrl" class="card-img-top" :alt="product.title">
     <div class="card-body px-0 py-4 text-center">
       <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
       <p class="card-text fs-6 pri-aux">{{ product.price }}元</p>
@@ -260,15 +260,6 @@ export default {
       this.cardGroupBeenFiltered = false
       const chosenMember = document.querySelectorAll('.active-lg')
       const filterCardGroupProduct = [...this.cardGroupProduct]
-      if (chosenMember.length === 0) {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '尚未選擇成員！',
-          showConfirmButton: false,
-          timer: 1800
-        })
-      }
       chosenMember.forEach(el => {
         const dataId = el.getAttribute('data-id')
         // 如果dataid為'9'的foreach完全不一樣
@@ -278,14 +269,47 @@ export default {
           }
         })
       })
-      console.log(filterCardGroupProduct)
       // 如果連第一層filter都沒有產品，就可以值接回傳無符合。
       if (filterCardGroupProduct.length === 0) {
         this.cardGroupBeenFiltered = true
-        console.log('無符合商品，請修改篩選條件！')
       }
       // this.channels.value為一個array
       const chosenChannels = this.channels.value
+      // 有選通路但沒選成員
+      if (chosenMember.length === 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '尚未選擇成員！',
+          showConfirmButton: false,
+          timer: 1800
+        })
+        this.clearFilter('memberLack')
+        return
+      }
+      // 有選成員但沒選通路
+      if (chosenChannels.length === 0 && chosenMember.length !== 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '尚未選擇通路！',
+          showConfirmButton: false,
+          timer: 1800
+        })
+        this.clearFilter('channelLack')
+        return
+      }
+      // 沒選成員且沒選通路
+      if (chosenChannels.length === 0 && chosenMember.length === 0) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '篩選條件尚未填寫！',
+          showConfirmButton: false,
+          timer: 1800
+        })
+        return
+      }
       const finalData = []
       chosenChannels.forEach((el, index, array) => {
         filterCardGroupProduct.forEach((per, i, arr) => {
@@ -294,10 +318,20 @@ export default {
           }
         })
       })
-      console.log(this.channels.value)
-      console.log(finalData)
       this.filteredCardGroupList = finalData
       this.cardGroupBeenFiltered = true
+    },
+    clearFilter (params) {
+      const chosenMember = document.querySelectorAll('.active-lg')
+      if (params === 'channelLack') {
+        chosenMember.forEach(el => {
+          el.classList.remove('active-lg')
+        })
+      }
+      if (params === 'memberLack') {
+        // 移除多選
+        this.channels.value = []
+      }
     },
     ...mapActions(productsStore, ['getCardGroupProduct'])
   },

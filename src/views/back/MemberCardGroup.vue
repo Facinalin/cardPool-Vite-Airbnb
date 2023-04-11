@@ -119,13 +119,13 @@
 <button type="button" class="btn btn-mainorange text-white bd-rd-20">收</button>
 </div>
 <div class="lower d-flex justify-content-start">
-  <img src="https://i.imgur.com/5PlS2aH.png" alt="" class="closing-liner-pic bd-rd-12">
-  <img src="https://i.imgur.com/ATWXtR9.png" alt="" class="closing-liner-pic bd-rd-12">
-  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
-  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
-  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
-  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
-  <img src="https://i.imgur.com/AANylPt.png" alt="" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/5PlS2aH.png" alt="bangchan" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/ATWXtR9.png" alt="leeknow" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="changbin" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="hyunjin" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="han" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="felix" class="closing-liner-pic bd-rd-12">
+  <img src="https://i.imgur.com/AANylPt.png" alt="seungmin" class="closing-liner-pic bd-rd-12">
 </div>
           </div>
         </div>

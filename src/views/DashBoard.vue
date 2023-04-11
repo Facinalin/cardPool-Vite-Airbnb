@@ -51,7 +51,7 @@
 <RouterView></RouterView>
 <div class="footer d-flex flex-column justify-content-center align-items-center">
   <h4 class="en-font me-2 mb-3 fs-5">CardPool is Designed and Created by Facina Lin.</h4>
-  <h4 class="text-center ch-font px-1 d-flex fs-6 justify-content-center align-items-center">本站僅作品用途，尚無商用。聯絡我<img src="../assets/discord.svg" alt="" class="footer-icon ms-2 display-block"></h4>
+  <h4 class="text-center ch-font px-1 d-flex fs-6 justify-content-center align-items-center">本站僅作品用途，尚無商用。聯絡我</h4>
  </div>
 </template>
 

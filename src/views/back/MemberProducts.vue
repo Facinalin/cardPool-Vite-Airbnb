@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-mainorange" type="button" @click="addDance">test</button>
+
         <div class="col-10 d-flex flex-column">
           <div class="text-end mt-4 mb-4">
         <button class="btn btn-primary me-4 text-white" @click="openModal('new')">
@@ -68,7 +68,7 @@
   class="form-control" placeholder="請輸入圖片連結" :rules="isRequired" :class="{ 'is-invalid': errors.link }" ></v-field>
   <p name="link" class="invalid-feedback">{{ errors.link }}</p>
   <div class="modalPic">
-    <img class="img-fluid" :src="perProduct.imgUrl">
+    <img class="img-fluid" :src="perProduct.imgUrl" :alt="perProduct.title">
   </div>
   <div
       v-if="!perProduct.imagesUrl.length || perProduct.imagesUrl[perProduct.imagesUrl.length - 1]">
@@ -264,49 +264,6 @@ export default {
       normalArea: []
     }
   },
-  //   // {"id": 8,
-  // "title": "Skzoo娃衣",
-  // "imgUrl": "https://i.imgur.com/kBYi7Cx.jpg",
-  // "price": "450",
-  // "sellerId": 1,
-  // "channel": "WithMuu",
-  // "type": "拆卡",
-  // "domesticFee": 60,
-  // "internationalFee": {
-  // "complement": false,
-  // "amount": 0
-  // },
-  // "leftmember": {
-  // "1": false,
-  // "2": true,
-  // "3": true,
-  // "4": true,
-  // "5": false,
-  // "6": false,
-  // "7": true,
-  // "8": false
-  // },
-  // "description": "#拆 推特收卡請注意",
-  // "imgsUrl": [
-  // "https://i.imgur.com/rYO7eET.png",
-  // "https://i.imgur.com/gJt30Ua.png",
-  // "https://i.imgur.com/KduMq6i.png",
-  // "https://i.imgur.com/tqtF0e9.png"
-  // ],
-  // "domesticCourier": {
-  // "711店到店": 60,
-  // "全家店到店": 60,
-  // "711賣貨便": 35
-  // },
-  // "mustChoose": [
-  // 2,
-  // 4
-  // ],
-  // "scarcity": [
-  // 3,
-  // 7
-  // ]
-  // }
   methods: {
     choosingMember (i, evt) {
       console.log(evt.target.checked)
@@ -393,8 +350,6 @@ export default {
           }
         }
       }
-      console.log(isNew)
-      // productModal.show()
     },
     getProductList () {
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products/all`
@@ -551,6 +506,7 @@ export default {
       keyboard: false,
       backdrop: 'static'
     })
+    this.getProductList()
   }
 }
 </script>

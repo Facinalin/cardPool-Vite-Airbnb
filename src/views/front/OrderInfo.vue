@@ -4,7 +4,7 @@
             <div class="mb-3">
       <label for="email" class="form-label me-2">Email</label><font-awesome-icon icon="fa-solid fa-star-of-life" class="text-mainorange modalIcon fs-7" />
       <v-field id="email" name="email" type="email" class="form-control custom-vf"
-                placeholder="請輸入 Email" :class="{ 'is-invalid': errors.email }" :rules="isRequired"
+                placeholder="請輸入 Email" :class="{ 'is-invalid': errors.email }" :rules="emailVali"
                 v-model="perOrder.data.user.email"
               ></v-field>
               <p name="email" class="invalid-feedback">{{ errors.email }}</p>
@@ -77,6 +77,10 @@ export default {
     phoneVali (value) {
       const phoneNumber = /^(09)\d{8}$/
       return phoneNumber.test(value) ? true : '請填入正確的電話號碼！'
+    },
+    emailVali (value) {
+      const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
+      return email.test(value) ? true : '請填入正確的電子郵件！'
     },
     isRequired (value) {
       if (!value) {

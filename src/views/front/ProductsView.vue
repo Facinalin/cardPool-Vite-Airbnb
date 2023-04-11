@@ -7,7 +7,7 @@
       <div class="col-lg-3 col-md-4 col-sm-12 my-5 card-group" v-for="product in products" :key="product.id">
   <div class="card rounded-0 border-0 px-2">
     <div class="card-gene-product-per-pic">
-  <img :src="product.imgUrl" class="card-img-top" alt="">
+  <img :src="product.imgUrl" class="card-img-top" :alt="product.title">
 </div>
   <div class="card-body px-0 py-4 text-center">
     <h5 class="card-title fs-6 mb-3 text-maingray">{{ product.title }}</h5>
@@ -41,9 +41,9 @@ import productsStore from '../../store/productsStore.js'
 export default {
   data () {
     return {
-      loadingStatus: {
-        loadingItem: ''
-      }
+      // loadingStatus: {
+      //   loadingItem: ''
+      // }
     }
   },
   components: {
@@ -54,9 +54,11 @@ export default {
     ...mapActions(productsStore, ['getProduct'])
   },
   computed: {
-    ...mapState(productsStore, ['products', 'isLoading'])
+    ...mapState(productsStore, ['products', 'isLoading']),
+    ...mapState(cartsStore, ['loadingStatus'])
   },
   mounted () {
+    console.log(this.loadingStatus)
     setTimeout(() => {
       this.getProduct()
     }, 800)

@@ -13,7 +13,7 @@
           <ul class="ch-font admin-sidebar pt-2">
             <li class="fs-5 mb-3 text-center text-white cursor-p">訂單管理</li>
             <li class="fs-5 mb-3 text-center text-white cursor-p" @click="toGeneralProductPanel">一般產品</li>
-            <li class="fs-5 mb-3 text-center text-white cursor-p d-flex align-items-center justify-content-center" data-bs-toggle="collapse" data-bs-target="#cardGroupCollapse" aria-expanded="false" aria-controls="collapseExample" @click="checkDrop">拆卡團<img src="../../assets/polygon.svg" alt="" class="dropdown-icon ms-2" :class="{ 'tr-rotate':dropdownList}"></li>
+            <li class="fs-5 mb-3 text-center text-white cursor-p d-flex align-items-center justify-content-center" data-bs-toggle="collapse" data-bs-target="#cardGroupCollapse" aria-expanded="false" aria-controls="collapseExample" @click="checkDrop">拆卡團<img src="../../assets/polygon.svg" alt="dropdown" class="dropdown-icon ms-2" :class="{ 'tr-rotate':dropdownList}"></li>
             <div class="collapse bg-secondary" id="cardGroupCollapse">
   <div class="card card-body bg-secondary border-0">
     <ul>
@@ -43,7 +43,7 @@
   class="form-control" placeholder="請輸入圖片連結" :rules="isRequired" :class="{ 'is-invalid': errors.link }" ></v-field>
   <p name="link" class="invalid-feedback">{{ errors.link }}</p>
   <div class="modalPic">
-    <img class="img-fluid" :src="perProduct.imgUrl">
+    <img class="img-fluid" :src="perProduct.imgUrl" :alt="perProduct.title">
   </div>
   <div v-if="Array.isArray(perProduct.imagesUrl)">
     <div class="mb-1" v-for="(image, key) in perProduct.imagesUrl" :key="key">
@@ -52,7 +52,7 @@
         <input v-model="perProduct.imagesUrl[key]" type="text" class="form-control"
           placeholder="請輸入圖片連結">
       </div>
-      <img class="img-fluid" :src="image">
+      <img class="img-fluid" :src="image" :alt="image">
     </div>
     <div
       v-if="!perProduct.imagesUrl.length || perProduct.imagesUrl[perProduct.imagesUrl.length - 1]">
@@ -241,7 +241,7 @@ export default {
   data () {
     return {
       checkCardGroup: false,
-      userProductList: [],
+      // userProductList: [],
       perProduct: {
         category: '',
         origin_price: null,
@@ -299,32 +299,23 @@ export default {
         productModal.show()
         this.perProduct = { ...item }
         if (this.perProduct.domestic_Transport.courier !== '面交') {
-          console.log('非面交，金額大於0')
           this.ifDomesticFee = true
           const hasDomestic = this.$refs.hasDomestic
           hasDomestic.setAttribute('checked', '')
         }
         if (this.perProduct.international_Transport.complement === true) {
-          console.log('需二補，金額為0')
           this.ifInternational = true
           this.ifComplement = true
           const ifInternationalBtn = this.$refs.hasInternational
-          const ifComplementBtn = this.$refs.needComplement
-          console.log(ifComplementBtn)
           ifInternationalBtn.setAttribute('checked', '')
-          // ifComplementBtn.setAttribute('checked', '')
         }
         if (this.perProduct.international_Transport.complement === false && this.perProduct.international_Transport.amount !== 0) {
-          console.log('不需二補，金額大於0')
           this.ifInternational = true
           this.ifComplement = false
           const ifInternationalBtn = this.$refs.hasInternational
           ifInternationalBtn.setAttribute('checked', '')
-          const ifComplementBtn = this.$refs.needComplement
-          console.log(ifComplementBtn)
         }
       } if (isNew === 'group') {
-        console.log('我是dashboard')
         this.isNew = 'group'
         this.perProduct = {
           category: '',
@@ -347,9 +338,10 @@ export default {
           }
         }
         this.ifGroup = true
-      } else if (isNew === 'production') {
-        console.log('production')
       }
+      // else if (isNew === 'production') {
+      //   console.log('production')
+      // }
       productModal.show()
       const unpopularMem = this.$refs.redArea
       const popularMem = this.$refs.blueArea
@@ -357,8 +349,7 @@ export default {
       const takenArea = this.$refs.takenArea
       const choosePlate = this.$refs.choosePlate
       // const unpopularMem = document.getElementById('redDragArea')
-      // const popularMem = document.getElementById('blueDragArea')
-      console.log(unpopularMem) // 點開第一次為undefined，點開第二次取到該dom元素，已經試過document.querySelector結果一樣
+      // const popularMem = document.getElementById('blueDragArea') // 點開第一次為undefined，點開第二次取到該dom元素，已經試過document.querySelector結果一樣
       const backlogArr = [
         { content: '<img src="https://i.imgur.com/5VrxHl4.png" alt="Bangchan" data-id="1"><p class="en-font" style="font-weight:100;">Bangchan</p>' },
         { content: '<img src="https://i.imgur.com/Uf8hp4X.png" alt="Leeknow" data-id="2"><p class="en-font" style="font-weight:100;">Leeknow</p>' },
@@ -370,7 +361,7 @@ export default {
         { content: '<img src="https://i.imgur.com/OHOP739.png" alt="IN" data-id="8"><p class="en-font" style="font-weight:100;">IN</p>' }
       ]
       const checkDrag = document.querySelectorAll('.draggable')
-      console.log(checkDrag) // 點開第一次nodelist長度為0
+      // console.log(checkDrag) // 點開第一次nodelist長度為0
       if (unpopularMem && checkDrag.length === 0) {
       // 新增時尚未指定成員
         backlogArr.map((ele) => {
@@ -383,36 +374,31 @@ export default {
           return choosePlate
         })
 
-        const blueAreaSortableObj = Sortable.create(popularMem, {
+        Sortable.create(popularMem, {
           group: 'dnd',
           animation: 10
         })
-        const redAreaSortableObj = Sortable.create(unpopularMem, {
+        Sortable.create(unpopularMem, {
           group: 'dnd',
           animation: 10
         })
-        const normalAreaSortableObj = Sortable.create(normalArea, {
+        Sortable.create(normalArea, {
           group: 'dnd',
           animation: 10
         })
-        const takenAreaSortableObj = Sortable.create(takenArea, {
-          group: 'dnd',
-          animation: 10
-        })
-
-        const choosePlateSortableObj = Sortable.create(choosePlate, {
+        Sortable.create(takenArea, {
           group: 'dnd',
           animation: 10
         })
 
-        console.log(blueAreaSortableObj, redAreaSortableObj, takenAreaSortableObj, normalAreaSortableObj, choosePlateSortableObj)
+        Sortable.create(choosePlate, {
+          group: 'dnd',
+          animation: 10
+        })
       }
       const allDraggable = document.querySelectorAll('.draggable img')
       if (isNew === 'edit' && allDraggable.length === 8) {
         // 編輯時已有各區指定成員
-        console.log('8個')
-        console.log(this.perProduct)
-        console.log(allDraggable)
         const mustChoose = this.perProduct.mustChoose
         const scarcity = this.perProduct.scarcity
         const normalMember = { ...this.perProduct.leftMember }
@@ -438,7 +424,6 @@ export default {
             delete normalMember[arr[i]]
           }
         })
-        console.log(takenMember)
         const normalChoose = Object.keys(normalMember)
         //   const popularMem = this.$refs.blueArea
         // const normalArea = this.$refs.normalArea
@@ -498,7 +483,6 @@ export default {
           choosePlate.innerHTML = ''
         })
       }
-      console.log(isNew)
     },
     // findFirstDuplicateElement (arr) {
     //   const elementCount = {}
@@ -537,7 +521,6 @@ export default {
       const popularMem = this.$refs.blueArea
       const normalArea = this.$refs.normalArea
       const takenArea = this.$refs.takenArea
-      console.log(unpopularMem)
       unpopularMem.innerHTML = ''
       popularMem.innerHTML = ''
       normalArea.innerHTML = ''
@@ -551,7 +534,6 @@ export default {
         sortPro.splice(0, 10)
         const cardgroup = sortPro.filter(el => el.category === '拆卡' && el.created_At)
         this.userProductList = cardgroup
-        console.log(this.userProductList)
       }).catch(err => {
         Swal.fire({
           position: 'center',
@@ -592,19 +574,16 @@ export default {
         mustChoose.forEach(i => {
           const dataIdValue = i.getAttribute('data-id')
           this.mustChoose.push(dataIdValue)
-          console.log(`must${dataIdValue}`)
         })
         const scarcity = document.querySelectorAll('.scarceArea .draggable img')
         scarcity.forEach(i => {
           const dataIdValue = i.getAttribute('data-id')
           this.scarcity.push(dataIdValue)
-          console.log(`scarce${dataIdValue}`)
         })
         const normalChoose = document.querySelectorAll('.normalArea .draggable img')
         normalChoose.forEach(i => {
           const dataIdValue = i.getAttribute('data-id')
           this.normalArea.push(dataIdValue)
-          console.log(`normal${dataIdValue}`)
         })
 
         this.mustChoose.forEach((el, i, arr) => {
@@ -639,10 +618,7 @@ export default {
         } else {
           this.perProduct.international_Transport.complement = false
         }
-        console.log(this.perProduct)
-        console.log(httpMethod, url)
         axios[httpMethod](url, { data: this.perProduct }).then(res => {
-          console.log(this.perProduct)
           let msg = '新增'
           if (type === 'edit') {
             msg = '修改'
@@ -698,7 +674,7 @@ export default {
       this.ifComplement = false
     },
     onSubmit (values) {
-      console.log(JSON.stringify(values, null, 2))
+      return (JSON.stringify(values, null, 2))
     },
     isRequired (value) {
       if (!value) {

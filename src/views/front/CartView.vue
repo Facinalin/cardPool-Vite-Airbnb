@@ -19,7 +19,7 @@
             <tr class="perItemCheckout py-4">
       <td>
       <div class="cardItem-title d-flex align-items-center py-4">
-          <img :src="cart.product.imgUrl" alt="Product-img" class="per-cart-pic">
+          <img :src="cart.product.imgUrl" :alt="cart.product.title" class="per-cart-pic">
           <p class="text-center align-middle pt-0 pb-3 ps-4 pe-4 fz-20 ms-2">{{ cart.product.title }}</p>
       </div>
   </td>

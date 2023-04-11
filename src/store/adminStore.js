@@ -21,8 +21,8 @@ export default defineStore('adminStore', {
         sortPro.splice(0, 10)
         const cardgroup = sortPro.filter(el => el.category === '拆卡' && el.created_At)
         this.userProductList = cardgroup
-        console.log(this.userProductList)
       }).catch(err => {
+        this.isLoading = false
         Swal.fire({
           position: 'center',
           icon: 'error',

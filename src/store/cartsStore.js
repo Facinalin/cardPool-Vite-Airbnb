@@ -46,7 +46,7 @@ export default defineStore('cartsStore', {
           })
         })
     },
-    deleteAllCartToOrder () {
+    deleteAllCartToOrder (curProductId) {
       // /v2/api/{api_path}/carts
       // 送出訂單後使用
       const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/carts`
@@ -57,6 +57,7 @@ export default defineStore('cartsStore', {
           this.getCart()
         })
         .catch(err => {
+          this.loadingStatus.loadingItem = ''
           Swal.fire({
             position: 'center',
             icon: 'error',

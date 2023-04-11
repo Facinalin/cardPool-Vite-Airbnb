@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const { VITE_APP_URL2, VITE_APP_PATH } = import.meta.env
 export default defineStore('productsStore', {
@@ -11,7 +12,10 @@ export default defineStore('productsStore', {
     AdminCardGroupProduct: [],
     danceGroups: [],
     pagination: {},
-    category: ''
+    category: '',
+    loadingStatus: {
+      loadingItem: ''
+    }
     // loading技巧：在統一狀態管理區預設先設置true，傳到元件時會在非同步請求結束後改為false
   }),
   actions: {
@@ -29,7 +33,14 @@ export default defineStore('productsStore', {
           this.isLoading = false
         })
         .catch(err => {
-          console.log(err)
+          this.isLoading = false
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
     },
     getCardProducts () {
@@ -45,7 +56,14 @@ export default defineStore('productsStore', {
           this.isLoading = false
         })
         .catch(err => {
-          console.log(err)
+          this.isLoading = false
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
     },
     // 拆卡團
@@ -60,7 +78,14 @@ export default defineStore('productsStore', {
           this.isLoading = false
         })
         .catch(err => {
-          console.log(err)
+          this.isLoading = false
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.message}`,
+            showConfirmButton: false,
+            timer: 1800
+          })
         })
     },
     // 跳舞揪團
@@ -68,9 +93,11 @@ export default defineStore('productsStore', {
       if (path === '/danceclub') {
         // /v2/api/{api_path}/admin/products
         this.category = '跳舞'
-        const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products?page=${page}&category=${this.category}`
+        // const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/admin/products?page=${page}&category=${this.category}`
+        const url = `${VITE_APP_URL2}/api/${VITE_APP_PATH}/products?page=${page}&category=${this.category}`
         axios.get(url)
           .then(res => {
+            this.isLoading = false
             const { products, pagination } = res.data
             this.pagination = pagination
             this.danceGroups = products
@@ -78,7 +105,14 @@ export default defineStore('productsStore', {
             // this.danceGroups = filterGroup
           })
           .catch(err => {
-            console.log(err)
+            this.isLoading = false
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: `${err.message}`,
+              showConfirmButton: false,
+              timer: 1800
+            })
           })
       }
     }

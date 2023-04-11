@@ -3,11 +3,11 @@
         <div class="row">
             <div v-if="productCategory==='一般'" class="product-img col-md-12 col-lg-5 mb-80 mt-9">
                 <div class="d-flex justify-content-center mb-6">
-                    <img :src="product.imgUrl" alt="" class="cardImg"></div>
+                    <img :src="product.imgUrl" class="cardImg" :alt="product.title"></div>
         </div>
         <div v-if="productCategory==='出卡'" class="product-img col-md-12 col-lg-5 mb-80 mt-9">
                 <div class="d-flex justify-content-center mb-6">
-                    <img :src="product.imgUrl" alt="" class="cardProductCardImg"></div>
+                    <img :src="product.imgUrl" class="cardProductCardImg" :alt="product.title"></div>
         </div>
         <!--商品選項-右-->
         <div class="col-md-12 col-lg-7 ps-lg-9 ch-font mt-9 d-flex flex-column justfy-content-between general-product-des">
