@@ -1,0 +1,1305 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap');
+
+a {
+    text-decoration: none;
+}
+
+.wrapper{
+    border-bottom: 12px solid transparent;
+    border-image: linear-gradient(-165deg, $primary 60%, $secondary 90%) 0.5;
+}
+
+// Font General settings
+.ch-font{
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 500;
+}
+
+.ls-4{
+  letter-spacing: 4px;
+}
+
+.ls-6{
+  letter-spacing: 6px;
+}
+
+.ls-10{
+  letter-spacing: 10px;
+}
+@media screen and (max-width: 767px) {
+  .fs-5{
+   font-size: 16px !important;
+  }
+  .fs-6{
+    font-size: 12px !important;
+   }
+}
+
+
+.fz-18{
+  font-size: 18px;
+}
+.fz-60{
+  font-size: 60px;
+}
+
+.fwt-light{
+  font-weight: 100;
+}
+
+.fw-heavy{
+  font-weight: 500;
+}
+
+.fw-max{
+  font-weight: 700;
+}
+
+
+.lh1-5{
+  line-height: 1.5;
+}
+
+.border-0{
+  border: none;
+}
+
+// Font General settings-end
+
+// Border General settings
+
+.bd-rd-6{
+  border-radius: 6px;
+}
+
+.bd-rd-12{
+  border-radius: 12px;
+}
+
+.bd-rd-20{
+  border-radius: 20px;
+}
+
+// Border General settings-end
+
+
+.mt-150{
+  margin-top: 150px;
+}
+
+.mt-50{
+  margin-top: 50px;
+}
+
+.mt-90{
+  margin-top: 90px;
+}
+
+.mb-80{
+  margin-bottom: 80px;
+}
+
+.modalPic{
+    padding: 12px;
+}
+
+.choosedArea{
+    background: $maingray;
+    color: $white;
+    border-radius: 12px;
+    padding: 12px;
+    min-height: 120px;
+}
+
+.mustChoose{
+    color: $maingray;
+    padding: 8px;
+    height: 40px;
+    width: 50%;
+}
+
+.chooseAfterMust{
+    background: #DFE8FF;
+    color: $maingray;
+    border-radius: 12px;
+    padding: 8px;
+    height: 40px;
+    width: 50%;
+}
+
+.d-flex .form-check{
+    width: 33%;
+}
+
+.display-none{
+    display: none;
+}
+
+.sprint-section {
+  width: 100%;
+  height: 100%;
+}
+
+.bg-red{
+  background: #FFE1EC;
+}
+
+.bg-blue {
+  background: #DFE8FF;
+}
+
+.droppable-container {
+  height: 210px;
+  border-radius: 12px;
+  padding: 8px;
+  height: 40px;
+  width: 100%;
+}
+
+.warning-text {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+/* .ghost {
+  opacity: 0.4;
+  background-color: yellow;
+  width: 10%;
+  text-align: center;
+} */
+
+.dragPerPic{
+  width: 200px;
+}
+.banner-txt{
+  height: 900px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow-y: hidden;
+  border-bottom: 1px solid $primary;
+}
+
+.banner-upper-text{
+  position: absolute;
+  z-index:1;
+  margin-top: 135px;
+}
+
+.banner-pic{
+  width: 600px;
+  display: block;
+  height: auto;
+  object-fit: cover;
+  position: absolute;
+  z-index:2;
+  @media screen and (max-width: 767px) {
+    width: 440px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 100%;
+  }
+}
+.banner-bottom-text{
+  margin-top: 490px;
+  position: absolute;
+  z-index:10;
+}
+
+
+.text-size{
+  font-size: 140px;
+  text-align: center;
+  line-height: 1.6;
+  -webkit-text-stroke: 3px $white;
+  @media screen and (max-width: 767px) {
+  font-size: 100px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 70px;
+    }
+  @media screen and (max-width: 448px) {
+      font-size: 46px;
+      }
+}
+
+.btn-area{
+  width: 100%;
+  margin-top: 36px;
+  @media screen and (max-width: 448px) {
+    justify-content: center;
+    }
+}
+
+.ge-btn-area{
+  justify-content: center;
+}
+
+.general-product-des{
+  @media screen and (max-width: 992px) {
+    margin-bottom: 70px;
+    }
+  @media screen and (max-width: 767px) {
+      align-items: center;
+      }
+}
+
+.banner{
+  height: 220vh;
+  padding: 0 60px;
+  background: linear-gradient(-165deg, yellow 60%, $secondary 90%) 0.5;
+  // background-image: var(--bs-gradient);
+}
+
+.en-font{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.en-slogan{
+  color: white;
+  font-size: 44px;
+  margin-top: 70px;
+}
+
+.banner-bottom{
+  background: #1a0641;
+  height: 40vh;
+}
+
+.content{
+  height: 320vh;
+  @media screen and (max-width: 992px) {
+    height: 320vh;
+  }
+  @media screen and (max-width: 767px) {
+    height: 470vh;
+  }
+  @media screen and (max-width: 575px) {
+    height: 490vh;
+  }
+}
+
+.cta-btn{
+  transition: 300ms ease-in;
+  &:hover{
+  background: $secondary;
+  .cta-btn-txt{
+    color: $maingray;
+  }
+  }
+}
+
+.sprint-section .draggable{
+  width: 100%;
+}
+
+.draggable{
+  width: 32%;
+  color: $white;
+  background: transparent;
+  // border: 0.8px solid $white;
+  text-align: center;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  img{
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    vertical-align: middle;
+    margin-top: 12px;
+  }
+  p{
+    font-size: 24px;
+    font-weight: 550;
+    font-family: 'Josefin Sans', sans-serif;
+    -webkit-text-stroke: 1.7px $white;
+    margin-bottom: 12px;
+  }
+}
+
+.choosePlate{
+  display: flex;
+  flex-wrap: wrap;
+  background: $maingray;
+  margin-top: 48px;
+}
+
+.perArea{
+  width: 25%;
+}
+
+.text-primary-trans{
+  color: #DBDBFF;
+}
+
+
+.text-secondary-trans{
+  color: #FFDBF4;
+}
+
+.card-container{
+  padding: 24px 100px;
+  width: 45%;
+  height: 100%;
+  position: relative;
+  @media screen and (max-width: 1020px) {
+    padding-right: 80px;
+    padding-left: 80px;
+    }
+  @media screen and (max-width: 986px) {
+    padding-right: 50px;
+    padding-left: 50px;
+    }
+  @media screen and (max-width: 767px) {
+    position: static;
+    width: 100%;
+      }
+
+}
+
+.perCard{
+  width:110px;
+  height: 165px;
+  border-radius: 20px;
+}
+
+.section{
+  height: 850px;
+}
+
+.swiper-section{
+  margin-top: 180px;
+  overflow: hidden;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.nav-item::marker{
+  display: none;
+}
+
+.btn {
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
+}
+
+.perSlide{
+  height: 100%;
+  margin-right: 16px;
+  @media screen and (max-width: 767px) {
+    width: 220px;
+  }
+
+}
+
+.perSlide:last-child{
+  margin-right: 0px;
+}
+
+.swiperWrapper{
+  height: 280px;
+  width: 100%;
+  @media screen and (max-width: 575px) {
+    height: 390px;
+   }
+  @media screen and (max-width: 500px) {
+    height: 445px;
+    width: 60%;
+   }
+}
+
+.swiperImg{
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+  @media screen and (max-width: 780px) {
+    width: 86%;
+    height: auto;
+    display: block;
+  }
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
+}
+
+.btn-group-adj{
+  margin-bottom: 0;
+  border-radius: 0px;
+  display: block;
+  padding-bottom: 1px;
+}
+
+.card-img-top-rec{
+  width:100%;
+  height: 330px;
+  object-fit: cover;
+  position: relative;
+  z-index: 0;
+} 
+
+
+.card-img-top{
+  width:100%;
+  height: 250px;
+  object-fit: cover;
+} 
+
+// 商品頁成員按鈕
+
+.member-row{
+  width: 100%;
+  padding: 8px 8px;
+}
+
+.member-img-sm{
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  border: 6px solid #ffffff;
+  padding: 2px 4px;
+  // &:hover{
+  // border: 6px solid #1e1c1c;
+  // }
+}
+
+.red-area{
+  background: #FFE1EC;
+  border-radius: 12px;
+  padding: 4px 14px;
+  .member-img-sm{
+  border: 6px solid #FFE1EC;
+  @media screen and (max-width: 576px) {
+  border: 4px solid #FFE1EC;
+  }
+  @media screen and (max-width: 458px) {
+    border: 1px solid #FFE1EC;
+    }
+  }
+  .per-member:hover{
+      border: 6px solid #1e1c1c;
+      @media screen and (max-width: 576px) {
+        border: 4px solid $maingray;
+        }
+  }
+}
+
+.blue-area{
+  background: #DFE8FF;
+  border-radius: 12px;
+  padding: 4px 8px;
+  .member-img-sm{
+  border: 6px solid #DFE8FF;
+  @media screen and (max-width: 576px) {
+    border: 3px solid #DFE8FF;
+    }
+    @media screen and (max-width: 458px) {
+      border: 1px solid #DFE8FF;
+      }
+    
+  .per-member:hover{
+    border: 6px solid $maingray;
+}
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .per-member:hover{
+  border: 4px solid $maingray;
+}
+}
+
+.white-area{
+  background: $white;
+  .member-img-sm{
+  border: 6px solid $white;
+  .per-member:hover{
+    border: 6px solid $maingray;
+    @media screen and (max-width: 576px) {
+      border: 4px solid $maingray;
+      }
+}
+  }
+}
+
+.per-member{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #ffffff;
+  background: cover;
+  position:relative;
+  margin: 0px 4px;
+  @media screen and (max-width: 554px) {
+   width: 90px;
+   height: 90px;
+  }
+  @media screen and (max-width: 450px) {
+    width: 70px;
+    height: 70px;
+   }
+}
+
+// .per-member-txt{
+//   @media screen and (max-width: 767px) {
+//     font-size: 20px;
+//     }
+//   @media screen and (max-width: 554px) {
+//    font-size: 16px;
+//    }
+// }
+
+.small-head{
+  width: 74px;
+  height: 74px;
+  @media screen and (max-width: 554px) {
+    width: 64px;
+    height: 64px;
+   }
+   @media screen and (max-width: 460px) {
+    width: 42px;
+    height: 42px;
+   }
+}
+
+.member-option{
+  width: 480px;
+  @media screen and (max-width: 992px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 768px) {
+    width: 97%;
+    }
+
+}
+
+.product-img{
+  @media screen and (max-width: 992px) {
+    margin-bottom: 36px;
+    }
+  @media screen and (max-width: 768px) {
+    padding: 0 24px;
+    }
+}
+
+.perMemberOption{
+  width: 25%;
+}
+
+.perMemberFilter{
+  width: 30%;
+}
+
+.memberDisabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+//   &:hover{
+//   border: 6px solid #ffffff;
+// }
+}
+
+.txtDisabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+  &:hover{
+  border:0px;
+  }
+}
+
+.activeSm{
+border: 6px solid $primary;
+ }
+
+.active-lg{
+  border: 8px solid $primary;
+   }
+
+.memberQty{
+  color: $mainorange;
+  height: 24px;
+  width: 24px;
+// hover無效？？
+//   &:hover{
+//     color: $white;
+//     background: $mainorange;
+// }
+}
+
+.card-title {
+  flex: 1;
+  max-height: 3.6rem; /* 設置最大高度，即兩行文字的高度 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer{
+  background: $white;
+  height: 120px;
+  width: 100%;
+}
+
+.footer-icon{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.display-block{
+  display: block;
+}
+
+.dance-cta-img{
+  width: 380px;
+  position: absolute;
+  z-index: 1;
+  @media screen and (max-width: 1200px) {
+    width: 85%;
+    padding-right: 28px;
+  }
+  @media screen and (max-width: 986px) {
+    width: 320px;
+  }
+  @media screen and (max-width: 843px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 767px) {
+    width: 90%;
+    position: static;
+    z-index: auto;
+    margin-bottom: 50px;
+    display: block;
+    margin: 0 auto;
+    padding-right: 0px;
+  }
+
+}
+
+.txt .fz-60{
+  @media screen and (max-width: 986px) {
+    font-size: 54px;
+  }
+}
+
+.txt{
+  width: 55%;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.dance-pic-area{
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    padding-top: 0;
+    text-align: center;
+    margin-top: 60px;
+  }
+}
+
+.addBtn:hover{
+  background: $secondary;
+}
+
+.addBtn{
+  display: block;
+}
+
+.cursor-p{
+  cursor: pointer;
+}
+
+.admin-sidebar{
+  position: relative;
+  &::before{
+    content: '';
+    background: $white;
+    opacity: 0.5;
+    height: 4px;
+    width: 40px;
+    top: -8px;
+    left: 50%;
+    border-radius: 6px;
+    transform: translateX(-50%);
+    position: absolute;
+  }
+}
+
+.dropdown-icon{
+  width: 14px;
+  height: 14px;
+  transform: rotate(180deg);
+}
+
+.tr-rotate{
+  transform: rotate(0deg);
+}
+
+.dark-pink{
+  color: #9A678A;
+}
+
+.draggable p{
+  font-weight: 100;
+}
+
+.per-liner-pic{
+  width: 20px;
+  height: 20px;
+}
+
+.bd-gray{
+  border: 6px solid #1e1c1c;
+}
+
+.cursor-a{
+  cursor: auto;
+}
+
+.closing-liner-pic{
+  width: 42px;
+  height: 42px;
+  margin-right: 20px;
+}
+
+.upper .des{
+  width: 35%;
+}
+
+.member-list .per-member{
+  border: 0;
+}
+
+// 單拆卡頁面
+.seller-pic{
+  width: 50px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.bd-top-opa{
+  border-top: 1px solid rgba(155, 155, 227, .7); 
+}
+
+.details-1{
+  margin-top: 7px;
+  position: relative;
+  line-height: 2;
+  &::before{
+      content: "商品資訊";
+      position: absolute;
+      transform: translate(8%,-100%);
+      background: #9B9BE3;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 15px 15px 0 0;
+
+  }
+}
+
+.details-dance{
+  margin-top: 150px;
+  position: relative;
+  line-height: 2;
+  &::before{
+      content: "主揪資訊";
+      position: absolute;
+      transform: translate(8%,-100%);
+      background: #9B9BE3;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 15px 15px 0 0;
+
+  }
+}
+
+.perDance-cta{
+  @media screen and (max-width: 986px) {
+    margin-bottom: 70px;
+
+  }
+  @media screen and (max-width: 575px) {
+   padding: 0 24px;
+
+  }
+}
+
+.notice{
+  margin-top: 7px;
+  position: relative;
+  line-height: 2;
+  &::before{
+      content: "拆卡注意事項";
+      position: absolute;
+      transform: translate(8%,-100%);
+      background: #E8A8D4;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 15px 15px 0 0;
+
+  }
+  @media screen and (max-width: 564px) {
+    margin: 0px 14px 50px 14px;
+ 
+   }
+  
+}
+
+.seller{
+  width: 100%;
+}
+
+.seller-btn{
+  color: #E8A8D4;
+  &:hover{
+      color: #ffffff;
+      background: #E8A8D4;  
+  }
+}
+
+.accordion{
+  width: 100%;
+}
+
+.bg-dark-pink{
+  background: #9A678A;
+}
+
+.bg-dark-purple{
+  background: #7272BD;
+}
+
+.creator-title{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bb-dark-pink{
+  border-bottom: 10px solid #DBB6CF;
+}
+
+.bb-dark-purple{
+  border-bottom: 10px solid #B4B4E2;
+}
+
+.filterWrapper {
+  width: 48%;
+  @media screen and (max-width: 1196px) {
+  width: 60%;
+    }
+  @media screen and (max-width: 992px) {
+   width: 80%;
+    }
+  @media screen and (max-width: 767px) {
+   width: 100%;
+       }
+
+}
+
+.member-img{
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  border: 8px solid #ffffff;
+  &:hover{
+    .per-member{
+      border: 8px solid #1e1c1c;
+    }
+      
+  }
+
+}
+
+.perMemberFilter h2 {
+  font-size: 22px;
+  @media screen and (max-width: 992px) {
+    font-size: 20px;
+    }
+  @media screen and (max-width: 767px) {
+    font-size: 18px;
+    }
+  @media screen and (max-width: 554px) {
+   font-size: 16px;
+   }
+}
+
+// 動畫
+
+.circle-parent{
+  position: relative;
+  width: 840px;
+  height: 50px;
+  @media screen and (max-width: 1200px) {
+    width: 726px;
+    height: 45px;
+    }
+  @media screen and (max-width: 1192px) {
+    width: 86.2%;
+    height: 60px;
+    }
+  @media screen and (max-width: 1020px) {
+      width: 77.35%;
+      height: 48px;
+      }
+  @media screen and (max-width: 986px) {
+    height: 42px;
+    width: 98%;
+    }
+  @media screen and (max-width: 843px) {
+      width: 99.2%;
+      height: 30px;
+    }
+  @media screen and (max-width: 767px) {
+      display: none;
+    }
+}
+
+.circle{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $primary;
+    left: 0;
+    top: 2px;
+    animation: fly 3s linear infinite;
+    animation-iteration-count:1;  
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+    position: absolute;
+    z-index: 4; 
+    @media screen and (max-width: 1200px) {
+      width: 25px;
+      height: 25px;
+      }
+    @media screen and (max-width: 986px) {
+      width: 20px;
+      height: 20px;
+
+    }
+    @media screen and (max-width: 843px) {
+      width: 24px;
+      height: 24px;
+    }
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+
+}
+
+@keyframes fly {
+  0% {
+    left: 30px;
+  }
+  100% {
+    left: calc(100%);
+  }
+}
+
+
+.dance-section {
+  height: 500px;
+  @media screen and (max-width: 992px) {
+  height: 570px;
+    }
+  @media screen and (max-width: 767px) {
+    height: 700px;
+    padding-top: 20px;
+    }
+}
+
+
+
+
+.loadingGif{
+  margin-top: 70px;
+  width: 160px;
+}
+
+.col-3-card{
+  width: 100%;
+}
+
+.activity-btn-pic{
+  width: 100%;
+  height: 264px;
+  object-fit: cover;
+}
+
+.perBtn{
+  cursor: pointer;
+  position: relative;
+  h1 {
+    position: absolute;
+    font-size: 80px;
+    left: 40px;
+    bottom: 30px;
+    &:hover{
+    left: 60px;
+    transition: transform 0.3s ease-in;
+    }
+  }
+}
+
+
+.bd-l-12{
+  border-radius: 12px 0 0 0;
+}
+
+.custom-vf{
+  border: 2px solid #B4B4E2;
+  border-radius: 8px;
+  margin-top: -6px;
+}
+
+.vform{
+  width: 100%;
+}
+
+.form{
+  width: 100%;
+}
+
+.vformpa{
+  width: 100%;
+}
+
+.per-cart-pic{
+  object-fit: cover;
+  width: 50px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.takeaseat{
+  width: 340px;
+  @media screen and (max-width: 1020px) {
+  width: 300px;
+  }
+  @media screen and (max-width: 986px) {
+    width: 250px;
+    }
+  @media screen and (max-width: 767px) {
+      width: 320px;
+      display: block;
+    margin: 32px auto;
+      }
+  @media screen and (max-width: 430px) {
+    width: 90%;
+        }
+}
+
+//  transform: rotate(90deg);
+// width: 470px;
+
+.button-area{
+  width: 30%;
+}
+
+.dance-per-group{
+  position: relative;
+  &::after{
+    cursor: pointer;
+    content:'看更多';
+    width: 60px;
+    border: $white;
+    color:$white;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-45%, -55%); 
+    display: none;
+  }
+  &:hover::after {
+    display: block; // hover時顯示
+    }
+}
+
+.card-img-member{
+  position: relative;
+}
+
+.watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.imgur.com/RPpHTzn.png');
+  background-repeat: repeat;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.multiselect-tags .multiselect-tag {
+  background: $maingray;
+}
+
+.construction-pic{
+  width: 500px;
+  display: block;
+  @media screen and (max-width: 548px) {
+  width:90%;
+  }
+
+}
+
+.cardProductCardImg{
+  width: 220px;
+  display: block;
+  border-radius: 12px;
+}
+
+.account-cta-img{
+  width: 320px;
+  @media screen and (max-width: 992px) {
+    width: 260px;
+    padding-left: 0;
+  }
+  @media screen and (max-width: 767px) {
+    width: 75%;
+    display: block;
+    padding-left: 0;
+    margin: 36px auto;
+  }
+
+}
+
+.dance-cardImg{
+  display: block;
+  width: 100%;
+  @media screen and (max-width: 575px) {
+    padding: 0 24px;
+    border-radius: 12px;
+  }
+}
+
+.account-img-left{
+  width: 40%;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.account-img-right{
+  width: 60%;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.account-cta-link{
+  display: inline;
+  margin: 0px auto;
+}
+
+.perClub-pic{
+  object-fit: cover;
+}
+
+.perClub{
+  @media screen and (max-width: 767px) {
+    margin-bottom: 60px;
+  }
+}
+
+.start{
+  flex-direction: row;
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.dance-pra{
+  @media screen and (max-width: 500px) {
+    margin-top: 24px;
+  }
+}
+
+.club-btn-group{
+  @media screen and (max-width: 767px) {
+    margin-top: 30px;
+  }
+}
+
+.card-group-section{
+  @media screen and (max-width: 767px) {
+    margin-bottom: 60px;
+  }
+}
+
+.swiper-txt{
+  @media screen and (max-width: 767px) {
+    margin-bottom: 80px;
+  }
+}
+
+.footer-txt{
+  @media screen and (max-width: 575px) {
+    font-size: 14px;
+  }
+}
+
+.cardImg{
+  width: 100%;
+}
+
+.product-btn{
+  @media screen and (max-width: 424px) {
+    margin-bottom: 42px;
+  }
+}
+
+.login-bg{
+  background-image: url(./logInPic.png);
+}
+
+@media screen and (max-width: 767px) {
+  .login-bg{
+  background-image: url(https://images.unsplash.com/photo-1603847734787-9e8a3f3e9d60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG9sb2dyYXBoaWN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60);
+}
+}
+
+.poster-area{
+  background-repeat: no-repeat;
+  background-size:contain;
+  max-width: 100%;
+}
+
+.dance-list{
+  border-radius: 8px;
+  background: $maingray;
+  color: $white;
+  padding: 4px 8px;
+  margin-right: 13px;
+}
+
+.dance-vform{
+  width: 50%;
+}
+
+
+
+
+// .gradient-custom {
+//   background-image: linear-gradient(-145deg, $black 50%, #1a0641 80%);
+// }
+
+// fw-bold是給粗體
+
