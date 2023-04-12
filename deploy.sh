@@ -26,7 +26,7 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
 
 # 選擇二：if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:Facinalin/cardPool-Vite-Airbnb.git master:gh-pages
+git push -f https://github.com/Facinalin/cardPool-Vite-Airbnb.git master:gh-pages
 
 
 cd -
